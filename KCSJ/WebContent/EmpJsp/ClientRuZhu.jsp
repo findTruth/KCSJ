@@ -37,7 +37,7 @@
 }
 </style>
 
-<title>散客入住</title>
+<title>客户入住</title>
 
     <link rel="stylesheet" href="<%=basePath %>css/bootstrap.min.css"> 
     <link rel="stylesheet" href="<%=basePath %>css/bootstrap-table.min.css">
@@ -116,7 +116,7 @@
                                 共<span id="spanTotalPage"></span>页
             </div>
                <div class="gridItem" style="margin-left:50px;  padding: 5px; width: 400px; float: left; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">   
-                  <span id="spanFirst" >首页</span> 
+                  <span id="spanFirst" >首页</span>
                       &nbsp;&nbsp;<span id="spanPre">上一页</span>
                   <span id="spanInput" style="margin: 0px; padding: 0px 0px 4px 0px; height:100%; "> 
                                                        第<input id="Text1" type="text" class="TextBox" onkeyup="changepage()"   style="height:20px; text-align: center;width:50px" />页 
@@ -258,10 +258,7 @@
         	         $("#ruzhu").get(0).style.display = "block";
         	    	 
         	     }
-        	     
-        	 
           }
-          
           
           function checkVip(){
         	  var vno = $("#vno").get(0).value;

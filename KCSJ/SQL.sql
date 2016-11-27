@@ -151,7 +151,7 @@ create table vip(
  vno number(3) primary key,
  vname varchar2(10) not null,
  vcard varchar2(20) not null,
- rmno references room(rmno),ss
+ rmno references room(rmno),
  vtel number(15) not null,
  --饭钱
  vfee number(5,2),

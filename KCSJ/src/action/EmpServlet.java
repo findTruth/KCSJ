@@ -19,6 +19,7 @@ import biz.EBiz.EmpBizImpl;
 import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
 import entity.Room;
+import javabean.ClientBean;
 
 @WebServlet("/Emp/*")
 public class EmpServlet extends HttpServlet {
@@ -164,4 +165,6 @@ public class EmpServlet extends HttpServlet {
 		}
 
 	}
+	
+	
 }

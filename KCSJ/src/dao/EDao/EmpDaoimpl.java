@@ -12,6 +12,7 @@ import entity.Emp;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
+import javabean.ClientBean;
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
@@ -366,6 +367,12 @@ public class EmpDaoimpl implements EmpDao {
         return flag;
 	}
 
-	
+//	public static void main(String[] args) {
+//		
+////		ClientBean cc = new ClientBean();
+////
+////		cc.getClient().getRmno();
+//		
+//	}
 	
 }

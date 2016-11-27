@@ -368,7 +368,7 @@ public class EmpDaoimpl implements EmpDao {
 	}
 
 //	public static void main(String[] args) {
-//		
+		
 ////		ClientBean cc = new ClientBean();
 ////
 ////		cc.getClient().getRmno();

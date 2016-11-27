@@ -5,7 +5,7 @@ create table manager(
   mpassword varchar2(35) not null,
   mcard varchar2(20) not null
 );
-
+--test
 
 --删除原来存在的序列
 drop sequence manager_seq;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                
+                <!--  
+                	url 最后一项 为数据库名
+                 -->
+                <property name="url" value="jdbc:oracle:thin:@localhost:1521:ORCL"/>
+                <property name="username" value="pp"/>
+                <property name="password" value="pp111111"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/StudentMapper.xml"/>
+    </mappers>
+</configuration>

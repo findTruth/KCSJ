@@ -148,11 +148,18 @@ public class EmpServlet extends HttpServlet {
 			
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			
-			System.out.println(vno+"  "+vcard+"   "+rmno);
-			
 			String s = biz.VipRuZhu(vno,vcard,rmno);
 			
-			
+			if(s.equals("信息有误")){
+				
+				out.print("{\"result\":\"0\"}");
+			}else if(s.equals("ok")){
+				out.print("{\"result\":\"1\"}");
+			}else if(s.equals("erro")){
+				out.print("{\"result\":\"2\"}");
+			}else{
+				out.print("{\"result\":\"3\"}");
+			}
 			
 		}
 

@@ -120,6 +120,14 @@ html,body {
 				<li>
 					<a href="<%=basePath %>Login/Register.jsp">管理员注册</a>
 				</li>
+				<li>
+					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					 今日天气状况
+				</li>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+               <iframe name="sinaWeatherTool"   src="http://weather.news.sina.com.cn/chajian/iframe/weatherStyle41.html?city=%E9%95%BF%E6%B2%99" width="270" height="113" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>s
 			</ul>
 				<h2>
 					酒店管理系统

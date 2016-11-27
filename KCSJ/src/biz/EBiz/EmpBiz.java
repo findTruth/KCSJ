@@ -4,6 +4,7 @@ import java.util.List;
 
 import entity.Emp;
 import entity.Room;
+import entity.Vip;
 
 public interface EmpBiz {
 	
@@ -27,5 +28,6 @@ public interface EmpBiz {
 
 	String VipRuZhu(int vno, String vcard, int rmno);
 	
+	Vip QueryVipByVno(int vno);
 	
 }

@@ -9,12 +9,12 @@
 <title>员工登录</title>  
 <%@ include file="head.jsp"%>
 
-    <link type="text/css"  rel="stylesheet" href="../css/pintuer.css">
-    <link type="text/css" rel="stylesheet" href="../css/admin.css">
-     <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link type="text/css"  rel="stylesheet" href="<%=basePath %>css/pintuer.css">
+    <link type="text/css" rel="stylesheet" href="<%=basePath %>css/admin.css">
+     <link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
     
-    <script src="../js/jquery.js"></script>
-    <script src="../js/pintuer.js"></script>  
+    <script src="<%=basePath %>js/jquery.js"></script>
+    <script src="<%=basePath %>js/pintuer.js"></script>  
     
 </head>
 <body>

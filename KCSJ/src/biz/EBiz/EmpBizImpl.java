@@ -119,16 +119,44 @@ public class EmpBizImpl implements EmpBiz {
 	}
 
 	//通过会员编号查询会员
-	private Vip QueryVipByVno(int vno) {
+	public Vip QueryVipByVno(int vno) {
 		
-		dao.QueryVipByVno(vno);
+		return dao.QueryVipByVno(vno);
 		
 	}
 	@Override
 	public String VipRuZhu(int vno, String vcard, int rmno) {
 		
 		Vip v = QueryVipByVno(vno);
-		return null;
+		
+		System.out.println(v);
+		if(v!=null){
+			System.out.println("aa");
+			if(!v.getVcard().equals(vcard)){
+				
+				return "信息有误";
+			}else{
+			
+			   //更新vip的入住信息
+			   boolean flag = dao.VipRuZhu(vcard,rmno);
+			
+			if(flag==true){
+				
+				dao.updateRoomRuZhu(rmno);
+				
+				return "ok";
+				
+			}else{
+				return "erro";
+			}
+			
+		}
+	}else{
+		
+		return "无此会员";
+		
+	}
+		
 	}
 
 

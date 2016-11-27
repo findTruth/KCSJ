@@ -6,11 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理员登录界面</title>
-	
-	 <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
-	 
-	 
 <%@ include file="head.jsp"%>
+	
+	 <link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
+	 
+	 
 
 <div class="box" id = "mymodal">
 		<div class="login-box">
@@ -154,8 +154,8 @@
 	
 	</script>
 	
-	  <script type="text/javascript" src="js/jquery-2.0.0.min.js" ></script>
-	 <script type="text/javascript" src="js/bootstrap.js"></script>
+	  <script type="text/javascript" src="<%=basePath %>js/jquery-2.0.0.min.js" ></script>
+	 <script type="text/javascript" src="<%=basePath %>js/bootstrap.js"></script>
 
 
 

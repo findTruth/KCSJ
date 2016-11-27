@@ -273,7 +273,7 @@
         		 document.getElementById("Vipdialogs").innerHTML="会员号不能为空！";  
                 matchResult=false;    
         	 }else if(vcard==""){
-         		 document.getElementById("dialogs").innerHTML="身份证不能为空！";  
+         		 document.getElementById("Vipdialogs").innerHTML="身份证不能为空！";  
                  matchResult=false;    
          	 }
         	 if(matchResult==true){
@@ -286,14 +286,19 @@
     	                  success:function(data){
 
     	                    var objs = eval(data); 
-    	                	if(objs.result==0){
+    	                	if(objs.result==1){
     	                		alert("入住成功");
     	                		var r1=confirm("是否回到主页");
     	                		if(r1==true){
     	                			window.location = "http://localhost:8080/KCSJ/RoomList/queryAllNullRoom.do"
     	                		}
+    	                	}else if(objs.result==0){
+    	                		 document.getElementById("Vipdialogs").innerHTML="会员信息错误";  
+    	                	}else if(objs.result==2){
+    	                		
+    	                		 document.getElementById("Vipdialogs").innerHTML="系统错误";  
     	                	}else{
-    	                		alert("入住失败");
+    	                		 document.getElementById("Vipdialogs").innerHTML="无此会员";
     	                	}
     	                }
     	  			})
@@ -343,7 +348,7 @@
  	                  success:function(data){
 
  	                    var objs = eval(data); 
- 	                	if(objs.result==0){
+ 	                	if(objs.result==1){
  	                		alert("入住成功");
  	                		var r1=confirm("是否回到主页");
  	                		if(r1==true){

@@ -4,6 +4,7 @@ import java.util.List;
 
 import entity.Emp;
 import entity.Room;
+import entity.Vip;
 import exception.Exception;
 
 public interface EmpDao {
@@ -28,7 +29,9 @@ public interface EmpDao {
 
 	boolean updateEmpPwd(String ename, String newpwd);
 
-	void QueryVipByVno(int vno);
+	Vip QueryVipByVno(int vno);
+
+	boolean VipRuZhu(String vcard, int rmno);
 	
 	/*
 	List<Menus> QueryAllMenus(); 

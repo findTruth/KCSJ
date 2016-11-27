@@ -13,8 +13,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>员工增加界面</title>
  
-    <link rel="stylesheet" href="../css/bootstrap.min.css"> 
-    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="<%=basePath %>css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="<%=basePath %>css/bootstrap-table.min.css">
 
 
 </head>
@@ -109,8 +109,8 @@
   </script>
   
   
-	  <script type="text/javascript" src="../js/jquery-2.0.0.min.js" ></script>
-	 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	  <script type="text/javascript" src="<%=basePath %>js/jquery-2.0.0.min.js" ></script>
+	 <script type="text/javascript" src="<%=basePath %>js/bootstrap.min.js"></script>
 	
 </body>
 </html>

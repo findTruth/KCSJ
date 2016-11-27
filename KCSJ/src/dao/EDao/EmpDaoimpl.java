@@ -11,6 +11,7 @@ import java.util.List;
 import entity.Emp;
 import entity.Manager;
 import entity.Room;
+import entity.Vip;
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
@@ -313,9 +314,56 @@ public class EmpDaoimpl implements EmpDao {
 	/**
 	 * 通过会员编号查询会员
 	 */
-	public void QueryVipByVno(int vno) {
-		// TODO Auto-generated method stub
+	
+	public Vip QueryVipByVno(int vno) {
+		Vip v = null;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from vip where vno=? ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,vno);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				v  = new Vip();
+				v.setVno(rs.getInt("vno"));
+				v.setRmno(rs.getInt("rmno"));
+				v.setVtel(rs.getLong("vtel"));
+				v.setVcard(rs.getString("vcard"));
+				v.setVdate(rs.getString("vdate"));
+				v.setVfee(rs.getDouble("vfee"));
+				v.setVname(rs.getString("vname"));
+				v.setVno(rs.getInt("vno"));
+			}
+			//关闭连接
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+          return v;
+
 		
+		
+	}
+
+	//更新Vip入住的信息
+	public boolean VipRuZhu(String vcard, int rmno) {
+		boolean flag = false;
+		try{
+		Connection conn = util.getConnection();
+		String sql = "update vip set vdate=to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),rmno=?  where vcard=?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, rmno);
+		ps.setString(2,vcard);
+		int n=ps.executeUpdate();
+		if(n>=1){
+			 flag=true;
+		}
+		util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return flag;
 	}
 
 	

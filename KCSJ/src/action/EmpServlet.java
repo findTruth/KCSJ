@@ -20,6 +20,7 @@ import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
 import entity.Room;
 import javabean.ClientBean;
+import javabean.VipBean;
 
 @WebServlet("/Emp/*")
 public class EmpServlet extends HttpServlet {
@@ -109,7 +110,6 @@ public class EmpServlet extends HttpServlet {
 			boolean flag = biz.ClientRuZhu(name, card, tel,rmno);
 
 			 if(flag){
-				 System.out.println("成功");
 			    //房间的入住状态
 				 boolean flag1 = biz.updateRoomRuZhu(rmno);
 				 if(flag1==true){
@@ -161,6 +161,28 @@ public class EmpServlet extends HttpServlet {
 			}else{
 				out.print("{\"result\":\"3\"}");
 			}
+			
+		}else if("/ClientLeave".equals(path)){
+			
+			int rmno = Integer.valueOf(request.getParameter("sousuo"));
+			
+			
+			//查询普通客户的入住信息
+			List<ClientBean> list = biz.queryClient_Leave(rmno);
+			
+			List<VipBean> listVip = biz.queryVip_Leave(rmno);
+			
+            Gson json = new Gson();
+            
+            if(list.size()==1){
+            	out.print(json.toJson(list));
+            }else if(listVip.size()==1){
+            	out.print(json.toJson(listVip));
+            	
+            }else{
+            	out.print(json.toJson(null));
+            	
+            }
 			
 		}
 

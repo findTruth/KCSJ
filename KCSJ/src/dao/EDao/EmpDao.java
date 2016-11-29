@@ -6,6 +6,8 @@ import entity.Emp;
 import entity.Room;
 import entity.Vip;
 import exception.Exception;
+import javabean.ClientBean;
+import javabean.VipBean;
 
 public interface EmpDao {
 	
@@ -32,6 +34,10 @@ public interface EmpDao {
 	Vip QueryVipByVno(int vno);
 
 	boolean VipRuZhu(String vcard, int rmno);
+
+	List<ClientBean> queryClientByRmno(int rmno);
+
+	List<VipBean> queryVipByRmno(int rmno);
 	
 	/*
 	List<Menus> QueryAllMenus(); 

@@ -13,6 +13,8 @@ import entity.Emp;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
+import javabean.ClientBean;
+import javabean.VipBean;
 
 //封装对业务的处理
 public class EmpBizImpl implements EmpBiz {
@@ -157,6 +159,24 @@ public class EmpBizImpl implements EmpBiz {
 		
 	}
 		
+	}
+
+	/**
+	 * 普通客户退房时查询退房信息
+	 */
+	public List<ClientBean> queryClient_Leave(int rmno) {
+		
+		//通过房间号查询普通客户
+		return dao.queryClientByRmno(rmno);
+		
+		
+	}
+
+	/**
+	 * vip客户退房时查询退房信息
+	 */
+	public List<VipBean> queryVip_Leave(int rmno) {
+		return dao.queryVipByRmno(rmno);
 	}
 
 

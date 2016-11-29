@@ -361,21 +361,6 @@
           }
           
           
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
          function change(data){
         		$.ajax({
   	  				type:'GET',

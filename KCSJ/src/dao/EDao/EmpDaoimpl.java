@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.Client;
 import entity.Emp;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
 import javabean.ClientBean;
+import javabean.VipBean;
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
@@ -367,12 +369,121 @@ public class EmpDaoimpl implements EmpDao {
         return flag;
 	}
 
-//	public static void main(String[] args) {
+	/**
+	 * 普通客户退房时查询信息
+	 */
+	public List<ClientBean> queryClientByRmno(int rmno) {
 		
-////		ClientBean cc = new ClientBean();
-////
-////		cc.getClient().getRmno();
+		List<ClientBean> list = new ArrayList<ClientBean>();
+		
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from room r,client c where c.rmno=r.rmno and r.rmno=? ";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Client c = new Client();
+				Room r = new Room();
+				r.setRmtype(rs.getString("rmtype"));
+				r.setRmprice(Double.valueOf(rs.getDouble("rmprice")));
+				r.setRydate(rs.getString("rydate"));
+				r.setRmno(rmno);
+				c.setCtel(rs.getLong("ctel"));
+				c.setCname(rs.getString("cname"));
+				c.setCcard(rs.getString("ccard"));
+				c.setCmfee(rs.getDouble("cmfee"));
+				c.setCdate(rs.getString("cdate"));
+				ClientBean cb = new ClientBean(c, r,"client");
+				list.add(cb);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+
+	/**
+	 * Vip退房时查询Vip用户的
+	 */
+	public List<VipBean> queryVipByRmno(int rmno) {
+          List<VipBean> list = new ArrayList<VipBean>();
+		
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from room r,vip v where v.rmno=r.rmno and r.rmno=? ";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Vip v = new Vip();
+				Room r = new Room();
+				r.setRmtype(rs.getString("rmtype"));
+				r.setVprice(Double.valueOf(rs.getDouble("vprice")));
+				r.setRmno(rmno);
+
+				v.setVno(rs.getInt("vno"));
+				v.setVcard(rs.getString("vcard"));
+				v.setVdate(rs.getString("vdate"));
+				v.setVfee(rs.getDouble("vfee"));
+				v.setVname(rs.getString("vname"));
+				v.setVtel(rs.getLong("vtel"));
+				
+				VipBean vb = new VipBean(v, r,"vip");
+				list.add(vb);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+//		EmpDaoimpl dao =  new EmpDaoimpl();
+//		int rmno = 102;
 //		
-//	}
+//		List<VipBean> list = dao.queryVipByRmno(rmno);
+//		System.out.println(list.get(0).getRoom().getVprice());
+		
+		//System.out.println(list.get(0).getRoom().getRmprice());
+		
+		
+	}
 	
 }

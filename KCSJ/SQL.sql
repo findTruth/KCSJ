@@ -104,7 +104,7 @@ drop table menus;
  );
 drop sequence menus_seq;
 --创建序列
-create sequence menus_seq start with 100 minvalue 1000 increment by 1;
+create sequence menus_seq start with 100 minvalue 100 increment by 1;
 insert into menus values(menus_seq.nextval,'辣椒炒肉',15,10);
 insert into menus values(menus_seq.nextval,'土豆烧肉',15,10);
 insert into menus values(menus_seq.nextval,'铁板牛肉',15,10);

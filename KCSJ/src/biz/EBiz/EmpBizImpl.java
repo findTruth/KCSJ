@@ -27,7 +27,8 @@ public class EmpBizImpl implements EmpBiz {
 
 		// 加密后进行判断
 		String Md5Pwd = MD5.MD5(pwd);
-		
+	
+		//
 		if (code != null && code.equals(checkCode)) {
 			if (e != null) {
 				if (e.getEname().equals(name) && e.getEpassword().equals(Md5Pwd)) {

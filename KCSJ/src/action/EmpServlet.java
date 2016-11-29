@@ -44,7 +44,6 @@ public class EmpServlet extends HttpServlet {
 
 		if ("/login".equals(path)) {
 
-
 			String name = request.getParameter("name");
 
 			String pwd = request.getParameter("pwd");
@@ -53,7 +52,7 @@ public class EmpServlet extends HttpServlet {
 			String code = request.getParameter("code");
 
 			// 先从session中获取正确验证码
-			
+
 			String checkCode = (String) session.getAttribute("right_checkCode");
 
 			String panduan = biz.queryEmp(name, pwd, code, checkCode);
@@ -61,12 +60,12 @@ public class EmpServlet extends HttpServlet {
 			if (!panduan.equals("验证码错误")) {
 
 				if ("正确".equals(panduan)) {
-					
-					//登录成功后将员工名字和密码存入session
+
+					// 登录成功后将员工名字和密码存入session
 					session.setAttribute("ename", name);
 					session.setAttribute("epwd", pwd);
 					out.print("{\"result\":\"5\"}");
-					
+
 				} else if ("错误".equals(panduan)) {
 					out.print("{\"result\":\"0\"}");
 				} else {
@@ -76,7 +75,6 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"2\"}");
 			}
 		} else if ("/password".equals(path)) {
-
 
 			String card = request.getParameter("card");
 
@@ -95,98 +93,95 @@ public class EmpServlet extends HttpServlet {
 				request.setAttribute("msg", "出错了");
 				request.getRequestDispatcher("../Login/Emppassword.jsp").forward(request, response);
 			}
-			
-		 //散客确认入住
+
+			// 散客确认入住
 		} else if ("/RuZhu".equals(path)) {
 
 			String name = request.getParameter("name");
 
 			String card = request.getParameter("card");
 
-			long  tel = Long.valueOf(request.getParameter("tel"));
+			long tel = Long.valueOf(request.getParameter("tel"));
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 
-			boolean flag = biz.ClientRuZhu(name, card, tel,rmno);
+			boolean flag = biz.ClientRuZhu(name, card, tel, rmno);
 
-			 if(flag){
-			    //房间的入住状态
-				 boolean flag1 = biz.updateRoomRuZhu(rmno);
-				 if(flag1==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-			 }else{
-				 out.print("{\"result\":\"1\"}");
-			 }
-
-		}else if("/updatePwd".equals(path)){
-			
-			String oldpwd = request.getParameter("oldpwd");
-			
-			String newpwd = request.getParameter("newpwd");
-			
-			String ename = (String) session.getAttribute("ename");
-			
-			String str = biz.updateEmpPwd(oldpwd,newpwd,ename);
-			
-			if(str.equals("密码错误")){
-				
-				out.print("{\"result\":\"0\"}");
-				
-			}else if(str.equals("成功修改")){ 
-				
+			if (flag) {
+				// 房间的入住状态
+				boolean flag1 = biz.updateRoomRuZhu(rmno);
+				if (flag1 == true) {
+					out.print("{\"result\":\"0\"}");
+				}
+			} else {
 				out.print("{\"result\":\"1\"}");
-			}else{
-				
+			}
+
+		} else if ("/updatePwd".equals(path)) {
+
+			String oldpwd = request.getParameter("oldpwd");
+
+			String newpwd = request.getParameter("newpwd");
+
+			String ename = (String) session.getAttribute("ename");
+
+			String str = biz.updateEmpPwd(oldpwd, newpwd, ename);
+
+			if (str.equals("密码错误")) {
+
+				out.print("{\"result\":\"0\"}");
+
+			} else if (str.equals("成功修改")) {
+
+				out.print("{\"result\":\"1\"}");
+			} else {
+
 				out.print("{\"result\":\"2\"}");
 			}
-			
-			
-		}else if("/VipRuZhu".equals(path)){
+
+		} else if ("/VipRuZhu".equals(path)) {
 			int vno = Integer.valueOf(request.getParameter("vno"));
-			
+
 			String vcard = request.getParameter("vcard");
-			
+
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			
-			String s = biz.VipRuZhu(vno,vcard,rmno);
-			
-			if(s.equals("信息有误")){
-				
+
+			String s = biz.VipRuZhu(vno, vcard, rmno);
+
+			if (s.equals("信息有误")) {
+
 				out.print("{\"result\":\"0\"}");
-			}else if(s.equals("ok")){
+			} else if (s.equals("ok")) {
 				out.print("{\"result\":\"1\"}");
-			}else if(s.equals("erro")){
+			} else if (s.equals("erro")) {
 				out.print("{\"result\":\"2\"}");
-			}else{
+			} else {
 				out.print("{\"result\":\"3\"}");
 			}
-			
-		}else if("/ClientLeave".equals(path)){
-			
+
+		} else if ("/ClientLeave".equals(path)) {
+
 			int rmno = Integer.valueOf(request.getParameter("sousuo"));
-			
-			
-			//查询普通客户的入住信息
+
+			// 查询普通客户的入住信息
 			List<ClientBean> list = biz.queryClient_Leave(rmno);
-			
+
 			List<VipBean> listVip = biz.queryVip_Leave(rmno);
-			
-            Gson json = new Gson();
-            
-            if(list.size()==1){
-            	out.print(json.toJson(list));
-            }else if(listVip.size()==1){
-            	out.print(json.toJson(listVip));
-            	
-            }else{
-            	out.print(json.toJson(null));
-            	
-            }
-			
+
+			Gson json = new Gson();
+
+			if (list.size() == 1) {
+				out.print(json.toJson(list));
+			} else if (listVip.size() == 1) {
+				out.print(json.toJson(listVip));
+
+			} else {
+				out.print(json.toJson(null));
+
+			}
+
 		}
 
 	}
-	
-	
+
 }

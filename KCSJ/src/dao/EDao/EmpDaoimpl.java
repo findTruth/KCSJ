@@ -227,7 +227,7 @@ public class EmpDaoimpl implements EmpDao {
 		
 		try {
 			Connection conn = util.getConnection();
-			String sql =" insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'))";
+			String sql =" insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy/MM/dd HH24:mi:ss'))";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1,name);
 			ps.setString(2,card);
@@ -354,7 +354,7 @@ public class EmpDaoimpl implements EmpDao {
 		boolean flag = false;
 		try{
 		Connection conn = util.getConnection();
-		String sql = "update vip set vdate=to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),rmno=?  where vcard=?";
+		String sql = "update vip set vdate=to_char(sysdate,'yyyy/MM/dd HH24:mi:ss'),rmno=?  where vcard=?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, rmno);
 		ps.setString(2,vcard);

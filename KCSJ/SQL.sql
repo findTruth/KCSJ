@@ -56,13 +56,13 @@ drop sequence room_seq;
 --创建序列
 create sequence room_seq start with 100 minvalue 100 increment by 1;
 --加入数据
-insert into room values(room_seq.nextval,'单人间',95,82,'有人','无人预订',null);
 insert into room values(room_seq.nextval,'单人间',95,82,'无人','无人预订',null);
-insert into room values(room_seq.nextval,'单人间',100,85,'有人','无人预订',null);
-insert into room values(room_seq.nextval,'单人间',102,86,'有人','无人预订',null);
-insert into room values(room_seq.nextval,'单人间',105,82,'有人','无人预订',null);
+insert into room values(room_seq.nextval,'单人间',95,82,'无人','无人预订',null);
+insert into room values(room_seq.nextval,'单人间',100,85,'无人','无人预订',null);
+insert into room values(room_seq.nextval,'单人间',102,86,'无人','无人预订',null);
 insert into room values(room_seq.nextval,'单人间',105,82,'无人','无人预订',null);
-insert into room values(room_seq.nextval,'单人间',100,85,'有人','无人预订',null);
+insert into room values(room_seq.nextval,'单人间',105,82,'无人','无人预订',null);
+insert into room values(room_seq.nextval,'单人间',100,85,'无人','无人预订',null);
 insert into room values(room_seq.nextval,'单人间',102,96,'无人','无人预订',null);
 insert into room values(room_seq.nextval,'单人间',110,95,'无人','无人预订',null);
 insert into room values(room_seq.nextval,'单人间',100,95,'无人','无人预订',null);

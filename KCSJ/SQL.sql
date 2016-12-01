@@ -47,7 +47,6 @@ create table room(
   vprice number(5,2) not null,
   rmbuff varchar2(10) check(rmbuff in('有人','无人')),
   rmbook varchar2(20) check(rmbook in('已预订','无人预订')),
-  --预定时间
   rydate  varchar2(20)
 );
 
@@ -104,7 +103,7 @@ drop table menus;
  );
 drop sequence menus_seq;
 --创建序列
-create sequence menus_seq start with 100 minvalue 1000 increment by 1;
+create sequence menus_seq start with 100 minvalue 100 increment by 1;
 insert into menus values(menus_seq.nextval,'辣椒炒肉',15,10);
 insert into menus values(menus_seq.nextval,'土豆烧肉',15,10);
 insert into menus values(menus_seq.nextval,'铁板牛肉',15,10);
@@ -184,7 +183,7 @@ create table history(
   hallfee number(5,2),
   hshijian varchar2(10)
 );
-
+// alter table history modify hname varchar2(30);
 --删除序列
 drop sequence his_seq;
 --创建序列

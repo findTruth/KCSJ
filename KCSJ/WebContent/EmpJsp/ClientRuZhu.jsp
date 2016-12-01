@@ -70,7 +70,6 @@
 						   <option>单人间</option>
 						   <option>双人间</option>
 						   <option>电脑房</option>
-						
 					   </select>
 						<span>请选择客户的房间种类</span>
 					</form>
@@ -103,7 +102,6 @@
 						<td><c:out value="${list.rmtype}"></c:out></td>
 						<td><c:out value="${list.rmprice}"></c:out></td>
 						<td><c:out value="${list.vprice}"></c:out></td>
-						
 						<td><a onclick="ruzhu(${list.rmno})">入住</a></td>
 					</tr>
 				</c:forEach>
@@ -141,9 +139,7 @@
 					    <span style="font-size:12px;color:red;  position:absolute; left: 350px;top: 100px; " id="dialogs">
 					                   			
 					    </span>
-					  
-					    
-				     <input  type="button" id="Btup" onclick="check()"  value="确认入住"/>
+					  <input  type="button" id="Btup" onclick="check()"  value="确认入住"/>
 			        <input type="button" value="关闭" onclick="closeDiv()">
 				
 	</div>
@@ -245,22 +241,16 @@
           
           //顾客信息页面的弹出
           function ruzhu(data){
-        	  
-        	     rmno= data;
-        	     
+        	  	 rmno= data;
         	     var r=confirm("该客户是否是会员");
         	     if(r==true){
         	    	 
         	    	 //弹出输入会员号的界面
         	    	 $("#Vipruzhu").get(0).style.display = "block";
         	     }else{
-        	    	 
-        	         $("#ruzhu").get(0).style.display = "block";
-        	    	 
-        	     }
-        	     
-        	 
-          }
+        	    	 $("#ruzhu").get(0).style.display = "block";
+        	    }
+        	 }
           
           
           function checkVip(){
@@ -358,23 +348,7 @@
          	 }
           }
           
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-         function change(data){
+            function change(data){
         		$.ajax({
   	  				type:'GET',
   	                dataType: 'json',
@@ -412,9 +386,8 @@
 	 
 	 
 	  
-	<script type="text/javascript" src="<%=basePath%>EmpJsp/js/TableFenYe.js"></script>
-
-    <script type="text/javascript" src="<%=basePath %>/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
+	<script type="text/javascript" src="<%=basePath %>/js/jquery.js"></script>
 
 </body>
 </html>

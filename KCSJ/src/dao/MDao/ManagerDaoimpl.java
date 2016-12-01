@@ -522,9 +522,9 @@ public class ManagerDaoimpl implements ManagerDao {
 	
 	
 //	
-//	public static void main(String[] args) {
-//		
-//		System.out.println((new ManagerDaoimpl().QueryAllRoom()).size());
-//	}
+	//public static void main(String[] args) {
+		
+	//	System.out.println((new ManagerDaoimpl().QueryAllRoom()).size());
+	//}
 
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import Tool.MD5;
 import dao.EDao.EmpDao;
 import dao.EDao.EmpDaoimpl;
+import entity.Client;
 import entity.Emp;
 import entity.Manager;
 import entity.Room;
@@ -65,13 +66,16 @@ public class EmpBizImpl implements EmpBiz {
 		return dao.QueryAllRoom();
 	}
 
+	public List<Room> QueryAllYuDing(){
+		return dao.QueryAllYuDing();
+	}
 	/**
 	 * 查询所有空房间通过房间类型
 	 */
 	public List<Room> QueryAllRoomNullBytype(String type) {
 		return dao.QueryAllRoomNullBytype(type);
 	}
-
+	
 	/**
 	 * 普通客户入住
 	 */
@@ -85,15 +89,68 @@ public class EmpBizImpl implements EmpBiz {
 	public List<Room> QueryAllNullRoom() {
 		return dao.QueryAllNullRoom();
 	}
-
+	//客户预定
 	
+	public boolean ClientYuDing(String name, String card, long tel,int rmno){
+		return dao.ClientYuDing(name, card, tel, rmno);
+	}
+	
+	
+	
+	//预定跟新表
+	public boolean updateRoomYuDing(int rmno){
+		return dao.updateRoomYuDing(rmno);
+	}
 
 	//客户入住后更新房间状态
 	public boolean updateRoomRuZhu(int rmno) {
 		return dao.updateRoomRuZhu(rmno);
 	}
-
-
+	
+	public boolean tuiding(int rmno){
+		return dao.tuiding(rmno);
+	}
+	public boolean deleteClient(int rmno){
+		return dao.deleteClient(rmno);
+	}
+	public boolean yudingruzhu(int rmno){
+		return dao.yudingruzhu(rmno);
+	}
+	public boolean roomyudingruzhu(int rmno){
+		return dao.roomyudingruzhu(rmno);
+	}
+	public boolean updateroomyudingruzhu(int rmno){
+		return dao.updateroomyudingruzhu(rmno);
+	}
+	//客户预定记录
+	public boolean yudingHistory(String vname, String vcard, long tel, 
+			int rmno, String rmtype, String newtime,String shijian){
+				return dao.yudingHistory(vname,vcard,tel, 
+						rmno,rmtype,newtime,shijian);
+		
+	}
+	//通过房间号查找client;
+	public Client queryClientByRmno(int rmno){
+		return dao.queryClientByRmno(rmno);
+	}
+	
+	public  String queryRoomTypeByRmno(int rmno){
+		return dao.queryRoomTypeByRmno(rmno);
+	}
+	//退订
+	public boolean addTuiDinghistory(String name, String card, 
+			long tel, int rmno, String type, String newtime,
+			String shijian){
+		return dao.addTuiDinghistory(name, card, tel, rmno, type, newtime, shijian);
+	}
+	//入住记录
+	public boolean addRuZhuhistory(String name, String card, long tel,
+			int rmno, String type, String newtime,
+			String shijian){
+		return dao.addRuZhuhistory(name, card, tel, rmno, type, newtime, shijian);
+		
+	}
+	
 	/**
 	 * 员工修改个人密码
 	 */
@@ -120,8 +177,8 @@ public class EmpBizImpl implements EmpBiz {
 
 	//通过会员编号查询会员
 	private Vip QueryVipByVno(int vno) {
-		
 		dao.QueryVipByVno(vno);
+		return null;
 		
 	}
 	@Override
@@ -130,7 +187,9 @@ public class EmpBizImpl implements EmpBiz {
 		Vip v = QueryVipByVno(vno);
 		return null;
 	}
-
-
 	
+	
+	public Vip QueryVipByVno2(int vno){
+		return dao.QueryVipByVno2(vno);
+	}
 }

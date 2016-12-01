@@ -3,6 +3,7 @@ package dao.EDao;
 import java.util.List;
 
 import entity.Emp;
+import entity.History;
 import entity.Room;
 import entity.Vip;
 import exception.Exception;
@@ -38,6 +39,20 @@ public interface EmpDao {
 	List<ClientBean> queryClientByRmno(int rmno);
 
 	List<VipBean> queryVipByRmno(int rmno);
+
+	boolean updateVipLeave(int vno);
+
+	boolean updateRoomLeave(int rmno);
+
+	boolean HistoryOfLeave(String name, String card, long tel, int rmno, String type, String time, double allfee);
+
+	boolean deleteClient(String name);
+
+	List<History> queryAllHistory();
+
+	List<History> queryAllHistoryByType(String type);
+
+	List<History> QueryHistoryByRmno(int rmno);
 	
 	/*
 	List<Menus> QueryAllMenus(); 

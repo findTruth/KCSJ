@@ -2,6 +2,8 @@ package action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import biz.EBiz.EmpBiz;
 import biz.EBiz.EmpBizImpl;
 import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
+import entity.History;
 import entity.Room;
 import javabean.ClientBean;
 import javabean.VipBean;
@@ -29,6 +32,8 @@ public class EmpServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 		response.setContentType("text/html;charset=utf-8");
 
 		request.setCharacterEncoding("utf-8");// 设置request解码
@@ -105,6 +110,8 @@ public class EmpServlet extends HttpServlet {
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 
+			System.out.println(name + " " + card + " " + tel + " " + rmno);
+
 			boolean flag = biz.ClientRuZhu(name, card, tel, rmno);
 
 			if (flag) {
@@ -177,11 +184,73 @@ public class EmpServlet extends HttpServlet {
 
 			} else {
 				out.print(json.toJson(null));
-
 			}
 
-		}
+		} else if ("/VipLeave".equals(path)) {
 
+			int vno = Integer.valueOf(request.getParameter("vno"));
+
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+
+			double mfee = Double.valueOf(request.getParameter("mfee"));
+
+			double allfee = Double.valueOf(request.getParameter("allfee"));
+
+			String card = request.getParameter("card");
+
+			String name = request.getParameter("name");
+
+			long tel = Long.valueOf(request.getParameter("tel"));
+
+			String type = request.getParameter("type");
+
+			String time = request.getParameter("time");
+
+			String panduan = biz.VipLeave(vno, rmno, mfee, allfee, card, name, tel, type, time);
+
+			if (panduan.equals("success")) {
+
+				out.print("{\"result\":\"0\"}");
+			} else {
+				out.print("{\"result\":\"1\"}");
+			}
+
+			// 普通客户退房后的操作
+		} else if ("/ClientOfLeave".equals(path)) {
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+
+			double mfee = Double.valueOf(request.getParameter("mfee"));
+
+			double allfee = Double.valueOf(request.getParameter("allfee"));
+
+			String card = request.getParameter("card");
+
+			String name = request.getParameter("name");
+
+			long tel = Long.valueOf(request.getParameter("tel"));
+
+			String type = request.getParameter("type");
+
+			String time = request.getParameter("time");
+
+			String panduan = biz.ClientLeave(rmno, mfee, allfee, card, name, tel, type, time);
+
+			if (panduan.equals("success")) {
+				out.print("{\"result\":\"0\"}");
+			}else{
+				out.print("{\"result\":\"1\"}");
+			}
+
+		}else if("/AllHistory".equals(path)){
+			
+			List<History> list = biz.queryAllHistory();
+			
+			if(list!=null){
+				request.setAttribute("historyList", list);
+				request.getRequestDispatcher("../EmpJsp/History.jsp").forward(request, response);
+			}
+			
+		}
 	}
 
 }

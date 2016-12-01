@@ -10,6 +10,7 @@ import Tool.MD5;
 import dao.EDao.EmpDao;
 import dao.EDao.EmpDaoimpl;
 import entity.Emp;
+import entity.History;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
@@ -175,5 +176,95 @@ public class EmpBizImpl implements EmpBiz {
 	public List<VipBean> queryVip_Leave(int rmno) {
 		return dao.queryVipByRmno(rmno);
 	}
+
+	/**
+	 * vip退房，并修改vip的数据
+	 */
+	public String VipLeave(int vno, int rmno, double mfee, double allfee, String card, String name, long tel,
+			String type, String time) {
+
+		// 更新vip的内容
+		if (dao.updateVipLeave(vno) == true) {
+
+			// 更新退房后的房间状态
+			if (dao.updateRoomLeave(rmno) == true) {
+
+				// 更新退房的历史记录表
+				if (dao.HistoryOfLeave(name, card, tel, rmno, type, time, allfee) == true) {
+
+					return "success";
+				} else {
+					return "erro";
+				}
+			} else {
+
+				return "erro";
+			}
+
+		} else {
+
+			return "erro";
+
+		}
+
+	}
+
+	/**
+	 * 普通客户退房时的操作
+	 */
+	public String ClientLeave(int rmno, double mfee, double allfee, String card, String name, long tel, String type,
+			String time) {
+		if (dao.deleteClient(name) == true) {
+
+			if (dao.updateRoomLeave(rmno) == true) {
+
+				if (dao.HistoryOfLeave(name, card, tel, rmno, type, time, allfee)) {
+
+					return "success";
+				} else {
+					return "erro";
+				}
+
+			} else {
+				return "erro";
+			}
+
+		} else {
+			return "erro";
+		}
+	}
+
+
+	/**
+	 * 查询所有历史记录
+	 */
+	public List<History> queryAllHistory() {
+		return dao.queryAllHistory();
+	}
+	/**
+	 *通过房间号查询历史记录 
+	 */
+	public List<History> QueryHistoryByRmno(int rmno) {
+		return dao.QueryHistoryByRmno(rmno);
+	}
+
+	/**
+	 * 通过房间类型查询历史记录
+	 */
+	public List<History> QueryHistoryByType(String type) {
+		
+		if(type.equals("全部房间")){
+			return dao.queryAllHistory();
+		}else{
+			
+			return dao.queryAllHistoryByType(type);
+			
+		}
+		
+		
+		
+		
+	}
+
 
 }

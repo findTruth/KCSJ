@@ -8,6 +8,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>结账界面</title>
 <link rel="stylesheet" href="<%=basePath%>css/pintuer.css">
@@ -45,6 +46,7 @@
 						<th style="font-size: 15px" width="100"
 							style="text-align:left; padding-left:20px">姓名</th>
 						<th style="font-size: 15px">身份证号</th>
+						<th style="font-size: 15px">房间类型</th>
 						<th style="font-size: 15px">房间号</th>
 						<th style="font-size: 15px">订餐费用</th>
 						<th style="font-size: 15px">电话</th>
@@ -108,7 +110,7 @@
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
 					</button>
 					<button type="button" id="btn_submit" class="btn btn-primary"
-						data-dismiss="modal">
+						data-dismiss="modal" onclick="jieZhang()">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>结账
 					</button>
 				</div>

@@ -3,21 +3,24 @@
  */
 
 // 搜索（通过房间号或身份证号查询）
+var vno = 0;
+var allfee = 0;
+var mfee;
+var rmno;
+var name;
+var card;
+var tel;
+var roomtype;
+var time;
 function changesearch() {
 	var sousuo = $("#SouSuo").get(0).value;
 
-	var name;
-	var card;
-	var rmno;
-	var mfee;
-	var tel;
-	var time;
-	var vno = 0;
 	var roomprice;
 
 	var numberreg = /^[1-9]\d{0,2}$/;
 
 	if (numberreg.test(sousuo) == true) {
+
 		$
 				.ajax({
 					type : 'post',
@@ -34,6 +37,7 @@ function changesearch() {
 								tel = data[0].client.ctel;
 								time = data[0].client.cdate;
 								roomprice = data[0].room.rmprice;
+								roomtype = data[0].room.rmtype;
 
 							} else if (data[0].XinXi == "vip") {
 								vno = data[0].vip.vno;
@@ -44,6 +48,7 @@ function changesearch() {
 								tel = data[0].vip.vtel;
 								time = data[0].vip.vdate;
 								roomprice = data[0].room.vprice;
+								roomtype = data[0].room.rmtype;
 
 							}
 
@@ -61,6 +66,8 @@ function changesearch() {
 									+ name
 									+ "</span></td><td><span id='card' style='font-size: 15px'>"
 									+ card
+									+ "</span></td><td><span id='rmno' style='font-size: 15px'>"
+									+ roomtype
 									+ "</span></td><td><span id='rmno' style='font-size: 15px'>"
 									+ rmno
 									+ "</td><td><span id='cmfee' style='font-size: 15px'>"
@@ -144,10 +151,9 @@ function tuifang(vno, name, card, rmno, mfee, time, roomprice) {
 
 	// 计算出相差天数
 	var Time = Math.ceil(Time01 / (24 * 3600 * 1000));
-	alert(Time + "天");
 
 	var roomfee = roomprice * Time;
-	var allfee = roomfee + mfee;
+	allfee = roomfee + mfee;
 
 	// Time所住时长
 	// outdate退房时间
@@ -173,12 +179,57 @@ function tuifang(vno, name, card, rmno, mfee, time, roomprice) {
 	} else {
 		$("#Vip").get(0).innerHTML = "否";
 	}
-	alert(name);
-	alert(card);
-	alert(rmno);
-	alert(mfee);
-	alert(time);
 
 	$('#myModal').modal();
+
+}
+
+/**
+ * 结账事件
+ * 
+ */
+function jieZhang() {
+
+	if ($("#Vip").get(0).innerHTML == '是') {
+		
+		$.ajax({
+			type : 'POST',
+			dataType : 'json',
+			url : 'http://localhost:8080/KCSJ/Emp/VipLeave.do?vno=' + vno
+					+ '&rmno=' + rmno + '&mfee=' + mfee + '&allfee=' + allfee
+					+ '&card=' + card + '&name=' + name + '&tel=' + tel
+					+ '&type=' + roomtype + '&time=' + time,
+			success : function(data, textStatus) {
+
+				var obj = eval(data);
+
+				if (obj.result == 0) {
+					alert("退房成功");
+				}else {
+					alert("失败");
+				}
+			}
+		})
+	}else{
+		$.ajax({
+			type : 'POST',
+			dataType : 'json',
+			url : 'http://localhost:8080/KCSJ/Emp/ClientOfLeave.do?rmno=' + rmno + '&mfee=' + mfee + '&allfee=' + allfee
+					+ '&card=' + card + '&name=' + name + '&tel=' + tel
+					+ '&type=' + roomtype + '&time=' + time,
+			success : function(data, textStatus) {
+
+				var obj = eval(data);
+
+				if (obj.result == 0) {
+					alert("退房成功");
+					window.location.href = "http://localhost:8080/KCSJ/info.html";
+				}else {
+					alert("失败");
+				}
+			}
+		})
+		
+	}
 
 }

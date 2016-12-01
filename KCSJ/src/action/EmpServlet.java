@@ -2,13 +2,10 @@ package action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.util.Date;
-=======
 import java.net.Inet4Address;
 import java.util.ArrayList;
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -25,18 +22,12 @@ import biz.EBiz.EmpBiz;
 import biz.EBiz.EmpBizImpl;
 import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
-<<<<<<< HEAD
 import entity.Client;
-=======
 import entity.History;
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 import entity.Room;
-<<<<<<< HEAD
 import entity.Vip;
-=======
 import javabean.ClientBean;
 import javabean.VipBean;
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 @WebServlet("/Emp/*")
 public class EmpServlet extends HttpServlet {
@@ -115,7 +106,6 @@ public class EmpServlet extends HttpServlet {
 				request.setAttribute("msg", "出错了");
 				request.getRequestDispatcher("../Login/Emppassword.jsp").forward(request, response);
 			}
-<<<<<<< HEAD
 			
 		}
 		//预定入住
@@ -125,6 +115,7 @@ public class EmpServlet extends HttpServlet {
 			String card = request.getParameter("idcard");
 			long  tel = Long.valueOf(request.getParameter("tel"));
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
+			//插入client不加时间
 			boolean flag = biz.ClientYuDing(name,card,tel,rmno);
 			 if(flag==true){
 				 //跟新预定状态
@@ -150,10 +141,14 @@ public class EmpServlet extends HttpServlet {
 			if(flag2){
 				System.out.println("成功");
 				boolean flag = biz.tuiding(rmno);
-				//客户表中查找信息
-				Client client = biz.queryClientByRmno(rmno);
+				//客户表中查找信息  逻辑错误 预定没有插入客户信息表
+				//在记录中找信息
+				
+				Client client = (Client) biz.queryClientByRmno(rmno);
+				
 				//通过房间号查找房间类型
 			String type= biz.queryRoomTypeByRmno(rmno);
+			System.out.println();
 			boolean a = biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(),client.getRmno(), 
 					type, t, "退订");
 				if(flag==true){
@@ -176,7 +171,7 @@ public class EmpServlet extends HttpServlet {
 				//跟新房间的入住时间
 				boolean flag2 = biz.roomyudingruzhu(rmno);
 				//查询出房间信息
-				Client client = biz.queryClientByRmno(rmno);
+				Client client = (Client) biz.queryClientByRmno(rmno);
 				String type= biz.queryRoomTypeByRmno(rmno);
 				//预定住房记录
 				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type, t, "预定入住");
@@ -192,7 +187,7 @@ public class EmpServlet extends HttpServlet {
 			String vcard = request.getParameter("vcard");
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			System.out.println(vno+"  "+vcard+"   "+rmno);
-			Vip v =  biz.QueryVipByVno2(vno);
+			Vip v =  biz.QueryVipByVno(vno);
 			//判断会员号
 			String card = v.getVcard();
 			String name = v.getVname();
@@ -211,17 +206,7 @@ public class EmpServlet extends HttpServlet {
 			}else{
 				 out.print("{\"result\":\"1\"}");
 			}
-		}
-		
-		
-		//散客确认入住
-		
-		else if ("/RuZhu".equals(path)) {
-=======
-
-			// 散客确认入住
 		} else if ("/RuZhu".equals(path)) {
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 			String name = request.getParameter("name");
 
@@ -266,29 +251,13 @@ public class EmpServlet extends HttpServlet {
 
 				out.print("{\"result\":\"2\"}");
 			}
-<<<<<<< HEAD
-		}else if("/VipRuZhu".equals(path)){
-=======
-
 		} else if ("/VipRuZhu".equals(path)) {
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			int vno = Integer.valueOf(request.getParameter("vno"));
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			String vcard = request.getParameter("vcard");
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-<<<<<<< HEAD
 			System.out.println(vno+"  "+vcard+"   "+rmno);
 			String s = biz.VipRuZhu(vno,vcard,rmno);
-=======
-
-			String s = biz.VipRuZhu(vno, vcard, rmno);
 
 			if (s.equals("信息有误")) {
 
@@ -339,9 +308,9 @@ public class EmpServlet extends HttpServlet {
 
 			String type = request.getParameter("type");
 
-			String time = request.getParameter("time");
+			String time1 = request.getParameter("time");
 
-			String panduan = biz.VipLeave(vno, rmno, mfee, allfee, card, name, tel, type, time);
+			String panduan = biz.VipLeave(vno, rmno, mfee, allfee, card, name, tel, type, time1);
 
 			if (panduan.equals("success")) {
 
@@ -366,9 +335,9 @@ public class EmpServlet extends HttpServlet {
 
 			String type = request.getParameter("type");
 
-			String time = request.getParameter("time");
+			String time1 = request.getParameter("time");
 
-			String panduan = biz.ClientLeave(rmno, mfee, allfee, card, name, tel, type, time);
+			String panduan = biz.ClientLeave(rmno, mfee, allfee, card, name, tel, type, time1);
 
 			if (panduan.equals("success")) {
 				out.print("{\"result\":\"0\"}");
@@ -385,7 +354,6 @@ public class EmpServlet extends HttpServlet {
 				request.getRequestDispatcher("../EmpJsp/History.jsp").forward(request, response);
 			}
 			
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 		}
 	}
 

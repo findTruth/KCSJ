@@ -46,7 +46,7 @@
  <div class="container-fluid" id="listpanel">
 	<div class="row">
 		
-		<div class="col-md-6">
+		<div class="col-md-12">
 		
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">

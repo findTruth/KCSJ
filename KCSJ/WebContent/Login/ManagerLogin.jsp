@@ -149,9 +149,7 @@
 					   $("#dialogs").html("验证码错误");
 					   ff();
 				   }else{
-					   window.location.href="<%=basePath%>
-	ManagerJsp/ManagerHome.jsp?name="
-										+ name;
+					   window.location.href="<%= basePath%>ManagerJsp/ManagerHome.jsp?name="+ name;
 
 							}
 						}

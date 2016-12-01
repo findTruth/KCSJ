@@ -44,11 +44,7 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>操作列表</strong></div>
   <h2><span class="icon-user"></span>日常业务</h2>
   <ul style="display:block">
-<<<<<<< HEAD
-    <li><a href="<%=basePath%>RoomList/queryAllRoom.do" target="right"><span class="icon-caret-right"></span>预定退订</a></li>
-=======
-    <li><a href="<%=basePath%>Login/EmpLogin.jsp" target="right"><span class="icon-caret-right"></span>预定退订与预定入住</a></li>
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
+    <li><a href="<%=basePath%>RoomList/queryAllRoom.do" target="right"><span class="icon-caret-right"></span>预定退订与预定入住</a></li>
     <li><a href="<%=basePath%>RoomList/queryAllNullRoom.do" target="right"><span class="icon-caret-right"></span>顾客入住</a></li>
     <li><a href="column.html" target="right"><span class="icon-caret-right"></span>点餐业务</a></li>
     <li><a href="<%=basePath%>EmpJsp/ClientLeave.jsp" target="right"><span class="icon-caret-right"></span>顾客退房</a></li>

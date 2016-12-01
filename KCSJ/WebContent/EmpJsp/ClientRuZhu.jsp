@@ -13,8 +13,6 @@
 			+ path + "/";
 %>
 
-
-
 <style type="text/css">
 #ruzhu {
 	display: none;
@@ -48,35 +46,6 @@
 
 
 <body>
-	<div class="container-fluid" id="listpanel">
-		<div class="row">
-
-<<<<<<< HEAD
-					<form class="navbar-form navbar-left" role="search" action="<%=basePath%>Manager/queryRoom.do">
-						<div class="form-group">
-						
-					   <select class="form-control" style="width: 90px;" onchange="change(this)">
-						   <option>单人间</option>
-						   <option>双人间</option>
-						   <option>电脑房</option>
-					   </select>
-						<span>请选择客户的房间种类</span>
-					</form>
-					
-=======
-			<div class="col-md-6">
-
-				<nav class="navbar navbar-default" role="navigation">
-				<div class="navbar-header">
-
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span><span
-							class="icon-bar"></span><span class="icon-bar"></span><span
-							class="icon-bar"></span>
-					</button>
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
-				</div>
 
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
@@ -101,147 +70,89 @@
 				</nav>
 			</div>
 		</div>
-<<<<<<< HEAD
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<table class="table table-bordered table-hover" id = "t_table" >
+			<table class="table table-bordered table-hover" id="t_table">
 				<thead>
 					<tr class="success">
-					<th>房间号</th>
-					<th>房间类型</th>
-					<th>房间价格</th>
-					<th>会员价格</th>
-					<th>操作</th>
-					
-				</tr>
-				</thead>
-				
-				<tbody id="list">
-				
-				<c:forEach  varStatus="i" var="list" items="${Roomlist}">
-					<tr class="warning">
-					
-						<td><c:out value="${list.rmno}"></c:out></td>
-						<td><c:out value="${list.rmtype}"></c:out></td>
-						<td><c:out value="${list.rmprice}"></c:out></td>
-						<td><c:out value="${list.vprice}"></c:out></td>
-						<td><a onclick="ruzhu(${list.rmno})">入住</a></td>
+						<th>房间号</th>
+						<th>房间类型</th>
+						<th>房间价格</th>
+						<th>会员价格</th>
+						<th>操作</th>
+
 					</tr>
-				</c:forEach>
+				</thead>
+
+				<tbody id="list">
+
+					<c:forEach varStatus="i" var="list" items="${Roomlist}">
+						<tr class="warning">
+
+							<td><c:out value="${list.rmno}"></c:out></td>
+							<td><c:out value="${list.rmtype}"></c:out></td>
+							<td><c:out value="${list.rmprice}"></c:out></td>
+							<td><c:out value="${list.vprice}"></c:out></td>
+							<td><a onclick="ruzhu(${list.rmno})">入住</a></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
-			
-			<div class="gridItem" style="padding: 5px; width: 250px; float: left; text-align: left; height: 20px; font-size: 15px;" > 
-                               共有 <span id="spanTotalInfor"></span> 条记录     
-                               当前第<span id="spanPageNum"></span>页     
-                                共<span id="spanTotalPage"></span>页
-            </div>
-               <div class="gridItem" style="margin-left:50px;  padding: 5px; width: 400px; float: left; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">   
-                  <span id="spanFirst" >首页</span> 
-                      &nbsp;&nbsp;<span id="spanPre">上一页</span>
-                  <span id="spanInput" style="margin: 0px; padding: 0px 0px 4px 0px; height:100%; "> 
-                                                       第<input id="Text1" type="text" class="TextBox" onkeyup="changepage()"   style="height:20px; text-align: center;width:50px" />页 
-                 </span>
-                 &nbsp;&nbsp;<span id="spanNext">下一页</span> 
-                 &nbsp;&nbsp;<span  id="spanLast">尾页</span> 
-        </div>
-=======
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered table-hover" id="t_table">
-					<thead>
-						<tr class="success">
-							<th>房间号</th>
-							<th>房间类型</th>
-							<th>房间价格</th>
-							<th>会员价格</th>
-							<th>操作</th>
 
-						</tr>
-					</thead>
-
-					<tbody id="list">
-
-						<c:forEach varStatus="i" var="list" items="${Roomlist}">
-							<tr class="warning">
-
-								<td><c:out value="${list.rmno}"></c:out></td>
-								<td><c:out value="${list.rmtype}"></c:out></td>
-								<td><c:out value="${list.rmprice}"></c:out></td>
-								<td><c:out value="${list.vprice}"></c:out></td>
-
-								<td><a onclick="ruzhu(${list.rmno})">入住</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-
-				<div class="gridItem"
-					style="padding: 5px; width: 250px; float: left; text-align: left; height: 20px; font-size: 15px;">
-					共有 <span id="spanTotalInfor"></span> 条记录 当前第<span id="spanPageNum"></span>页
-					共<span id="spanTotalPage"></span>页
-				</div>
-				<div class="gridItem"
-					style="margin-left: 50px; padding: 5px; width: 400px; float: left; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">
-					<span id="spanFirst">首页</span> &nbsp;&nbsp;<span id="spanPre">上一页</span>
-					<span id="spanInput"
-						style="margin: 0px; padding: 0px 0px 4px 0px; height: 100%;">
-						第<input id="Text1" type="text" class="TextBox"
-						onkeyup="changepage()"
-						style="height: 20px; text-align: center; width: 50px" />页
-					</span> &nbsp;&nbsp;<span id="spanNext">下一页</span> &nbsp;&nbsp;<span
-						id="spanLast">尾页</span>
-				</div>
+			<div class="gridItem"
+				style="padding: 5px; width: 250px; float: left; text-align: left; height: 20px; font-size: 15px;">
+				共有 <span id="spanTotalInfor"></span> 条记录 当前第<span id="spanPageNum"></span>页
+				共<span id="spanTotalPage"></span>页
 			</div>
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
+			<div class="gridItem"
+				style="margin-left: 50px; padding: 5px; width: 400px; float: left; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">
+				<span id="spanFirst">首页</span> &nbsp;&nbsp;<span id="spanPre">上一页</span>
+				<span id="spanInput"
+					style="margin: 0px; padding: 0px 0px 4px 0px; height: 100%;">
+					第<input id="Text1" type="text" class="TextBox"
+					onkeyup="changepage()"
+					style="height: 20px; text-align: center; width: 50px" />页
+				</span> &nbsp;&nbsp;<span id="spanNext">下一页</span> &nbsp;&nbsp;<span
+					id="spanLast">尾页</span>
+			</div>
+			
+		<!--要入住的顾客的信息 -->
+		<div id="ruzhu">
+			<!--修改页面的表单 -->
+			<span>客户的基本信息</span><br>
+			<br> <small>姓名：</small><input type="text" name="cname" id="name" />&nbsp;&nbsp;&nbsp;
+
+			<small>身份证号：</small><input type="text" name="ccard" id="card" /><br>
+			<br>
+			<br> <small>电话：</small><input type="text" name="ctel" id="tel" />&nbsp;&nbsp;&nbsp;
+
+			<span
+				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
+				id="dialogs"> </span> <input type="button" id="Btup"
+				onclick="check()" value="确认入住" /> <input type="button" value="关闭"
+				onclick="closeDiv()">
+
 		</div>
-<<<<<<< HEAD
-	</div>
-	
-	<!--要入住的顾客的信息 -->
-	<div  id="ruzhu">				
-				    <!--修改页面的表单 -->
-					    <span>客户的基本信息</span><br><br>
-					
-							<small>姓名：</small><input   type="text"  name="cname" id="name" />&nbsp;&nbsp;&nbsp;
-						
-							<small>身份证号：</small><input   type="text"   name="ccard" id = "card"/><br><br><br>
-						
-							<small>电话：</small><input  type="text"   name="ctel" id="tel"/>&nbsp;&nbsp;&nbsp;
-						
-					    <span style="font-size:12px;color:red;  position:absolute; left: 350px;top: 100px; " id="dialogs">
-					                   			
-					    </span>
-					  <input  type="button" id="Btup" onclick="check()"  value="确认入住"/>
-			        <input type="button" value="关闭" onclick="closeDiv()">
-				
-	</div>
-	
-	<!-- 会员信息的输入框 -->
-	   <div  id="Vipruzhu">				
-				    <!--修改页面的表单 -->
-					    <span>会员的信息</span><br><br>
-					
-							<small>会员号：</small><input   type="text"   id="vno" />&nbsp;&nbsp;&nbsp;
-						
-							<small>身份证号：</small><input   type="text"    id = "vcard"/><br><br><br>
-						
-					    <span style="font-size:12px;color:red;  position:absolute; left: 350px;top: 100px; " id="Vipdialogs">
-					                   			
-					    </span>
-					  
-					    
-				     <input  type="button" id="Btup" onclick="checkVip()"  value="确认入住"/>
-			        <input type="button" value="关闭" onclick="closeVipDiv()">
-				
-	</div>
-	
-	
-	
-	
-	 <script type="text/javascript">
-=======
+
+		<!-- 会员信息的输入框 -->
+		<div id="Vipruzhu">
+			<!--修改页面的表单 -->
+			<span>会员的信息</span><br>
+			<br> <small>会员号：</small><input type="text" id="vno" />&nbsp;&nbsp;&nbsp;
+
+			<small>身份证号：</small><input type="text" id="vcard" /><br>
+			<br>
+			<br> <span
+				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
+				id="Vipdialogs"> </span> <input type="button" id="Btup"
+				onclick="checkVip()" value="确认入住" /> <input type="button" value="关闭"
+				onclick="closeVipDiv()">
+
+		</div>
+
+
+
 
 		<!--要入住的顾客的信息 -->
 		<div id="ruzhu">
@@ -274,9 +185,7 @@
 
 
 
-
 		<script type="text/javascript">
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	 
 	      var rmno; 
 	      var theTable = document.getElementById("t_table");
@@ -358,18 +267,11 @@
         	    	 //弹出输入会员号的界面
         	    	 $("#Vipruzhu").get(0).style.display = "block";
         	     }else{
-<<<<<<< HEAD
         	    	 $("#ruzhu").get(0).style.display = "block";
         	    }
         	 }
           
-=======
         	    	 
-        	         $("#ruzhu").get(0).style.display = "block";
-        	    	 
-        	     }
-          }
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
           
           function checkVip(){
         	  var vno = $("#vno").get(0).value;
@@ -471,12 +373,8 @@
          	 }
           }
           
-<<<<<<< HEAD
-            function change(data){
-=======
           
          function change(data){
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
         		$.ajax({
   	  				type:'GET',
   	                dataType: 'json',
@@ -511,20 +409,12 @@
           }
 	 
 	 </script>
-<<<<<<< HEAD
-	 
-	 
-	  
-	<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
-	<script type="text/javascript" src="<%=basePath %>/js/jquery.js"></script>
-=======
-
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 
-		<script type="text/javascript"
-			src="<%=basePath%>EmpJsp/js/TableFenYe.js"></script>
 
+		<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/jquery.js"></script>
+
+
 </body>
 </html>

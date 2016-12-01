@@ -64,7 +64,7 @@ public class filter implements Filter {
 		
 //		System.out.println(ename);
 //		
-//		System.out.println(url.endsWith("/login.do"));
+		System.out.println(url.endsWith("/check"));
 
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path
 				+ "/";
@@ -74,7 +74,7 @@ public class filter implements Filter {
 		if (ename != null || mname != null || url.endsWith("Home.jsp") || url.endsWith("ManagerLogin.jsp") || url.endsWith("Register.jsp")
 				|| url.endsWith("EmpLogin.jsp") || url.equals(basePath)||url.endsWith("/check")|| url.endsWith("/login.do")
 				|| url.endsWith("404.jsp") || url.endsWith("404.html")
-				|| url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")) {
+				|| url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")|| url.endsWith(".png")|| url.endsWith(".jpg")) {
 			chain.doFilter(request, response);
 		} else {
 			

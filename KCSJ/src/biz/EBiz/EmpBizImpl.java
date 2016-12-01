@@ -92,7 +92,6 @@ public class EmpBizImpl implements EmpBiz {
 	public List<Room> QueryAllNullRoom() {
 		return dao.QueryAllNullRoom();
 	}
-<<<<<<< HEAD
 	//客户预定
 	
 	public boolean ClientYuDing(String name, String card, long tel,int rmno){
@@ -107,14 +106,9 @@ public class EmpBizImpl implements EmpBiz {
 	}
 
 	//客户入住后更新房间状态
-=======
-
-	// 客户入住后更新房间状态
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	public boolean updateRoomRuZhu(int rmno) {
 		return dao.updateRoomRuZhu(rmno);
 	}
-<<<<<<< HEAD
 	
 	public boolean tuiding(int rmno){
 		return dao.tuiding(rmno);
@@ -139,7 +133,7 @@ public class EmpBizImpl implements EmpBiz {
 		
 	}
 	//通过房间号查找client;
-	public Client queryClientByRmno(int rmno){
+	public List<Client> queryClientByRmno(int rmno){
 		return dao.queryClientByRmno(rmno);
 	}
 	
@@ -160,9 +154,7 @@ public class EmpBizImpl implements EmpBiz {
 		
 	}
 	
-=======
 
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	/**
 	 * 员工修改个人密码
 	 */
@@ -187,19 +179,13 @@ public class EmpBizImpl implements EmpBiz {
 		}
 	}
 
-<<<<<<< HEAD
-	//通过会员编号查询会员
-	private Vip QueryVipByVno(int vno) {
-		dao.QueryVipByVno(vno);
-		return null;
+	
 		
-=======
 	// 通过会员编号查询会员
 	public Vip QueryVipByVno(int vno) {
 
 		return dao.QueryVipByVno(vno);
 
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	}
 
 	@Override
@@ -243,7 +229,7 @@ public class EmpBizImpl implements EmpBiz {
 	public List<ClientBean> queryClient_Leave(int rmno) {
 
 		// 通过房间号查询普通客户
-		return dao.queryClientByRmno(rmno);
+		return dao.queryClientByRmno2(rmno);
 
 	}
 
@@ -310,13 +296,11 @@ public class EmpBizImpl implements EmpBiz {
 			return "erro";
 		}
 	}
-<<<<<<< HEAD
 	
 	
 	public Vip QueryVipByVno2(int vno){
 		return dao.QueryVipByVno2(vno);
 	}
-=======
 
 
 	/**
@@ -351,5 +335,4 @@ public class EmpBizImpl implements EmpBiz {
 	}
 
 
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 }

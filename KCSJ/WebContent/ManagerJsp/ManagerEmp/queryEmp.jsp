@@ -13,8 +13,7 @@
 
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
 
 
@@ -32,7 +31,7 @@
 	<div class="container-fluid" id="listpanel">
 		<div class="row">
 
-			<div class="col-md-6">
+			<div class="col-md-12">
 
 				<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
@@ -188,8 +187,7 @@
       
       function add(){
     	  
-    	  window.location.href = "<%=basePath%>
-		ManagerJsp/ManagerEmp/addEmp.jsp";
+    	  window.location.href = "<%=basePath%>ManagerJsp/ManagerEmp/addEmp.jsp";
 
 		}
 
@@ -259,8 +257,7 @@
 		}
 	</script>
 
-	<script type="text/javascript"
-		src="<%=basePath%>ManagerJsp/js/TableFenYe.js"></script>
+	<script type="text/javascript" src="<%=basePath%>ManagerJsp/js/TableFenYe.js"></script>
 
 </body>
 </html>

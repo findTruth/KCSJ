@@ -37,7 +37,7 @@ public interface EmpDao {
 
 	List<Room> QueryAllNullRoom();
 	
-	Client queryClientByRmno(int rmno);
+	List<Client> queryClientByRmno(int rmno);
 	
 	 String queryRoomTypeByRmno(int rmno);
  
@@ -68,7 +68,7 @@ public interface EmpDao {
 
 	boolean VipRuZhu(String vcard, int rmno);
 
-	List<ClientBean> queryClientByRmno(int rmno);
+	List<ClientBean> queryClientByRmno2(int rmno);
 
 	List<VipBean> queryVipByRmno(int rmno);
 

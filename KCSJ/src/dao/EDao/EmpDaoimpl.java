@@ -16,11 +16,8 @@ import entity.History;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
-<<<<<<< HEAD
-=======
 import javabean.ClientBean;
 import javabean.VipBean;
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
@@ -291,10 +288,6 @@ public class EmpDaoimpl implements EmpDao {
 		List<Room> list = new ArrayList<Room>();
 		try {
 			Connection conn = util.getConnection();
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			String sql = "select * from room where rmtype=? and rmbuff='无人' and rmbook='无人预订'  order by rmno asc";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, type);
@@ -326,28 +319,25 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
-<<<<<<< HEAD
 	
 	//通过房间号查找客户信息
-	public Client queryClientByRmno(int rmno){
-		Client client = new Client();
+	public List<Client> queryClientByRmno(int rmno){
+		List<Client> client = null;
 		try {
 			Connection conn = util.getConnection();
 			String sql = "select * from client where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, rmno);
+			ps.setInt(1,rmno);
 			ResultSet rs = ps.executeQuery();
-			
 			while (rs.next()) {
-				 String cname = rs.getString("cname");
+				String cname = rs.getString("cname");
 				String ccard = rs.getString("ccard");
 				long ctel = rs.getLong("ctel");
 				double cmfee = rs.getDouble("cmfee") ;
-			   String cdate = rs.getString("cdate");
-			   
-			    client = new Client(cname, ccard, ctel, rmno, cmfee, cdate);
-			
+			   Client cl =  new Client(cname, ccard, ctel, rmno, 0,null);
+			   client.add(cl);
 			  }
+			util.closeConnection(ps, conn, rs);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -375,10 +365,8 @@ public class EmpDaoimpl implements EmpDao {
 	}
 	
 	//查询所有空房间
-=======
 
 	// 查询所有空房间
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	public List<Room> QueryAllNullRoom() {
 		List<Room> list = new ArrayList<Room>();
 		try {
@@ -417,17 +405,9 @@ public class EmpDaoimpl implements EmpDao {
 	// 普通客户入住
 	public boolean ClientRuZhu(String name, String card, long tel, int rmno) {
 		boolean flag = false;
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 		try {
 			Connection conn = util.getConnection();
-<<<<<<< HEAD
 			String sql ="insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'))";
-=======
-			String sql = " insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy/MM/dd HH24:mi:ss'))";
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setString(2, card);
@@ -447,7 +427,7 @@ public class EmpDaoimpl implements EmpDao {
 	// 顾客入住后更新房间状态
 	public boolean updateRoomRuZhu(int rmno) {
 		boolean flag = false;
-<<<<<<< HEAD
+		
 		try{
 		Connection conn = util.getConnection();
 		String sql = "update room set rmbuff='有人' where rmno=?";
@@ -458,18 +438,6 @@ public class EmpDaoimpl implements EmpDao {
 			 flag=true;
 		}
 		util.closeConnection(ps, conn, null);
-=======
-		try {
-			Connection conn = util.getConnection();
-			String sql = "update room set rmbuff='有人'  where rmno=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, rmno);
-			int n = ps.executeUpdate();
-			if (n >= 1) {
-				flag = true;
-			}
-			util.closeConnection(ps, conn, null);
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -479,10 +447,9 @@ public class EmpDaoimpl implements EmpDao {
 	//预定不加时间
 	public boolean ClientYuDing(String name, String card, long tel,int rmno) {
 		boolean flag = false;
-		
 		try {
 			Connection conn = util.getConnection();
-			String sql =" insert into client(cid,cname,ccard,ctel,rmno) values(client_seq.nextval,?,?,?,?)";
+			String sql =" insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,null)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1,name);
 			ps.setString(2,card);
@@ -579,7 +546,7 @@ public class EmpDaoimpl implements EmpDao {
 			boolean flag = false;
 			try {
 				Connection conn = util.getConnection();
-				String sql =" insert into history  values(his_seq.nextval,?,?,?,?,?,'空',?,'无','无',0,?)";
+				String sql =" insert into history values(his_seq.nextval,?,?,?,?,?,'空',?,'无','无',0,?)";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1,name);
 				ps.setString(2,card);
@@ -628,7 +595,6 @@ public class EmpDaoimpl implements EmpDao {
 	// 更新员工密码
 	public boolean updateEmpPwd(String ename, String newpwd) {
 		boolean flag = false;
-<<<<<<< HEAD
 		try{
 		Connection conn = util.getConnection();
 		String sql = "update emp set epassword=?  where ename=?";
@@ -642,21 +608,7 @@ public class EmpDaoimpl implements EmpDao {
 		util.closeConnection(ps, conn, null);
 		}catch (Exception e) {
 		e.printStackTrace();
-=======
-		try {
-			Connection conn = util.getConnection();
-			String sql = "update emp set epassword=?  where ename=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, newpwd);
-			ps.setString(2, ename);
-			int n = ps.executeUpdate();
-			if (n >= 1) {
-				flag = true;
-			}
-			util.closeConnection(ps, conn, null);
-		} catch (Exception e) {
-			e.printStackTrace();
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
+		
 		}
 		return flag;
 	}
@@ -692,7 +644,6 @@ public class EmpDaoimpl implements EmpDao {
 		return v;
 
 	}
-<<<<<<< HEAD
 	//会员预定判定
 	public Vip QueryVipByVno2(int vno){
 		Vip vip = new Vip();
@@ -716,7 +667,6 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return vip;
 	}
-=======
 
 	// 更新Vip入住的信息
 	public boolean VipRuZhu(String vcard, int rmno) {
@@ -741,7 +691,8 @@ public class EmpDaoimpl implements EmpDao {
 	/**
 	 * 普通客户退房时查询信息
 	 */
-	public List<ClientBean> queryClientByRmno(int rmno) {
+	public List<ClientBean> queryClientByRmno2
+	(int rmno) {
 
 		List<ClientBean> list = new ArrayList<ClientBean>();
 
@@ -1034,5 +985,4 @@ public class EmpDaoimpl implements EmpDao {
 	}
 
 
->>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 }

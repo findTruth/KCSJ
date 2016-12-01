@@ -2,8 +2,13 @@ package action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+import java.net.Inet4Address;
+import java.util.ArrayList;
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,9 +25,18 @@ import biz.EBiz.EmpBiz;
 import biz.EBiz.EmpBizImpl;
 import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
+<<<<<<< HEAD
 import entity.Client;
+=======
+import entity.History;
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 import entity.Room;
+<<<<<<< HEAD
 import entity.Vip;
+=======
+import javabean.ClientBean;
+import javabean.VipBean;
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 @WebServlet("/Emp/*")
 public class EmpServlet extends HttpServlet {
@@ -31,6 +45,8 @@ public class EmpServlet extends HttpServlet {
 	public String t;
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 		response.setContentType("text/html;charset=utf-8");
 
 		request.setCharacterEncoding("utf-8");// 设置request解码
@@ -50,7 +66,6 @@ public class EmpServlet extends HttpServlet {
 		
 		if ("/login".equals(path)) {
 
-
 			String name = request.getParameter("name");
 
 			String pwd = request.getParameter("pwd");
@@ -59,7 +74,7 @@ public class EmpServlet extends HttpServlet {
 			String code = request.getParameter("code");
 
 			// 先从session中获取正确验证码
-			
+
 			String checkCode = (String) session.getAttribute("right_checkCode");
 
 			String panduan = biz.queryEmp(name, pwd, code, checkCode);
@@ -67,12 +82,12 @@ public class EmpServlet extends HttpServlet {
 			if (!panduan.equals("验证码错误")) {
 
 				if ("正确".equals(panduan)) {
-					
-					//登录成功后将员工名字和密码存入session
+
+					// 登录成功后将员工名字和密码存入session
 					session.setAttribute("ename", name);
 					session.setAttribute("epwd", pwd);
 					out.print("{\"result\":\"5\"}");
-					
+
 				} else if ("错误".equals(panduan)) {
 					out.print("{\"result\":\"0\"}");
 				} else {
@@ -82,7 +97,6 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"2\"}");
 			}
 		} else if ("/password".equals(path)) {
-
 
 			String card = request.getParameter("card");
 
@@ -101,6 +115,7 @@ public class EmpServlet extends HttpServlet {
 				request.setAttribute("msg", "出错了");
 				request.getRequestDispatcher("../Login/Emppassword.jsp").forward(request, response);
 			}
+<<<<<<< HEAD
 			
 		}
 		//预定入住
@@ -202,56 +217,176 @@ public class EmpServlet extends HttpServlet {
 		//散客确认入住
 		
 		else if ("/RuZhu".equals(path)) {
+=======
+
+			// 散客确认入住
+		} else if ("/RuZhu".equals(path)) {
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 			String name = request.getParameter("name");
 
 			String card = request.getParameter("card");
 
-			long  tel = Long.valueOf(request.getParameter("tel"));
+			long tel = Long.valueOf(request.getParameter("tel"));
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 
-			boolean flag = biz.ClientRuZhu(name, card, tel,rmno);
+			System.out.println(name + " " + card + " " + tel + " " + rmno);
 
-			 if(flag){
-				 System.out.println("成功");
-			    //房间的入住状态
-				 boolean flag1 = biz.updateRoomRuZhu(rmno);
-				 if(flag1==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-			 }else{
-				 out.print("{\"result\":\"1\"}");
-			 }
+			boolean flag = biz.ClientRuZhu(name, card, tel, rmno);
 
-		}else if("/updatePwd".equals(path)){
-			
-			String oldpwd = request.getParameter("oldpwd");
-			
-			String newpwd = request.getParameter("newpwd");
-			
-			String ename = (String) session.getAttribute("ename");
-			
-			String str = biz.updateEmpPwd(oldpwd,newpwd,ename);
-			
-			if(str.equals("密码错误")){
-				
-				out.print("{\"result\":\"0\"}");
-				
-			}else if(str.equals("成功修改")){ 
-				
+			if (flag) {
+				// 房间的入住状态
+				boolean flag1 = biz.updateRoomRuZhu(rmno);
+				if (flag1 == true) {
+					out.print("{\"result\":\"0\"}");
+				}
+			} else {
 				out.print("{\"result\":\"1\"}");
-			}else{
-				
+			}
+
+		} else if ("/updatePwd".equals(path)) {
+
+			String oldpwd = request.getParameter("oldpwd");
+
+			String newpwd = request.getParameter("newpwd");
+
+			String ename = (String) session.getAttribute("ename");
+
+			String str = biz.updateEmpPwd(oldpwd, newpwd, ename);
+
+			if (str.equals("密码错误")) {
+
+				out.print("{\"result\":\"0\"}");
+
+			} else if (str.equals("成功修改")) {
+
+				out.print("{\"result\":\"1\"}");
+			} else {
+
 				out.print("{\"result\":\"2\"}");
 			}
+<<<<<<< HEAD
 		}else if("/VipRuZhu".equals(path)){
+=======
+
+		} else if ("/VipRuZhu".equals(path)) {
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			int vno = Integer.valueOf(request.getParameter("vno"));
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			String vcard = request.getParameter("vcard");
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
+<<<<<<< HEAD
 			System.out.println(vno+"  "+vcard+"   "+rmno);
 			String s = biz.VipRuZhu(vno,vcard,rmno);
-		}
+=======
 
+			String s = biz.VipRuZhu(vno, vcard, rmno);
+
+			if (s.equals("信息有误")) {
+
+				out.print("{\"result\":\"0\"}");
+			} else if (s.equals("ok")) {
+				out.print("{\"result\":\"1\"}");
+			} else if (s.equals("erro")) {
+				out.print("{\"result\":\"2\"}");
+			} else {
+				out.print("{\"result\":\"3\"}");
+			}
+
+		} else if ("/ClientLeave".equals(path)) {
+
+			int rmno = Integer.valueOf(request.getParameter("sousuo"));
+
+			// 查询普通客户的入住信息
+			List<ClientBean> list = biz.queryClient_Leave(rmno);
+
+			List<VipBean> listVip = biz.queryVip_Leave(rmno);
+
+			Gson json = new Gson();
+
+			if (list.size() == 1) {
+				out.print(json.toJson(list));
+			} else if (listVip.size() == 1) {
+				out.print(json.toJson(listVip));
+
+			} else {
+				out.print(json.toJson(null));
+			}
+
+		} else if ("/VipLeave".equals(path)) {
+
+			int vno = Integer.valueOf(request.getParameter("vno"));
+
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+
+			double mfee = Double.valueOf(request.getParameter("mfee"));
+
+			double allfee = Double.valueOf(request.getParameter("allfee"));
+
+			String card = request.getParameter("card");
+
+			String name = request.getParameter("name");
+
+			long tel = Long.valueOf(request.getParameter("tel"));
+
+			String type = request.getParameter("type");
+
+			String time = request.getParameter("time");
+
+			String panduan = biz.VipLeave(vno, rmno, mfee, allfee, card, name, tel, type, time);
+
+			if (panduan.equals("success")) {
+
+				out.print("{\"result\":\"0\"}");
+			} else {
+				out.print("{\"result\":\"1\"}");
+			}
+
+			// 普通客户退房后的操作
+		} else if ("/ClientOfLeave".equals(path)) {
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+
+			double mfee = Double.valueOf(request.getParameter("mfee"));
+
+			double allfee = Double.valueOf(request.getParameter("allfee"));
+
+			String card = request.getParameter("card");
+
+			String name = request.getParameter("name");
+
+			long tel = Long.valueOf(request.getParameter("tel"));
+
+			String type = request.getParameter("type");
+
+			String time = request.getParameter("time");
+
+			String panduan = biz.ClientLeave(rmno, mfee, allfee, card, name, tel, type, time);
+
+			if (panduan.equals("success")) {
+				out.print("{\"result\":\"0\"}");
+			}else{
+				out.print("{\"result\":\"1\"}");
+			}
+
+		}else if("/AllHistory".equals(path)){
+			
+			List<History> list = biz.queryAllHistory();
+			
+			if(list!=null){
+				request.setAttribute("historyList", list);
+				request.getRequestDispatcher("../EmpJsp/History.jsp").forward(request, response);
+			}
+			
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
+		}
 	}
+
 }

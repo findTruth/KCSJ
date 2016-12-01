@@ -13,9 +13,9 @@
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理员管理中心</title>
-    <link rel="stylesheet" href="../css/pintuer.css">
-    <link rel="stylesheet" href="../css/admin.css">
-    <script src="../js/jquery.js"></script>   
+    <link rel="stylesheet" href="<%=basePath %>css/pintuer.css">
+    <link rel="stylesheet" href="<%=basePath %>css/admin.css">
+    <script src="<%=basePath %>js/jquery.js"></script>   
 </head>
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">

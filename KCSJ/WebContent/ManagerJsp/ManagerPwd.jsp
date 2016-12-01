@@ -12,9 +12,9 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
- <link rel="stylesheet" href="<%=basePath %>Login/css/pintuer.css">
-    <link rel="stylesheet" href="<%=basePath %>Login/css/admin.css">
-	<link href=".<%=basePath %>Manager/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+ <link rel="stylesheet" href="<%=basePath %>css/pintuer.css">
+    <link rel="stylesheet" href="<%=basePath %>css/admin.css">
+	<link href=".<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
 
 
 <title>修改密码</title>
@@ -103,14 +103,11 @@
      });
 
 }; 
- 	  
 }
-   
-   
    
    </script>
 
-     <script type="text/javascript" src="js/jquery-2.0.0.min.js" ></script>
-	 <script type="text/javascript" src="js/bootstrap.js"></script>
+     <script type="text/javascript" src="<%=basePath %>js/jquery-2.0.0.min.js" ></script>
+	 <script type="text/javascript" src="<%=basePath %>js/bootstrap.js"></script>
 </body>
 </html>

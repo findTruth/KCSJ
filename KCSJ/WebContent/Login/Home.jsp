@@ -7,7 +7,12 @@
   <head>
     <title>主页</title>
     
-	 <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+ <%
+  String path = request.getContextPath();
+  String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>   
+    
+	 <link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
 	 
 	 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	 
@@ -129,8 +134,8 @@
 	
 
 
-	  <script type="text/javascript" src="js/jquery-2.0.0.min.js" ></script>
-	 <script type="text/javascript" src="js/bootstrap.js"></script>
+	  <script type="text/javascript" src="<%=basePath %>js/jquery-2.0.0.min.js" ></script>
+	 <script type="text/javascript" src="<%=basePath %>js/bootstrap.js"></script>
 	 
 	 <script type="text/javascript">
 	     function show(){
@@ -150,10 +155,6 @@
 	  		}
 	 
 	 </script>
-	 
-	 
-	 
-	 
 	 
 </body>
 </html>

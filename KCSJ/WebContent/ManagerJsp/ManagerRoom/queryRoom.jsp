@@ -32,8 +32,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>客房查询界面</title>
 	
-    <link rel="stylesheet" href="../css/bootstrap.min.css"> 
-    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="<%=basePath %>css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="<%=basePath %>css/bootstrap-table.min.css">
 
 
 </head>

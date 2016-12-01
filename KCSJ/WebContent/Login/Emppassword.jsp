@@ -7,15 +7,15 @@
 <title>员工找回密码</title>
 <%@ include file="head.jsp"%>
 
-    <link rel="stylesheet" href="<%=basePath %>Login/css/pintuer.css">
-    <link rel="stylesheet" href="<%=basePath %>Login/css/admin.css">
-	<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="<%=basePath %>css/pintuer.css">
+    <link rel="stylesheet" href="<%=basePath %>css/admin.css">
+	<link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
     
-    <script src="<%=basePath %>Login/js/jquery.js"></script>
-    <script src="<%=basePath %>Login/js/pintuer.js"></script> 
+    <script src="<%=basePath %>js/jquery.js"></script>
+    <script src="<%=basePath %>js/pintuer.js"></script> 
 
 
-</head>
+</head>s
 <body>
 <div class="bg"></div>
 <div class="container">

@@ -4,9 +4,12 @@ import java.util.List;
 
 import entity.Client;
 import entity.Emp;
+import entity.History;
 import entity.Room;
 import entity.Vip;
 import exception.Exception;
+import javabean.ClientBean;
+import javabean.VipBean;
 
 public interface EmpDao {
 	
@@ -61,7 +64,27 @@ public interface EmpDao {
 
 	boolean updateEmpPwd(String ename, String newpwd);
 
-	void QueryVipByVno(int vno);
+	Vip QueryVipByVno(int vno);
+
+	boolean VipRuZhu(String vcard, int rmno);
+
+	List<ClientBean> queryClientByRmno(int rmno);
+
+	List<VipBean> queryVipByRmno(int rmno);
+
+	boolean updateVipLeave(int vno);
+
+	boolean updateRoomLeave(int rmno);
+
+	boolean HistoryOfLeave(String name, String card, long tel, int rmno, String type, String time, double allfee);
+
+	boolean deleteClient(String name);
+
+	List<History> queryAllHistory();
+
+	List<History> queryAllHistoryByType(String type);
+
+	List<History> QueryHistoryByRmno(int rmno);
 	
 	Vip QueryVipByVno2(int vno);
 	

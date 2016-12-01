@@ -11,9 +11,12 @@ import dao.EDao.EmpDao;
 import dao.EDao.EmpDaoimpl;
 import entity.Client;
 import entity.Emp;
+import entity.History;
 import entity.Manager;
 import entity.Room;
 import entity.Vip;
+import javabean.ClientBean;
+import javabean.VipBean;
 
 //封装对业务的处理
 public class EmpBizImpl implements EmpBiz {
@@ -26,7 +29,7 @@ public class EmpBizImpl implements EmpBiz {
 
 		// 加密后进行判断
 		String Md5Pwd = MD5.MD5(pwd);
-		
+
 		if (code != null && code.equals(checkCode)) {
 			if (e != null) {
 				if (e.getEname().equals(name) && e.getEpassword().equals(Md5Pwd)) {
@@ -79,8 +82,8 @@ public class EmpBizImpl implements EmpBiz {
 	/**
 	 * 普通客户入住
 	 */
-	public boolean ClientRuZhu(String name, String card, long tel,int rmno) {
-		return dao.ClientRuZhu(name,card,tel,rmno);
+	public boolean ClientRuZhu(String name, String card, long tel, int rmno) {
+		return dao.ClientRuZhu(name, card, tel, rmno);
 	}
 
 	/**
@@ -89,6 +92,7 @@ public class EmpBizImpl implements EmpBiz {
 	public List<Room> QueryAllNullRoom() {
 		return dao.QueryAllNullRoom();
 	}
+<<<<<<< HEAD
 	//客户预定
 	
 	public boolean ClientYuDing(String name, String card, long tel,int rmno){
@@ -103,9 +107,14 @@ public class EmpBizImpl implements EmpBiz {
 	}
 
 	//客户入住后更新房间状态
+=======
+
+	// 客户入住后更新房间状态
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	public boolean updateRoomRuZhu(int rmno) {
 		return dao.updateRoomRuZhu(rmno);
 	}
+<<<<<<< HEAD
 	
 	public boolean tuiding(int rmno){
 		return dao.tuiding(rmno);
@@ -151,45 +160,196 @@ public class EmpBizImpl implements EmpBiz {
 		
 	}
 	
+=======
+
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	/**
 	 * 员工修改个人密码
 	 */
 	public String updateEmpPwd(String oldpwd, String newpwd, String ename) {
-		
-	  Emp emp = dao.querEmpByName(ename);
-	  
-	  if(!emp.getEpassword().equals(MD5.MD5(oldpwd))){
-		  return "密码错误";
-	  }else{
-		  //更新员工密码
-		  boolean flag = dao.updateEmpPwd(ename,MD5.MD5(newpwd));
-		  
-		  if(flag==true){
-			  
-			  return "成功修改";
-			  
-		  }else{
-			  
-			  return "失败";
-		  }
-	  }
+
+		Emp emp = dao.querEmpByName(ename);
+
+		if (!emp.getEpassword().equals(MD5.MD5(oldpwd))) {
+			return "密码错误";
+		} else {
+			// 更新员工密码
+			boolean flag = dao.updateEmpPwd(ename, MD5.MD5(newpwd));
+
+			if (flag == true) {
+
+				return "成功修改";
+
+			} else {
+
+				return "失败";
+			}
+		}
 	}
 
+<<<<<<< HEAD
 	//通过会员编号查询会员
 	private Vip QueryVipByVno(int vno) {
 		dao.QueryVipByVno(vno);
 		return null;
 		
+=======
+	// 通过会员编号查询会员
+	public Vip QueryVipByVno(int vno) {
+
+		return dao.QueryVipByVno(vno);
+
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	}
+
 	@Override
 	public String VipRuZhu(int vno, String vcard, int rmno) {
-		
+
 		Vip v = QueryVipByVno(vno);
-		return null;
+
+		System.out.println(v);
+		if (v != null) {
+			System.out.println("aa");
+			if (!v.getVcard().equals(vcard)) {
+
+				return "信息有误";
+			} else {
+
+				// 更新vip的入住信息
+				boolean flag = dao.VipRuZhu(vcard, rmno);
+
+				if (flag == true) {
+
+					dao.updateRoomRuZhu(rmno);
+
+					return "ok";
+
+				} else {
+					return "erro";
+				}
+
+			}
+		} else {
+
+			return "无此会员";
+
+		}
+
 	}
+
+	/**
+	 * 普通客户退房时查询退房信息
+	 */
+	public List<ClientBean> queryClient_Leave(int rmno) {
+
+		// 通过房间号查询普通客户
+		return dao.queryClientByRmno(rmno);
+
+	}
+
+	/**
+	 * vip客户退房时查询退房信息
+	 */
+	public List<VipBean> queryVip_Leave(int rmno) {
+		return dao.queryVipByRmno(rmno);
+	}
+
+	/**
+	 * vip退房，并修改vip的数据
+	 */
+	public String VipLeave(int vno, int rmno, double mfee, double allfee, String card, String name, long tel,
+			String type, String time) {
+
+		// 更新vip的内容
+		if (dao.updateVipLeave(vno) == true) {
+
+			// 更新退房后的房间状态
+			if (dao.updateRoomLeave(rmno) == true) {
+
+				// 更新退房的历史记录表
+				if (dao.HistoryOfLeave(name, card, tel, rmno, type, time, allfee) == true) {
+
+					return "success";
+				} else {
+					return "erro";
+				}
+			} else {
+
+				return "erro";
+			}
+
+		} else {
+
+			return "erro";
+
+		}
+
+	}
+
+	/**
+	 * 普通客户退房时的操作
+	 */
+	public String ClientLeave(int rmno, double mfee, double allfee, String card, String name, long tel, String type,
+			String time) {
+		if (dao.deleteClient(name) == true) {
+
+			if (dao.updateRoomLeave(rmno) == true) {
+
+				if (dao.HistoryOfLeave(name, card, tel, rmno, type, time, allfee)) {
+
+					return "success";
+				} else {
+					return "erro";
+				}
+
+			} else {
+				return "erro";
+			}
+
+		} else {
+			return "erro";
+		}
+	}
+<<<<<<< HEAD
 	
 	
 	public Vip QueryVipByVno2(int vno){
 		return dao.QueryVipByVno2(vno);
 	}
+=======
+
+
+	/**
+	 * 查询所有历史记录
+	 */
+	public List<History> queryAllHistory() {
+		return dao.queryAllHistory();
+	}
+	/**
+	 *通过房间号查询历史记录 
+	 */
+	public List<History> QueryHistoryByRmno(int rmno) {
+		return dao.QueryHistoryByRmno(rmno);
+	}
+
+	/**
+	 * 通过房间类型查询历史记录
+	 */
+	public List<History> QueryHistoryByType(String type) {
+		
+		if(type.equals("全部房间")){
+			return dao.queryAllHistory();
+		}else{
+			
+			return dao.queryAllHistoryByType(type);
+			
+		}
+		
+		
+		
+		
+	}
+
+
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 }

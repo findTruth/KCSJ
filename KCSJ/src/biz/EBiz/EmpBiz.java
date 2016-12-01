@@ -4,8 +4,14 @@ import java.util.List;
 
 import entity.Client;
 import entity.Emp;
+import entity.History;
 import entity.Room;
 import entity.Vip;
+<<<<<<< HEAD
+=======
+import javabean.ClientBean;
+import javabean.VipBean;
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 
 public interface EmpBiz {
 	
@@ -60,6 +66,26 @@ public interface EmpBiz {
 
 	String VipRuZhu(int vno, String vcard, int rmno);
 	
+<<<<<<< HEAD
 	Vip QueryVipByVno2(int vno);
+=======
+	Vip QueryVipByVno(int vno);
+
+	List<ClientBean> queryClient_Leave(int rmno);
+
+	List<VipBean> queryVip_Leave(int rmno);
+
+	String VipLeave(int vno, int rmno, double mfee, double allfee, String card, String name, long tel, String type,
+			String time);
+
+	String ClientLeave(int rmno, double mfee, double allfee, String card, String name, long tel, String type,
+			String time);
+
+	List<History> queryAllHistory();
+
+	List<History> QueryHistoryByType(String type);
+
+	List<History> QueryHistoryByRmno(int rmno);
+>>>>>>> branch 'master' of https://github.com/findTruth/KCSJ.git
 	
 }

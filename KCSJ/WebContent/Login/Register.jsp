@@ -7,9 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理员注册界面</title>
 	
-	 <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
-
 <%@ include file="head.jsp"%>
+
+
+	 <link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
+
 
 <div class="box">
 		<div class="login-box">
@@ -54,7 +56,7 @@
 						</label>
 						<div class="col-xs-10">
 						   <div>
-						       <img src="/KeChengSheJi/check" id="i1" onclick="ff();"/><a href="javascript:;" onclick="ff();">&nbsp;&nbsp;看不清，换一张</a>
+						       <img src="/KCSJ/check" id="i1" onclick="ff();"/><a href="javascript:;" onclick="ff();">&nbsp;&nbsp;看不清，换一张</a>
 				               &nbsp;&nbsp;<input type="text" name="code" style="width:80px;"/>	 
 						   		<%
 									String code_msg=(String)request.getAttribute("code_msg");
@@ -115,14 +117,14 @@
 			  }
 			  return true;
 	  }
-	
+	s
 	
 	
 	
 	</script>
 	
-	  <script type="text/javascript" src="js/jquery-2.0.0.min.js" ></script>
-	 <script type="text/javascript" src="js/bootstrap.js"></script>
+	  <script type="text/javascript" src="<%=basePath %>js/jquery-2.0.0.min.js" ></script>
+	 <script type="text/javascript" src="<%=basePath %>js/bootstrap.js"></script>
 
 
 

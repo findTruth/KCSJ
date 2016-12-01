@@ -21,17 +21,5 @@
     <error-code>404</error-code>
     <location>/ErroJsp/404.jsp</location>
   </error-page>
-  
-  
-   <filter>
-         <filter-name>login</filter-name>
-         <filter-class>filter.filter</filter-class>
-   </filter>
-  
-   <filter-mapping>
-         <filter-name>login</filter-name>
-         <url-pattern>*.jsp</url-pattern>
-     </filter-mapping>
-  
-  
+
 </web-app>

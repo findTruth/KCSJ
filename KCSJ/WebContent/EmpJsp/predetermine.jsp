@@ -24,7 +24,7 @@
 border: 2em solid #87CEEB;
 	-->
 	height: 70%;
-	width: 20%;
+	width: 25%;
 	position: absolute;
 	top: 15%;
 	left: 45%;

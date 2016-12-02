@@ -17,9 +17,12 @@
     <servlet-name>check</servlet-name>
     <url-pattern>/check</url-pattern>
   </servlet-mapping>
+  
   <error-page>
     <error-code>404</error-code>
     <location>/ErroJsp/404.jsp</location>
   </error-page>
+  
+  
 
 </web-app>

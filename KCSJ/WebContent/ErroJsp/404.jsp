@@ -11,7 +11,7 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title><link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">
+<title>Insert title here</title><link rel="stylesheet" type="text/css" href="<%=basePath %>css/bootstrap.css">
     
     <link rel="stylesheet" type="text/css" href="<%=basePath %>ErroJsp/stylesheets/theme.css">
     <link rel="stylesheet" href="<%=basePath %>ErroJsp/lib/font-awesome/css/font-awesome.css">
@@ -77,7 +77,7 @@
     
 
 
-    <script src="<%=basePath %>ErroJsp/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="<%=basePath %>js/bootstrap.js"></script>
     <script type="text/javascript">
         $("[rel=tooltip]").tooltip();
         $(function() {

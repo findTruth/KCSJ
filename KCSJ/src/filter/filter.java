@@ -41,7 +41,7 @@ public class filter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+
 		HttpServletRequest req = (HttpServletRequest) request;
 
 		response.setCharacterEncoding("utf-8");
@@ -55,32 +55,32 @@ public class filter implements Filter {
 		HttpSession hs = req.getSession();
 
 		String ename = (String) hs.getAttribute("ename");
-		
+
 		String mname = (String) hs.getAttribute("mname");
-		
+
 		String user = (String) hs.getAttribute("User");
 
 		String path = req.getContextPath();
-		
-//		System.out.println(ename);
-//		
-		System.out.println(url.endsWith("/check"));
+
+		// System.out.println(ename);
+		//
+		// System.out.println(url.endsWith("/check"));
 
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path
 				+ "/";
-		
 
-		
-		if (ename != null || mname != null || url.endsWith("Home.jsp") || url.endsWith("ManagerLogin.jsp") || url.endsWith("Register.jsp")
-				|| url.endsWith("EmpLogin.jsp") || url.equals(basePath)||url.endsWith("/check")|| url.endsWith("/login.do")
-				|| url.endsWith("404.jsp") || url.endsWith("404.html")
-				|| url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")|| url.endsWith(".png")|| url.endsWith(".jpg")) {
+		if (ename != null || mname != null || url.endsWith("Home.jsp") || url.endsWith("ManagerLogin.jsp")
+				|| url.endsWith("Register.jsp") || url.endsWith("EmpLogin.jsp") || url.equals(basePath)
+				|| url.endsWith("/check") || url.endsWith("/login.do") || url.endsWith("404.jsp")
+				|| url.endsWith("404.html") || url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")
+				|| url.endsWith(".png") || url.endsWith(".jpg")) {
 			chain.doFilter(request, response);
 		} else {
-			
+
 			PrintWriter out = resp.getWriter();
 			out.println("<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head>");
-			out.print("<script>alert('请登录后在进行操作！…………');top.location.href='" + req.getContextPath() + "/Login/Home.jsp'</script>");
+			out.print("<script>alert('请登录后在进行操作！…………');top.location.href='" + req.getContextPath()
+					+ "/Login/Home.jsp'</script>");
 			// resp.sendRedirect(req.getContextPath() + "/index.jsp");
 			out.close();
 		}
@@ -90,7 +90,7 @@ public class filter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		
+
 	}
 
 }

@@ -8,8 +8,7 @@
 <title>管理员登录界面</title>
 <%@ include file="head.jsp"%>
 
-<link href="<%=basePath %>css/bootstrap.min.css" type="text/css"
-	rel="stylesheet">
+<link href="<%=basePath %>css/bootstrap.min.css" type="text/css" rel="stylesheet">
 
 
 
@@ -27,10 +26,7 @@
 					<div class="form-group">
 						<div class="col-xs-12  ">
 							<div class="input-group">
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-user"></span></span> <input type="text"
-									id="username" name="name" class="form-control"
-									placeholder="用户名">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> <input type="text" id="username" name="name" class="form-control" placeholder="用户名">
 							</div>
 						</div>
 					</div>
@@ -160,8 +156,7 @@
 	}
 </script>
 
-<script type="text/javascript"
-	src="<%=basePath%>js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/bootstrap.js"></script>
 </body>
 </html>

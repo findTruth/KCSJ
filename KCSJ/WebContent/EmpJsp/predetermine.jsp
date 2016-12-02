@@ -8,12 +8,11 @@
 <title>客房预订</title>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
 
-<link rel="stylesheet" href="../EmpJsp/css/bootstrap.min.css" />
-<script type="text/javaccript" src="../EmpJsp/js.jQuery">
+   <link rel="stylesheet" href="<%=basePath %>css/bootstrap.min.css" />
+   <script type="text/javaccript" src="<%=basePath %>js.jQuery">
 
 </script>
 <style>
@@ -55,7 +54,7 @@
 
 <body>
 	<div class="data-list">
-		<div class="data-list-Title">酒店预订</div>
+		<div class="data-list-Title"><h3>酒店预订</h3></div>
 		<form name="myForm" class="form-search" method="post"
 			action="predetermineUrl?action=yuding" style="padding-bottom: 0px">
 			<button class="btn btn-success" type="button"
@@ -72,6 +71,7 @@
 		</form>
 	</div>
 	<div>
+	<br><br>
 		<table
 			class="table table-bordered table-hover datatable table-striped"
 			id="t_table">
@@ -507,8 +507,6 @@
 			}
 		}
 	</script>
-	<script type="text/javascript"
-		src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
-	<script type="text/javascript" src="<%=basePath%>/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
 </body>
 </html>

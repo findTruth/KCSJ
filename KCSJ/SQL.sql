@@ -17,7 +17,7 @@ insert into manager values(manager_seq.nextval,'pp','111111','431202199611300017
 
 --删除原来的emp表
 drop table emp;
-
+--你好
 create table emp(
   empno number(5)  primary key,
   ecard varchar2(20) not null,

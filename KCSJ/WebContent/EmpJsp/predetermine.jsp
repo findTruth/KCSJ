@@ -5,20 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<title>客房预订</title>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
+<title>客房预订</title>
 
    <link rel="stylesheet" href="<%=basePath %>css/bootstrap.min.css" />
-   <script type="text/javaccript" src="<%=basePath %>js.jQuery">
 
-</script>
 <style>
 #yuding {
-	display: none; <!--
-	border: 2em solid #87CEEB; -->
+	display: none; 
+	border: 2em solid #87CEEB;
 	height: 70%;
 	width: 25%;
 	position: absolute;
@@ -26,10 +24,9 @@
 	left: 45%;
 	background: #C09853;
 }
-
 #delyuding {
-	display: none; <!--
-	border: 2em solid #87CEEB; -->
+	display: none; 
+	border: 2em solid #87CEEB;
 	height: 40%;
 	width: 60%;
 	position: absolute;
@@ -37,7 +34,6 @@
 	left: 24%;
 	background: #87CEEB;
 }
-
 #VipYuDing {
 	display: none;
 	border: 2em solid #87CEEB;
@@ -72,9 +68,7 @@
 	</div>
 	<div>
 	<br><br>
-		<table
-			class="table table-bordered table-hover datatable table-striped"
-			id="t_table">
+		<table class="table table-bordered table-hover datatable table-striped" id="t_table">
 			<thead>
 				<tr class="success">
 					<th>房间号</th>
@@ -90,9 +84,7 @@
 						<td>${list.rmtype}</td>
 						<td>${list.rmprice}</td>
 						<td>${list.vprice}</td>
-						<td><button class="btn btn-mini btn-info" type="button"
-								onclick="
-						MyYuDing('${list.rmno}','${list.rmtype}')">预定</button>
+						<td><button class="btn btn-mini btn-info" type="button" onclick="MyYuDing('${list.rmno}','${list.rmtype}')">预定</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -141,7 +133,6 @@
 		function closeVipDiv() {
 			$("#VipYuDing").get(0).style.display = "none";
 		}
-
 		//检查是否是会员
 		function checkVip() {
 			var rmno = $("#croomid").get(0).value;
@@ -158,8 +149,7 @@
 			if (matchResult == true) {
 				var r = confirm("确认预定？？");
 				if (r == true) {
-					$
-							.ajax({
+					$.ajax({
 								type : 'post',
 								dataType : 'json',
 								url : 'http://localhost:8080/KCSJ/Emp/VipYuDing.do?vno='
@@ -185,24 +175,19 @@
 				}
 			}
 		}
-
 		var rmno;
 		var theTable = document.getElementById("t_table");
 		var txtValue = document.getElementById("Text1").value;
-
 		//获取分页对应的控件
 		var totalPage = document.getElementById("spanTotalPage");//总页数
-
 		var pageNum = document.getElementById("spanPageNum");//当前页
 		var totalInfor = document.getElementById("spanTotalInfor");//记录总数
 		var pageNum2 = document.getElementById("Text1");//当前页文本框
-
 		var spanPre = document.getElementById("spanPre");//上一页
 		var spanNext = document.getElementById("spanNext");//下一页
 		var spanFirst = document.getElementById("spanFirst");//首页
 		var spanLast = document.getElementById("spanLast");//尾页
 		var pageSize = 5;//每页信息条数
-
 		var numberRowsInTable = theTable.rows.length - 1;//表格最大行数
 		//分页
 		function changepage() {
@@ -283,8 +268,7 @@
 			if (matchResult == true) {
 				var r = confirm("确认预定？？");
 				if (r == true) {
-					$
-							.ajax({
+					$.ajax({
 								type : 'post',
 								dataType : 'json',
 								url : 'http://localhost:8080/KCSJ/Emp/yuding.do?name='
@@ -308,7 +292,6 @@
 							})
 				}
 			}
-
 		}
 	</script>
 
@@ -338,12 +321,12 @@
 	<script type="text/javascript">
 		//选择下拉框中的值做出对应的操作
 		function change(data) {
+			alert(data.value);
 			$.ajax({
-						type : 'GET',
-						dataType : 'json',
-						url : 'http://localhost:8080/KCSJ/RoomList/GetroomlistBytype.do?type='
-								+ data.value,
-						success : function(data) {
+	  				type:'GET',
+	                dataType: 'json',
+	                url:'http://localhost:8080/KCSJ/RoomList/GetroomlistBytype.do?type='+data.value,
+					success : function(data) {
 							var $tbody = $("#list");
 							$tbody.empty();
 							for (var j = 0; j < data.length; j++) {
@@ -356,10 +339,8 @@
 										+ data[j].rmno + ")'>预定</a></td></tr>";
 								$tbody.append(table);
 							}
-
 							theTable = document.getElementById("t_table");
 							txtValue = document.getElementById("Text1").value;
-
 							//重新获取对应控件
 							totalPage = document
 									.getElementById("spanTotalPage");//总页数
@@ -372,14 +353,11 @@
 							spanFirst = document.getElementById("spanFirst");//首页
 							spanLast = document.getElementById("spanLast");//尾页
 							pageSize = 5;//每页信息条数
-
 							numberRowsInTable = theTable.rows.length - 1;//表格最大行数
 							hide();
 						}
 					})
-
 		}
-
 		function change2() {
 			$.ajax({
 				type : 'GET',
@@ -397,10 +375,8 @@
 								+ ")'>退定</a></td></tr>";
 						$tbody.append(table);
 					}
-
 					theTable = document.getElementById("t_table");
 					txtValue = document.getElementById("Text1").value;
-
 					//重新获取对应控件
 					totalPage = document.getElementById("spanTotalPage");//总页数
 					pageNum = document.getElementById("spanPageNum");//当前页
@@ -411,18 +387,15 @@
 					spanFirst = document.getElementById("spanFirst");//首页
 					spanLast = document.getElementById("spanLast");//尾页
 					pageSize = 5;//每页信息条数
-
 					numberRowsInTable = theTable.rows.length - 1;//表格最大行数
 					hide();
 				}
 			})
-
 		}
 		function tuiding(rmno) {
 			var r = confirm("确认退订？？");
 			if (r == true) {
-				$
-						.ajax({
+				$.ajax({
 							type : 'post',
 							dataType : 'json',
 							url : 'http://localhost:8080/KCSJ/Emp/tuiding.do?rmno='
@@ -442,7 +415,6 @@
 						})
 			}
 		}
-
 		//预定入住
 		function change3() {
 			$.ajax({
@@ -461,10 +433,8 @@
 								+ ")'>预定入住</a></td></tr>";
 						$tbody.append(table);
 					}
-
 					theTable = document.getElementById("t_table");
 					txtValue = document.getElementById("Text1").value;
-
 					//重新获取对应控件
 					totalPage = document.getElementById("spanTotalPage");//总页数
 					pageNum = document.getElementById("spanPageNum");//当前页
@@ -475,18 +445,15 @@
 					spanFirst = document.getElementById("spanFirst");//首页
 					spanLast = document.getElementById("spanLast");//尾页
 					pageSize = 5;//每页信息条数
-
 					numberRowsInTable = theTable.rows.length - 1;//表格最大行数
 					hide();
 				}
 			})
-
 		}
 		function yudingruzhu(rmno) {
 			var r = confirm("确认入住？？");
 			if (r == true) {
-				$
-						.ajax({
+				$.ajax({
 							type : 'post',
 							dataType : 'json',
 							url : 'http://localhost:8080/KCSJ/Emp/yudingruzhu.do?rmno='
@@ -507,6 +474,7 @@
 			}
 		}
 	</script>
-	<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
+    <script type="text/javascript" src="<%=basePath %>js/jquery.js"></script>
+	<script type="text/javascript" src="<%=basePath%>EmpJsp/js/TableFenYe.js"></script>
 </body>
 </html>

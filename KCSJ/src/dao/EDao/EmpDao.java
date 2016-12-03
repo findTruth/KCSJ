@@ -37,7 +37,7 @@ public interface EmpDao {
 
 	List<Room> QueryAllNullRoom();
 	
-	List<Client> queryClientByRmno(int rmno);
+	Client queryClientByRmno(int rmno);
 	
 	 String queryRoomTypeByRmno(int rmno);
  

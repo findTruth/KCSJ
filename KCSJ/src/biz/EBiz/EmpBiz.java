@@ -43,7 +43,7 @@ public interface EmpBiz {
 			long tel, int rmno, String type, String newtime,
 			String shijian);
 	
-	List<Client> queryClientByRmno(int rmno);
+	Client queryClientByRmno(int rmno);
 	
 	 String queryRoomTypeByRmno(int rmno);
     

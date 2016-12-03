@@ -1,7 +1,9 @@
 package biz.EBiz;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -20,7 +22,7 @@ import javabean.VipBean;
 
 //封装对业务的处理
 public class EmpBizImpl implements EmpBiz {
-
+	
 	EmpDao dao = new EmpDaoimpl();
 
 	public String queryEmp(String name, String pwd, String code, String checkCode) {
@@ -133,7 +135,7 @@ public class EmpBizImpl implements EmpBiz {
 		
 	}
 	//通过房间号查找client;
-	public List<Client> queryClientByRmno(int rmno){
+	public Client queryClientByRmno(int rmno){
 		return dao.queryClientByRmno(rmno);
 	}
 	

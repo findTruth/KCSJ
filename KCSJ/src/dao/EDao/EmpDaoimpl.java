@@ -21,6 +21,10 @@ import javabean.VipBean;
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
+	Date nowTime=new Date(); 
+	SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
+	String t = time.format(nowTime);
+
 
 	public Emp queryEmp(String name) {
 		Emp emp = null;
@@ -321,8 +325,8 @@ public class EmpDaoimpl implements EmpDao {
 	}
 	
 	//通过房间号查找客户信息
-	public List<Client> queryClientByRmno(int rmno){
-		List<Client> client = null;
+	public Client queryClientByRmno(int rmno){
+		Client client = null;
 		try {
 			Connection conn = util.getConnection();
 			String sql = "select * from client where rmno=?";
@@ -334,8 +338,7 @@ public class EmpDaoimpl implements EmpDao {
 				String ccard = rs.getString("ccard");
 				long ctel = rs.getLong("ctel");
 				double cmfee = rs.getDouble("cmfee") ;
-			   Client cl =  new Client(cname, ccard, ctel, rmno, 0,null);
-			   client.add(cl);
+			  client = new Client(cname, ccard, ctel, rmno, cmfee, t);
 			  }
 			util.closeConnection(ps, conn, rs);
 		} catch (Exception e) {

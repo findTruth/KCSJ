@@ -284,7 +284,6 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
-
 	/**
 	 * 查询所有空房间通过房间类型
 	 */
@@ -323,6 +322,41 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
+	
+
+	//通过房间状态查询房间
+		public List<Room> QueryAllRoomByRmbuff(){
+			List<Room> list = new ArrayList<Room>();
+			try {
+				Connection conn = util.getConnection();
+				String sql = "select * from room where rmbuff='有人' order by rmno asc";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					int rmno = rs.getInt("rmno");
+					String rmbuff = rs.getString("rmbuff");
+					String rmtype = rs.getString("rmtype");
+					double rmprice = rs.getDouble("rmprice");
+					double vprice = rs.getDouble("vprice");
+					String rydate = rs.getString("rydate");
+					Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, null, rydate);
+					list.add(r);
+				}
+
+				util.closeConnection(ps, conn, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return list;
+			
+		}
+	
 	
 	//通过房间号查找客户信息
 	public Client queryClientByRmno(int rmno){

@@ -155,7 +155,10 @@ public class EmpBizImpl implements EmpBiz {
 		return dao.addRuZhuhistory(name, card, tel, rmno, type, newtime, shijian);
 		
 	}
-	
+	//通过房间状态查询房间
+		public List<Room> QueryAllRoomByRmbuff(){
+			return dao.QueryAllRoomByRmbuff();
+		}
 
 	/**
 	 * 员工修改个人密码

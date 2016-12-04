@@ -184,6 +184,7 @@ create table history(
   hshijian varchar2(10)
 );
 // alter table history modify hname varchar2(30);
+// alter table history modify htype varchar2(20);
 --删除序列
 drop sequence his_seq;
 --创建序列

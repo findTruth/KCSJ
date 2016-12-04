@@ -151,7 +151,6 @@ public class ManagerBizImpl implements ManagerBiz {
 		
 	}
 
-
 	//查询单个房间
 	public List<Room> QueryRoom(String str) {
 

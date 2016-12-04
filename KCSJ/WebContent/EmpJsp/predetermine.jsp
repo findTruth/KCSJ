@@ -164,7 +164,7 @@
 										alert("客房预定成功");
 										var r1 = confirm("是否回到主页");
 										if (r1 == true) {
-											window.location = "http://localhost:8080/KCSJ/RoomList/queryAllNullRoom.do"
+											window.location = "http://localhost:8080/KCSJ/RoomList/queryAllRoom.do"
 										}
 									} else {
 										document.getElementById("Vipdialogs").innerHTML = "会员信息输入有误！";
@@ -321,7 +321,6 @@
 	<script type="text/javascript">
 		//选择下拉框中的值做出对应的操作
 		function change(data) {
-			alert(data.value);
 			$.ajax({
 	  				type:'GET',
 	                dataType: 'json',

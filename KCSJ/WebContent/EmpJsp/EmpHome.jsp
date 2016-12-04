@@ -46,7 +46,7 @@
   <ul style="display:block">
     <li><a href="<%=basePath%>RoomList/queryAllRoom.do" target="right"><span class="icon-caret-right"></span>预定退订与预定入住</a></li>
     <li><a href="<%=basePath%>RoomList/queryAllNullRoom.do" target="right"><span class="icon-caret-right"></span>顾客入住</a></li>
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>点餐业务</a></li>
+    <li><a href="<%=basePath%>Emp/ClientMenus.do" target="right"><span class="icon-caret-right"></span>点餐业务</a></li>
     <li><a href="<%=basePath%>EmpJsp/ClientLeave.jsp" target="right"><span class="icon-caret-right"></span>顾客退房</a></li>
     <li><a href="<%=basePath%>#" target="right"><span class="icon-caret-right"></span>查询入住房间</a></li>
     <li><a href="<%=basePath%>Emp/AllHistory.do" target="right"><span class="icon-caret-right"></span>查看房间记录</a></li>

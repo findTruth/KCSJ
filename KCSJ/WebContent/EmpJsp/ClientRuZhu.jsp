@@ -13,33 +13,11 @@
 			+ path + "/";
 %>
 
-<style type="text/css">
-#ruzhu {
-	display: none;
-	border: 2em solid #87CEEB;
-	height: 40%;
-	width: 60%;
-	position: absolute;
-	top: 24%;
-	left: 24%;
-	background: #87CEEB;
-}
-
-#Vipruzhu {
-	display: none;
-	border: 2em solid #87CEEB;
-	height: 40%;
-	width: 60%;
-	position: absolute;
-	top: 24%;
-	left: 24%;
-	background: #87CEEB;
-}
-</style>
 
 <title>客户入住</title>
 
 <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=basePath%>css/bootstrap.css">
 <link rel="stylesheet" href="<%=basePath%>css/bootstrap-table.min.css">
 
 </head>
@@ -47,30 +25,26 @@
 
 <body>
 
-				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
-					<h3>客房入住中心</h3>
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<h3>客房入住中心</h3>
 
 
-					<form class="navbar-form navbar-left" role="search"
-						action="<%=basePath%>Manager/queryRoom.do">
-						<div class="form-group">
+		<form class="navbar-form navbar-left" role="search"
+			action="<%=basePath%>Manager/queryRoom.do">
+			<div class="form-group">
 
-							<select class="form-control" style="width: 90px;"
-								onchange="change(this)">
-								<option>单人间</option>
-								<option>双人间</option>
-								<option>电脑房</option>
+				<select class="form-control" style="width: 90px;"
+					onchange="change(this)">
+					<option>单人间</option>
+					<option>双人间</option>
+					<option>电脑房</option>
 
-							</select> <span>请选择客户的房间种类</span>
-					</form>
-
-				</div>
-
-				</nav>
+				</select> <span>请选择客户的房间种类</span>
 			</div>
-		</div>
+		</form>
+
 	</div>
+
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-bordered table-hover" id="t_table">
@@ -81,7 +55,6 @@
 						<th>房间价格</th>
 						<th>会员价格</th>
 						<th>操作</th>
-
 					</tr>
 				</thead>
 
@@ -94,7 +67,9 @@
 							<td><c:out value="${list.rmtype}"></c:out></td>
 							<td><c:out value="${list.rmprice}"></c:out></td>
 							<td><c:out value="${list.vprice}"></c:out></td>
-							<td><a onclick="ruzhu(${list.rmno})">入住</a></td>
+
+							<td><button type="button" class="btn btn-info"
+									onclick="ruzhu(${list.rmno},'${list.rmtype}')">入住</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -116,78 +91,107 @@
 				</span> &nbsp;&nbsp;<span id="spanNext">下一页</span> &nbsp;&nbsp;<span
 					id="spanLast">尾页</span>
 			</div>
-			
-		<!--要入住的顾客的信息 -->
-		<div id="ruzhu">
-			<!--修改页面的表单 -->
-			<span>客户的基本信息</span><br>
-			<br> <small>姓名：</small><input type="text" name="cname" id="name" />&nbsp;&nbsp;&nbsp;
-
-			<small>身份证号：</small><input type="text" name="ccard" id="card" /><br>
-			<br>
-			<br> <small>电话：</small><input type="text" name="ctel" id="tel" />&nbsp;&nbsp;&nbsp;
-
-			<span
-				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
-				id="dialogs"> </span> <input type="button" id="Btup"
-				onclick="check()" value="确认入住" /> <input type="button" value="关闭"
-				onclick="closeDiv()">
-
-		</div>
-
-		<!-- 会员信息的输入框 -->
-		<div id="Vipruzhu">
-			<!--修改页面的表单 -->
-			<span>会员的信息</span><br>
-			<br> <small>会员号：</small><input type="text" id="vno" />&nbsp;&nbsp;&nbsp;
-
-			<small>身份证号：</small><input type="text" id="vcard" /><br>
-			<br>
-			<br> <span
-				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
-				id="Vipdialogs"> </span> <input type="button" id="Btup"
-				onclick="checkVip()" value="确认入住" /> <input type="button" value="关闭"
-				onclick="closeVipDiv()">
-
-		</div>
 
 
+			<!--普通客户入住弹框界面 -->
+			<div class="modal fade" id="ClientDiv" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">客户信息</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="form-group">
+								<label for="txt_departmentname">客户姓名</label> <input type="text"
+									name="txt_departmentname" class="form-control" id="name"
+									placeholder="客户姓名">
+							</div>
+							<div class="form-group">
+								<label for="txt_parentdepartment">客户电话</label> <input
+									type="text" name="txt_parentdepartment" class="form-control"
+									id="tel" placeholder="客户电话">
+							</div>
+							<div class="form-group">
+								<label for="txt_departmentlevel">客户身份证号</label> <input
+									type="text" name="txt_departmentlevel" class="form-control"
+									id="card" placeholder="客户身份证号">
+							</div>
+						</div>
+						<span
+							style="font-size: 15px; color: red; position: absolute; left: 30px; top: 320px;"
+							id="dialogs"> 出现错误 </span>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+							</button>
+							<button type="button" class="btn btn-primary" onclick="check()">
+								<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确认入住
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 会员弹框界面 -->
+			<div class="modal fade" id="vipDiv" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">会员信息</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="form-group">
+								<label for="txt_departmentname">会员编号</label> <input type="text"
+									name="txt_departmentname" class="form-control" id="vno"
+									placeholder="会员编号">
+							</div>
+							<div class="form-group">
+								<label for="txt_parentdepartment">会员身份证</label> <input
+									type="text" name="txt_parentdepartment" class="form-control"
+									id="vcard" placeholder="会员身份证">
+							</div>
+						</div>
+
+						<span
+							style="font-size: 15px; color: red; position: absolute; left: 30px; top: 250px;"
+							id="Vipdialogs"> 出现错误 </span>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+							</button>
+							<button type="button" id="btn_submit" class="btn btn-primary"
+								onclick="checkVip()">
+								<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确认入住
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
-		<!--要入住的顾客的信息 -->
-		<div id="ruzhu">
-			<!--修改页面的表单 -->
-			<span>客户的基本信息</span><br> <br> <small>姓名：</small><input
-				type="text" name="cname" id="name" />&nbsp;&nbsp;&nbsp; <small>身份证号：</small><input
-				type="text" name="ccard" id="card" /><br> <br> <br>
-			<small>电话：</small><input type="text" name="ctel" id="tel" />&nbsp;&nbsp;&nbsp;
-
-			<span
-				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
-				id="dialogs"> </span> <input type="button" id="Btup"
-				onclick="check()" value="确认入住" /> <input type="button" value="关闭"
-				onclick="closeDiv()">
-
-		</div>
-
-		<!-- 会员信息的输入框 -->
-		<div id="Vipruzhu">
-			<!--修改页面的表单 -->
-			<span>会员的信息</span><br> <br> <small>会员号：</small><input
-				type="text" id="vno" />&nbsp;&nbsp;&nbsp; <small>身份证号：</small><input
-				type="text" id="vcard" /><br> <br> <br> <span
-				style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
-				id="Vipdialogs"> </span> <input type="button" id="Btup"
-				onclick="checkVip()" value="确认入住" /> <input type="button"
-				value="关闭" onclick="closeVipDiv()">
-
-		</div>
 
 
 
-		<script type="text/javascript">
+
+			<script type="text/javascript">
 	 
 	      var rmno; 
+	      var type;
 	      var theTable = document.getElementById("t_table");
           var txtValue = document.getElementById("Text1").value;
           
@@ -248,31 +252,7 @@
     	  
           }
           
-          
-        //普通客户修改页面的关闭
-          function closeDiv(){
-            	 $("#ruzhu").get(0).style.display = "none";
-              }
-        //VIP客户修改页面的关闭
-          function closeVipDiv(){
-            	 $("#Vipruzhu").get(0).style.display = "none";
-              }
-          
-          //顾客信息页面的弹出
-          function ruzhu(data){
-        	  	 rmno= data;
-        	     var r=confirm("该客户是否是会员");
-        	     if(r==true){
-        	    	 
-        	    	 //弹出输入会员号的界面
-        	    	 $("#Vipruzhu").get(0).style.display = "block";
-        	     }else{
-        	    	 $("#ruzhu").get(0).style.display = "block";
-        	    }
-        	 }
-          
-        	    	 
-          
+          //正则会员信息
           function checkVip(){
         	  var vno = $("#vno").get(0).value;
           	 var vcard = $("#vcard").get(0).value;
@@ -280,7 +260,7 @@
           	var matchResult = true;
           	 
         	 if(vno==""){
-        		 document.getElementById("Vipdialogs").innerHTML="会员号不能为空！";  
+        		document.getElementById("Vipdialogs").innerHTML="会员号不能为空！";  
                 matchResult=false;    
         	 }else if(vcard==""){
          		 document.getElementById("Vipdialogs").innerHTML="身份证不能为空！";  
@@ -292,7 +272,7 @@
         			 $.ajax({
     	  				  type:'post',
     	                  dataType: 'json',
-    	                  url:'http://localhost:8080/KCSJ/Emp/VipRuZhu.do?vno='+vno+'&vcard='+vcard+'&rmno='+rmno,
+    	                  url:'http://localhost:8080/KCSJ/Emp/VipRuZhu.do?vno='+vno+'&vcard='+vcard+'&rmno='+rmno+'&type='+type,
     	                  success:function(data){
 
     	                    var objs = eval(data); 
@@ -320,6 +300,7 @@
         	  
           }
           
+          //正则普通客户的信息
           function check(){
         	 var name = $("#name").get(0).value;
          	 var card = $("#card").get(0).value;
@@ -354,7 +335,7 @@
          	     $.ajax({
  	  				  type:'post',
  	                  dataType: 'json',
- 	                  url:'http://localhost:8080/KCSJ/Emp/RuZhu.do?name='+name+'&card='+card+'&tel='+tel+'&rmno='+rmno,
+ 	                  url:'http://localhost:8080/KCSJ/Emp/RuZhu.do?name='+name+'&card='+card+'&tel='+tel+'&rmno='+rmno+'&type='+type,
  	                  success:function(data){
 
  	                    var objs = eval(data); 
@@ -373,7 +354,6 @@
          	 }
           }
           
-          
          function change(data){
         		$.ajax({
   	  				type:'GET',
@@ -383,7 +363,7 @@
   	                	var $tbody = $("#list");
   	                	$tbody.empty();  
   	                	            for (var j = 0; j < data.length; j++) { 
-  	                	            	var table="<tr class='warning'><td>"+data[j].rmno+"</td><td>"+data[j].rmtype+"</td><td>"+data[j].rmprice +"</td><td>"+data[j].vprice +"</td>"+"<td><a onclick='ruzhu("+data[j].rmno+")'>入住</a></td></tr>";
+  	                	            	var table="<tr class='warning'><td>"+data[j].rmno+"</td><td>"+data[j].rmtype+"</td><td>"+data[j].rmprice +"</td><td>"+data[j].vprice +"</td>"+"<td><a onclick='ruzhu("+data[j].rmno+','+'"'+data[j].rmtype+'"'+")'>入住</a></td></tr>";
   	                	            	$tbody.append(table);
   	                	            }
   	                	           theTable = document.getElementById("t_table");
@@ -406,15 +386,14 @@
   	                }
   	  			})
 
-          }
+          } 	
 	 
 	 </script>
 
 
-
-		<script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
-		<script type="text/javascript" src="<%=basePath%>/js/jquery.js"></script>
-
-
+			<script type="text/javascript" src="<%=basePath%>EmpJsp/js/RuZhu.js"></script>
+			<script type="text/javascript" src="<%=basePath%>EmpJsp/js/TableFenYe.js"></script>
+			<script type="text/javascript" src="<%=basePath%>js/jquery.js"></script>
+			<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
 </body>
 </html>

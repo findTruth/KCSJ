@@ -5,6 +5,7 @@ import java.util.List;
 import entity.Client;
 import entity.Emp;
 import entity.History;
+import entity.Menus;
 import entity.Room;
 import entity.Vip;
 import javabean.ClientBean;
@@ -30,20 +31,19 @@ public interface EmpBiz {
 	
 	boolean ClientYuDing(String name, String card, long tel,int rmno);
 	
-	boolean ClientRuZhu(String name, String card, long tel,int rmno);
+	boolean ClientRuZhu(String name, String card, long tel,int rmno,String type);
 	
 	boolean yudingHistory(String vname, String vcard, long tel, 
 			int rmno, String rmtype, String newtime,String shijian);
 	
 	boolean addRuZhuhistory(String name, String card, long tel,
-			int rmno, String type, String newtime,
-			String shijian);
+			int rmno, String type,String shijian);
 	
 	boolean addTuiDinghistory(String name, String card, 
 			long tel, int rmno, String type, String newtime,
 			String shijian);
 	
-	List<Client> queryClientByRmno(int rmno);
+	Client queryClientByRmno(int rmno);
 	
 	 String queryRoomTypeByRmno(int rmno);
     
@@ -61,7 +61,7 @@ public interface EmpBiz {
 
 	String updateEmpPwd(String oldpwd, String newpwd, String ename);
 
-	String VipRuZhu(int vno, String vcard, int rmno);
+	String VipRuZhu(int vno, String vcard, int rmno,String type);
 	
 	Vip QueryVipByVno(int vno);
 
@@ -80,5 +80,7 @@ public interface EmpBiz {
 	List<History> QueryHistoryByType(String type);
 
 	List<History> QueryHistoryByRmno(int rmno);
+
+	List<Menus> queryAllMenus();
 	
 }

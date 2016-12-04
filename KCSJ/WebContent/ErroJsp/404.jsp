@@ -20,7 +20,7 @@
 
     <!-- Demo page code -->
 
-    <style type="text/css">
+    <style type="text/css">ssss
         #line-chart {
             height:300px;
             width:800px;
@@ -38,10 +38,14 @@
         }
     </style>
 
-   
-  </head>
 
+  </head>
   <body class="http-error"> 
+  <!--<![endif]-->
+    
+
+
+    
 
     
         <div class="row-fluid">

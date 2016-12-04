@@ -5,6 +5,7 @@ import java.util.List;
 import entity.Client;
 import entity.Emp;
 import entity.History;
+import entity.Menus;
 import entity.Room;
 import entity.Vip;
 import exception.Exception;
@@ -37,7 +38,7 @@ public interface EmpDao {
 
 	List<Room> QueryAllNullRoom();
 	
-	List<Client> queryClientByRmno(int rmno);
+	Client queryClientByRmno(int rmno);
 	
 	 String queryRoomTypeByRmno(int rmno);
  
@@ -53,8 +54,7 @@ public interface EmpDao {
 			int rmno, String rmtype, String newtime,String shijian);
 	
 	boolean addRuZhuhistory(String name, String card, long tel,
-			int rmno, String type, String newtime,
-			String shijian);
+			int rmno, String type,String shijian);
 	
 	public boolean addTuiDinghistory(String name, String card, 
 			long tel, int rmno, String type, String newtime,
@@ -87,9 +87,10 @@ public interface EmpDao {
 	List<History> QueryHistoryByRmno(int rmno);
 	
 	Vip QueryVipByVno2(int vno);
+
+	List<Menus> queryAllMenus();
 	
 	/*
-	List<Menus> QueryAllMenus(); 
 	
 	list<Menus> QueryAllMenusByName(String msname);
 	

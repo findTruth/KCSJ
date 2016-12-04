@@ -71,7 +71,7 @@ public class filter implements Filter {
 
 		if (ename != null || mname != null || url.endsWith("Home.jsp") || url.endsWith("ManagerLogin.jsp")
 				|| url.endsWith("Register.jsp") || url.endsWith("EmpLogin.jsp") || url.equals(basePath)
-				|| url.endsWith("/check") || url.endsWith("/login.do") || url.endsWith("404.jsp")
+				|| url.endsWith("/check") || url.endsWith("/login.do") || url.endsWith("404.jsp")||url.endsWith("/GetroomlistBytype.do")
 				|| url.endsWith("404.html") || url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")
 				|| url.endsWith(".png") || url.endsWith(".jpg")) {
 			chain.doFilter(request, response);

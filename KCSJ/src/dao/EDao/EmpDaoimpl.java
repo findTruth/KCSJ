@@ -14,6 +14,7 @@ import entity.Client;
 import entity.Emp;
 import entity.History;
 import entity.Manager;
+import entity.Menus;
 import entity.Room;
 import entity.Vip;
 import javabean.ClientBean;
@@ -22,6 +23,9 @@ import util.util;
 
 public class EmpDaoimpl implements EmpDao {
 
+	Date nowTime=new Date(); 
+	SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
+	String t = time.format(nowTime);
 	public Emp queryEmp(String name) {
 		Emp emp = null;
 		try {
@@ -321,8 +325,8 @@ public class EmpDaoimpl implements EmpDao {
 	}
 	
 	//通过房间号查找客户信息
-	public List<Client> queryClientByRmno(int rmno){
-		List<Client> client = null;
+	public Client queryClientByRmno(int rmno){
+		Client client = null;
 		try {
 			Connection conn = util.getConnection();
 			String sql = "select * from client where rmno=?";
@@ -334,8 +338,8 @@ public class EmpDaoimpl implements EmpDao {
 				String ccard = rs.getString("ccard");
 				long ctel = rs.getLong("ctel");
 				double cmfee = rs.getDouble("cmfee") ;
-			   Client cl =  new Client(cname, ccard, ctel, rmno, 0,null);
-			   client.add(cl);
+			  client = new Client(cname, ccard, ctel, rmno, cmfee, t);
+			   
 			  }
 			util.closeConnection(ps, conn, rs);
 		} catch (Exception e) {
@@ -565,22 +569,20 @@ public class EmpDaoimpl implements EmpDao {
 			}
 			return flag;
 		}
-	//预定入住后添加纪录
+	//预定入住后添加纪录（包括入住）
 		public boolean addRuZhuhistory(String name, String card, long tel,
-				int rmno, String type, String newtime,
-				String shijian) {
+				int rmno, String type,String shijian) {
 			boolean flag = false;
 			try {
 				Connection conn = util.getConnection();
-				String sql =" insert into history  values(his_seq.nextval,?,?,?,?,?,'空','空',?,'无',0,?)";
+				String sql =" insert into history  values(his_seq.nextval,?,?,?,?,?,'空','空',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'无',0,?)";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1,name);
 				ps.setString(2,card);
 				ps.setLong(3,tel);
 				ps.setInt(4,rmno);
 				ps.setString(5,type);
-				ps.setString(6,newtime);
-				ps.setString(7,shijian);
+				ps.setString(6,shijian);
 				int i = ps.executeUpdate();
 				if(i>=1){
 					flag =  true;
@@ -971,7 +973,46 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return list;
 	}
+	
 
+	/**
+	 * 查询所有菜
+	 */
+	public List<Menus> queryAllMenus() {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus  order by mno asc ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Menus m = new Menus();
+				
+				m.setMimg(rs.getString("mimg"));
+				m.setMno(rs.getInt("mno"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMsname(rs.getString("msname"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+				
+				list.add(m);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 
 		// EmpDaoimpl dao = new EmpDaoimpl();
@@ -983,6 +1024,7 @@ public class EmpDaoimpl implements EmpDao {
 		// System.out.println(list.get(0).getRoom().getRmprice());
 
 	}
+
 
 
 }

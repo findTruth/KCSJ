@@ -98,18 +98,21 @@ drop table menus;
  create table menus(
    mno number(5) primary key,
    msname varchar2(10) not null,
+   mimg varchar2(30) not null,
+   mtype varchar2(20) not null,
    msfee number(4,1) not null,
-   mvfee number(4,1) not null
+   mvfee number(4,1) not null,
+   msale number(4) not null
  );
 drop sequence menus_seq;
 --创建序列
 create sequence menus_seq start with 100 minvalue 100 increment by 1;
-insert into menus values(menus_seq.nextval,'辣椒炒肉',15,10);
-insert into menus values(menus_seq.nextval,'土豆烧肉',15,10);
-insert into menus values(menus_seq.nextval,'铁板牛肉',15,10);
-insert into menus values(menus_seq.nextval,'红烧肉',15,10);
-insert into menus values(menus_seq.nextval,'茄子烧肉',15,10);
-insert into menus values(menus_seq.nextval,'绿豆汁/杯',8,7);
+insert into menus values(menus_seq.nextval,'辣椒炒肉','Image/辣椒炒肉.jpg','湘菜',15,10,5);
+insert into menus values(menus_seq.nextval,'土豆烧肉','Image/土豆烧肉.jpg','湘菜',15,10,10);
+insert into menus values(menus_seq.nextval,'铁板牛肉','Image/铁板牛肉.jpg','湘菜',15,10,100);
+insert into menus values(menus_seq.nextval,'红烧肉','Image/红烧肉.jpg','湘菜',15,10,50);
+insert into menus values(menus_seq.nextval,'茄子烧肉','Image/茄子烧肉.jpg','湘菜',15,10,15);
+insert into menus values(menus_seq.nextval,'绿豆汁/杯','Image/绿豆汁.jpg','果汁',8,7,20);
 insert into menus values(menus_seq.nextval,'红豆汁/杯',8,7);
 insert into menus values(menus_seq.nextval,'可乐/大杯',8,7);
 insert into menus values(menus_seq.nextval,'可乐/小杯',7,6);

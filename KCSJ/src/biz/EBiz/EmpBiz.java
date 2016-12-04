@@ -23,6 +23,8 @@ public interface EmpBiz {
 
 	List<Room> QueryAllRoomNullBytype(String type);
 	
+	List<Room> QueryAllRoomByRmbuff();
+	
 	boolean updateroomyudingruzhu(int rmno);
     
 	boolean yudingruzhu(int rmno);

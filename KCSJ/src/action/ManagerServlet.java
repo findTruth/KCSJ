@@ -212,8 +212,16 @@ public class ManagerServlet extends HttpServlet {
 				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/queryRoom.jsp").forward(request, response);
 
 			}
-
-		} else if ("/deleteRoom".equals(path)) {
+		}
+		/*else if("RuzhuqueryRoom".equals(path)){
+			List<Room> room = biz.QueryAllRoomByRmbuff();
+			if (room != null) {
+				request.setAttribute("Roomlist", room);
+				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request, response);
+			}
+		} */
+		
+		else if ("/deleteRoom".equals(path)) {
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 

@@ -17,7 +17,7 @@ insert into manager values(manager_seq.nextval,'pp','111111','431202199611300017
 
 --删除原来的emp表
 drop table emp;
-
+--你好
 create table emp(
   empno number(5)  primary key,
   ecard varchar2(20) not null,
@@ -187,6 +187,7 @@ create table history(
   hshijian varchar2(10)
 );
 // alter table history modify hname varchar2(30);
+// alter table history modify htype varchar2(20);
 --删除序列
 drop sequence his_seq;
 --创建序列

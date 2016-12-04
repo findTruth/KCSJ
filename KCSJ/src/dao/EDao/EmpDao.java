@@ -26,6 +26,8 @@ public interface EmpDao {
 	
 	List<Room> QueryAllRoomNullBytype(String type);
 	
+	List<Room> QueryAllRoomByRmbuff();
+	
 	boolean updateroomyudingruzhu(int rmno);
 	
 	boolean yudingruzhu(int rmno);
@@ -53,8 +55,7 @@ public interface EmpDao {
 	boolean yudingHistory(String vname, String vcard, long tel, 
 			int rmno, String rmtype, String newtime,String shijian);
 	
-	boolean addRuZhuhistory(String name, String card, long tel,
-			int rmno, String type,String shijian);
+	boolean addRuZhuhistory(String name, String card, long tel,int rmno, String type,String shijian);
 	
 	public boolean addTuiDinghistory(String name, String card, 
 			long tel, int rmno, String type, String newtime,

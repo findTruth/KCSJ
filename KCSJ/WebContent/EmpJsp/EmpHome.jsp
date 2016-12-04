@@ -48,7 +48,7 @@
     <li><a href="<%=basePath%>RoomList/queryAllNullRoom.do" target="right"><span class="icon-caret-right"></span>顾客入住</a></li>
     <li><a href="<%=basePath%>Emp/ClientMenus.do" target="right"><span class="icon-caret-right"></span>点餐业务</a></li>
     <li><a href="<%=basePath%>EmpJsp/ClientLeave.jsp" target="right"><span class="icon-caret-right"></span>顾客退房</a></li>
-    <li><a href="<%=basePath%>#" target="right"><span class="icon-caret-right"></span>查询入住房间</a></li>
+    <li><a href="<%=basePath%>Emp/RuZhuMession.do" target="right"><span class="icon-caret-right"></span>查询入住房间</a></li>
     <li><a href="<%=basePath%>Emp/AllHistory.do" target="right"><span class="icon-caret-right"></span>查看房间记录</a></li>
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>基本操作</h2>
@@ -63,6 +63,7 @@
          $(".leftnav h2").click(function(){
 	     $(this).next().slideToggle(200);	
 	     $(this).toggleClass("on"); 
+	     
        })
       $(".leftnav ul li a").click(function(){
 	    $("#a_leader_txt").text($(this).text());

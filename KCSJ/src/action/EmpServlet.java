@@ -4,24 +4,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.net.Inet4Address;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.google.gson.Gson;
-
 import biz.EBiz.EmpBiz;
 import biz.EBiz.EmpBizImpl;
-import biz.MBiz.ManagerBiz;
-import biz.MBiz.ManagerBizImpl;
 import entity.Client;
 import entity.History;
 import entity.Menus;
@@ -52,9 +44,9 @@ public class EmpServlet extends HttpServlet {
 
 		EmpBiz biz = new EmpBizImpl();
 		
-//		Date nowTime=new Date(); 
-//		SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
-//		String t = time.format(nowTime);
+		Date nowTime=new Date(); 
+		SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
+		String t = time.format(nowTime);
 		
 		if ("/login".equals(path)) {
 
@@ -121,7 +113,6 @@ public class EmpServlet extends HttpServlet {
 				 //跟新预定状态
 				 boolean flag2 = biz.updateRoomYuDing(rmno);
 				 //将预定信息插入到历史纪录表，设置事件为预定
-				
 				boolean flag3 = biz.yudingHistory(name, card, tel, rmno, type,
 						t, "预定房间");
 				 if(flag2==true){
@@ -135,18 +126,18 @@ public class EmpServlet extends HttpServlet {
 		else if("/tuiding".equals(path)){
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			//退订删除顾客信息表，跟新房间
-			boolean flag2 = biz.deleteClient(rmno);
-			if(flag2){
+			String type= biz.queryRoomTypeByRmno(rmno);
+			System.out.println(rmno);
+			if(type!=null){
+				System.out.println("成功");
 				boolean flag = biz.tuiding(rmno);
 				//客户表中查找信息  逻辑错误 预定没有插入客户信息表
 				//在记录中找信息
-				
-				Client client = (Client) biz.queryClientByRmno(rmno);
-				
 				//通过房间号查找房间类型
-			String type= biz.queryRoomTypeByRmno(rmno);
-			boolean a = biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(),client.getRmno(), 
-					type, t, "退订");
+				Client client = biz.queryClientByRmno(rmno);
+				System.out.println(client);
+				biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(),client.getRmno(),type, t, "退订");
+				biz.deleteClient(rmno);
 				if(flag==true){
 					 out.print("{\"result\":\"0\"}");
 				 }
@@ -190,6 +181,9 @@ public class EmpServlet extends HttpServlet {
 				//调用预定方法
 				 boolean flag2 = biz.updateRoomYuDing(rmno);
 				 boolean flag = biz.ClientYuDing(name,card,tel,rmno);
+				 //会员预定 加入历史纪录
+				 String type= biz.queryRoomTypeByRmno(rmno);
+				 biz.addRuZhuhistory(name, card, tel, rmno, type, "会员预定");
 				 if(flag2==true&&flag==true){
 					 out.print("{\"result\":\"0\"}");
 				 }else{
@@ -223,7 +217,15 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"1\"}");
 			}
 
-		} else if ("/updatePwd".equals(path)) {
+		}else if("/RuZhuMession".equals(path)){
+			List<Room> room = biz.QueryAllRoomByRmbuff();
+			if (room != null) {
+				request.setAttribute("Roomlist", room);
+				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request, response);
+			}
+		} 
+		
+		else if ("/updatePwd".equals(path)) {
 
 			String oldpwd = request.getParameter("oldpwd");
 

@@ -375,7 +375,6 @@ public class ManagerDaoimpl implements ManagerDao {
 
 		return list;
 	}
-
 	/**
 	 * 通过房间类型查询房间
 	 */

@@ -217,14 +217,7 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"1\"}");
 			}
 
-		}else if("/RuZhuMession".equals(path)){
-			List<Room> room = biz.QueryAllRoomByRmbuff();
-			if (room != null) {
-				request.setAttribute("Roomlist", room);
-				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request, response);
-			}
-		} 
-		
+		}
 		else if ("/updatePwd".equals(path)) {
 
 			String oldpwd = request.getParameter("oldpwd");
@@ -361,6 +354,13 @@ public class EmpServlet extends HttpServlet {
 			}
 			
 		}
+		else if("/RuZhuMession".equals(path)){
+			List<Room> room = biz.QueryAllRoomByRmbuff();
+			if (room != null) {
+				request.setAttribute("Roomlist", room);
+				request.getRequestDispatcher("../EmpJsp/ruzhuMession.jsp").forward(request, response);
+			}
+		} 
 	}
 
 }

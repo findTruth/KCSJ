@@ -328,17 +328,18 @@ public class EmpDaoimpl implements EmpDao {
 			List<Room> list = new ArrayList<Room>();
 			try {
 				Connection conn = util.getConnection();
-				String sql = "select * from room where rmbuff='有人' order by rmno asc";
+				String sql = "select * from room where rmbuff='有人' or rmbook='已预订' order by rmno asc";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
 					int rmno = rs.getInt("rmno");
 					String rmbuff = rs.getString("rmbuff");
+					String rmbook  = rs.getString("rmbook");
 					String rmtype = rs.getString("rmtype");
 					double rmprice = rs.getDouble("rmprice");
 					double vprice = rs.getDouble("vprice");
 					String rydate = rs.getString("rydate");
-					Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, null, rydate);
+					Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
 					list.add(r);
 				}
 

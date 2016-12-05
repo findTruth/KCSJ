@@ -10,10 +10,15 @@
 			+ path + "/";
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap-table.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/pintuer.css">
 <link rel="stylesheet" href="<%=basePath%>css/admin.css">
+<link href="<%=basePath%>css/bootstrap.css" rel="stylesheet" />
+<script src="<%=basePath%>js/jquery-2.0.0.min.js"></script>
+<script src="<%=basePath%>js/bootstrap.min.js"></script>
+<script src="<%=basePath%>css/bootstrap.min.css"></script>
+<script src="<%=basePath%>js/pintuer.js"></script>
+<style>
+</style>
 
 <title>Insert title here</title>
 </head>
@@ -44,7 +49,7 @@
 					<th>房间类型</th>
 					<th>普通价格</th>
 					<th>会员价格</th>
-					<th>状态</th>
+					<th>房间入住状态</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -57,7 +62,7 @@
 						<td>${room.vprice}</td>
 						<td>${room.rmbuff},${room.rmbook}</td>
 						<td>
-							<button class="btn btn-mini btn-info" type="button" onclick="">详细信息</button>&nbsp;
+							<button class="btn btn-mini btn-info" type="button" data-toggle="modal" data-target="#myModal" onclick="clientMession(${room.rmno})">详细信息</button>&nbsp;
 						</td>
 				</tr>
 				</c:forEach>
@@ -79,8 +84,78 @@
 		</span> <span id="spanNext">下一页</span> <span id="spanLast">尾页</span>
 	</div>		
     	</div>
- 	</body>
- 	<script type="text/javascript">
+    	
+   
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					模态框（Modal）标题
+				</h4>
+			</div>
+			<div class="modal-body">
+			<span style="font-size: 15px;">房间号：</span>
+			<span style="font-size: 15px;" id="Rmno"></span>
+			<span style="font-size: 15px;">房间类型：</span>
+			<span style="font-size: 15px;" id="Type"></span><br/>
+			<span style="font-size: 15px;">客户姓名：</span>
+			<span style="font-size: 15px;" id="Name"></span>
+			<span style="font-size: 15px;">客户证件：</span>
+			<span style="font-size: 15px;" id="Card"></span><br/>
+			<span style="font-size: 15px;">联系方式：</span>
+			<span style="font-size: 15px;" id="Tel"></span><br/>
+			<span style="font-size: 15px;">操作时间：</span>
+				<span style="font-size: 15px;" id="Time"></span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+ </body>
+	<script type="text/javascript">
+	
+	
+ 	function clientMession(rmno){
+ 		var name;
+ 		var card;
+ 		var tel;
+ 		var roomtype;
+ 		var time;
+ 		$("#Rmno").get(0).innerHTML = rmno;
+ 		alert("你好");
+ 		$.ajax({
+			type : 'POST',
+			dataType : 'json',
+			url : 'http://localhost:8080/KCSJ/Emp/roomNewMession.do?rmno='+rmno,
+			success : function(data) {
+				if (data != null) {
+					 name = data[0].cname;
+					card = data[0].ccard;
+					tel = data[0].ctel;
+					time = data[0].ctime;
+				} else {
+
+					alert("出错");
+
+				}
+		    }
+		})
+ 		$("#Name").get(0).innerHTML = name;
+		$("#Card").get(0).innerHTML = card;
+		$("#Rmno").get(0).innerHTML = rmno;
+		$("#Time").get(0).innerHTML = time;
+		$("#Type").get(0).innerHTML = roomtype;
+		$("#Tel").get(0).innerHTML = tel;
+ 	}
+ 		
+
  	var rmno;
 	var theTable = document.getElementById("t_table");
 	var txtValue = document.getElementById("Text1").value;
@@ -129,8 +204,9 @@
 			txtValue = txtValue2;
 		}
 	}
-</script>
- 	
+	
+	
+</script>	
 <script type="text/javascript" src="<%=basePath%>/EmpJsp/js/TableFenYe.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery.js"></script>
 </html>

@@ -25,6 +25,12 @@ public interface EmpBiz {
 	
 	List<Room> QueryAllRoomByRmbuff();
 	
+	String queryVipByCard(String card);
+	
+	boolean updateVipTime(int rmno);
+	
+	boolean updateVipMession(int vno,int rmno);
+	
 	boolean updateroomyudingruzhu(int rmno);
     
 	boolean yudingruzhu(int rmno);

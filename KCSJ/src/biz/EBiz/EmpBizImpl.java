@@ -1,5 +1,4 @@
 package biz.EBiz;
-
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,6 +101,10 @@ public class EmpBizImpl implements EmpBiz {
 			return false;
 		}
 	}
+	//通过card查找会员号
+	public String queryVipByCard(String card){
+		return dao.queryVipByCard(card);
+	}
 
 	/**
 	 * 入住时查询所有可入住的房间
@@ -109,8 +112,11 @@ public class EmpBizImpl implements EmpBiz {
 	public List<Room> QueryAllNullRoom() {
 		return dao.QueryAllNullRoom();
 	}
-
-	/************************/
+	//会员时间入住
+	public boolean updateVipTime(int rmno){
+		return dao.updateVipTime(rmno);
+	}
+	
 	// 客户预定
 
 	public boolean ClientYuDing(String name, String card, long tel, int rmno) {
@@ -209,6 +215,10 @@ public class EmpBizImpl implements EmpBiz {
 
 		return dao.QueryVipByVno(vno);
 
+	}
+	public boolean updateVipMession(int vno,int rmno){
+		return dao.updateVipMession(vno,rmno);
+		
 	}
 
 	/**

@@ -131,15 +131,15 @@ public class EmpServlet extends HttpServlet {
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			//退订删除顾客信息表，跟新房间
 			String type= biz.queryRoomTypeByRmno(rmno);
-			System.out.println(rmno);
+			//System.out.println(rmno);
 			if(type!=null){
-				System.out.println("成功");
+				//System.out.println("成功");
 				boolean flag = biz.tuiding(rmno);
 				//客户表中查找信息  逻辑错误 预定没有插入客户信息表
 				//在记录中找信息
 				//通过房间号查找房间类型
 				Client client = biz.queryClientByRmno(rmno);
-				System.out.println(client);
+				//System.out.println(client);
 				biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(),client.getRmno(),type, t, "退订");
 				biz.deleteClient(rmno);
 				if(flag==true){
@@ -150,7 +150,6 @@ public class EmpServlet extends HttpServlet {
 			 }
 			
 		}else if("/yudingruzhu".equals(path)){
-			
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			//判断是否是会员，
 			//通过房间号查找对应的信息
@@ -208,16 +207,15 @@ public class EmpServlet extends HttpServlet {
 			String name = v.getVname();
 			long tel = v.getVtel();
 			if(vcard.equals(card)){
-				//将会员信息加入到房间表和客户信息表中去
-				//调用预定方法
+				//调用预定方法更新房间状态
 				 boolean flag2 = biz.updateRoomYuDing(rmno);
 				 boolean flag = biz.ClientYuDing(name,card,tel,rmno);
-				 //会员预定 加入历史纪录
 				 String type= biz.queryRoomTypeByRmno(rmno);
+				 //会员预定 加入历史纪录				 
 				 biz.addRuZhuhistory(name, card, tel, rmno, type, "会员预定");
 				 //会员预定加入会员表	
 				 biz.updateVipMession(vno,rmno);
-				 if(flag2==true&&flag==true){
+				 if(flag2==true){
 					 out.print("{\"result\":\"0\"}");
 				 }else{
 					 out.print("{\"result\":\"1\"}");
@@ -298,7 +296,7 @@ public class EmpServlet extends HttpServlet {
 			Client list = biz.queryClientByRmno(rmno);
 			Gson roomjson = new Gson();
 			out.print(roomjson.toJson(list));
-			System.out.println("你好");
+			//System.out.println("你好");
 			if (list!=null) {
 				out.print(roomjson.toJson(list));
 			}
@@ -320,8 +318,6 @@ public class EmpServlet extends HttpServlet {
 
 			Gson json = new Gson();
 
-			System.out.println(list.size());
-			System.out.println(listVip.size());
 			if (list.size() == 1) {
 				out.print(json.toJson(list));
 			} else if (listVip.size() == 1) {

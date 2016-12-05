@@ -251,9 +251,6 @@
 			
 		}
 		
-		alert(clientprice);
-		alert(vipprice);
-		
 		
 		var rmno = $('#rmno').get(0).value;
 		var reg = /^\d{3}$/;

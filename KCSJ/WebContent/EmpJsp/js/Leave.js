@@ -24,8 +24,7 @@ function changesearch() {
 		$.ajax({
 					type : 'post',
 					dataType : 'json',
-					url : 'http://localhost:8080/KCSJ/Emp/ClientLeave.do?sousuo='
-							+ sousuo,
+					url : 'http://localhost:8080/KCSJ/Emp/ClientLeave.do?sousuo='+ sousuo,
 					success : function(data) {
 						if (data != null) {
 							if (data[0].XinXi == "client") {
@@ -203,6 +202,8 @@ function jieZhang() {
 				var obj = eval(data);
 
 				if (obj.result == 0) {
+					var $tbody = $("#List");
+					$tbody.empty();
 					alert("退房成功");
 				}else {
 					alert("失败");
@@ -222,6 +223,8 @@ function jieZhang() {
 
 				if (obj.result == 0) {
 					alert("退房成功");
+					var $tbody = $("#List");
+					$tbody.empty();
 					window.location.href = "http://localhost:8080/KCSJ/info.html";
 				}else {
 					alert("失败");

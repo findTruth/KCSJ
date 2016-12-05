@@ -84,5 +84,7 @@ public interface EmpBiz {
 	List<History> QueryHistoryByRmno(int rmno);
 
 	List<Menus> queryAllMenus();
+
+	String dianCan(double clientprice, double vipprice, int rmno);
 	
 }

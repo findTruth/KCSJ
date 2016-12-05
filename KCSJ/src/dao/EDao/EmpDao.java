@@ -69,7 +69,7 @@ public interface EmpDao {
 
 	boolean VipRuZhu(String vcard, int rmno);
 
-	List<ClientBean> queryClientByRmno2(int rmno);
+	List<ClientBean> queryClientBy_Rmno(int rmno);
 
 	List<VipBean> queryVipByRmno(int rmno);
 
@@ -90,6 +90,12 @@ public interface EmpDao {
 	Vip QueryVipByVno2(int vno);
 
 	List<Menus> queryAllMenus();
+
+	Vip queryvipByrmno(int rmno);
+
+	boolean updateClientMenus(int rmno, double clientprice);
+
+	boolean updateVipMenus(int rmno, double vipprice);
 	
 	/*
 	

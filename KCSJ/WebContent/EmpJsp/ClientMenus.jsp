@@ -42,7 +42,7 @@
 						<option value="">请选择菜系类别</option>
 						<option value="">粤菜</option>
 						<option value="">川菜</option>
-						<option value="">果汁</option>
+						<option value="">饮料</option>
 						<option value="">湘菜</option>
 				</select></li>
 				</if>
@@ -102,7 +102,9 @@
 	</div>
 
 
-	<!-- 顾客已点菜界面 -->
+<!-- 顾客已点菜的弹出界面 -->
+
+
 	<div class="modal fade" id="MenusDiv" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -115,7 +117,7 @@
 				<div class="modal-body">
 					<input type="text" placeholder="请输入顾客居住的房间号" name="keywords"
 						class="input"
-						style="width: 180px; line-height: 17px; display: inline-block" />
+						style="width: 180px; line-height: 17px; display: inline-block" id="rmno"/>
 					<table class="table table-hover text-center">
 						<thead>
 							<tr>
@@ -145,7 +147,7 @@
 		</div>
 	</div>
 
-
+<!-- 顾客点菜的弹出界面 -->
 
 
 
@@ -159,26 +161,49 @@
 	//顾客点菜的购物车
 	function addMenus(msname,mfee,vfee,data){
 		
+	  //用Dictionary进行键值对的储存
+	    var d = new Dictionary();
 		//获得tr对象
 		var trObject = $(data).parent().parent().parent();
 		
 		//获得顾客点的份数
 		var qutity = trObject.children('td').children('select').get(0).value;
 		
-
-	  //用Dictionary进行键值对的储存
-	    var d = new Dictionary();
+		if(qutity==0){
+			alert("请输入份数");
+		}else{
+			
+			for(var i = 0;i<arr.length;i++){
+				
+				if(msname==arr[i].get('msname')){
+					var newqutity = parseInt(qutity);
+					
+					var oldqutity = parseInt(arr[i].get('qutity'));
+					
+					var qutity1  = (newqutity+oldqutity)+"";
+					
+					arr.splice(i,1);
+					
+					d.put("mfee", mfee);
+				    d.put("vfee", vfee);
+				    d.put("qutity",qutity1);
+				    d.put("msname",msname);
+				    arr.push(d);
+					
+					alert("添加成功");
+				    trObject.children('td').children('select').get(0).value = 0;
+					return;
+				}
+				
+			}
 	    d.put("mfee", mfee);
 	    d.put("vfee", vfee);
 	    d.put("qutity",qutity);
 	    d.put("msname",msname);
-		
 	    arr.push(d);
-	    
 	    alert("添加成功");
-	    
-	   
 	    trObject.children('td').children('select').get(0).value = 0;
+		}
 	}
 	
 	
@@ -191,14 +216,12 @@
 		
       	$tbody.empty();  
       	            for (var i = 0; i < arr.length; i++) { 
-      	            	var table="<tr class='warning'><td>"+arr[i].get('msname')+"</td><td>"+arr[i].get('mfee')+"</td><td>"+arr[i].get('vfee')+"</td><td>"+arr[i].get('qutity')+"</td>"+"<td><a onclick='deleteMenus("+'"'+arr[i].get('msname')+'"'+")'>删除</a></td></tr>";
+      	            	var table="<tr class='warning'><td>"+arr[i].get('msname')+"</td><td>"+arr[i].get('mfee')+"</td><td>"+arr[i].get('vfee')+"</td><td>"+arr[i].get('qutity')+"</td>"+"<td><a onclick='deleteMenus("+'"'+arr[i].get('msname')+'"'+")'>放弃</a></td></tr>";
       	            	$tbody.append(table);
       	            }
-		
-		
 	}
 	
-	//确认点餐
+	//取消已经点的餐
 	function deleteMenus(msname){
 		
 		$tbody= $("#lookMenus");
@@ -206,20 +229,76 @@
 		for(var i = 0;i<arr.length;i++){
 			if(msname==arr[i].get('msname')){
 				arr.splice(i,1);
-				
 			}
 		}
-		
 		$tbody.empty();  
           for (var i = 0; i < arr.length; i++) { 
           	var table="<tr class='warning'><td>"+arr[i].get('msname')+"</td><td>"+arr[i].get('mfee')+"</td><td>"+arr[i].get('vfee')+"</td><td>"+arr[i].get('qutity')+"</td>"+"<td><a onclick='deleteMenus("+'"'+arr[i].get('msname')+'"'+")'>放弃</a></td></tr>";
           	$tbody.append(table);
           }
 	}
-	
-	
+
+	//送往顾客房间
 	function check(){
 		
+		var vipprice = 0;
+		var clientprice = 0;
+		for(var i = 0;i<arr.length;i++){
+			
+			clientprice+= arr[i].get("mfee")*arr[i].get("qutity");
+			
+			vipprice+= arr[i].get("vfee")*arr[i].get("qutity");
+			
+		}
+		
+		alert(clientprice);
+		alert(vipprice);
+		
+		
+		var rmno = $('#rmno').get(0).value;
+		var reg = /^\d{3}$/;
+		if(rmno==""){
+			alert("请输入房间号");
+		}else if(reg.test(rmno)==false){
+			alert("输入错误")
+		}else{
+			alert(rmno);
+			var r=confirm("确认点餐？？");
+     		if (r==true){
+     	     $.ajax({
+	  				  type:'post',
+	                  dataType: 'json',
+	                  url:'http://localhost:8080/KCSJ/Emp/DianCai.do?rmno='+rmno+'&clientprice='+clientprice+'&vipprice='+vipprice,
+	                  success:function(data){
+
+	                    var objs = eval(data); 
+	                	if(objs.result==0){
+	                		
+	                		alert("一共消费"+clientprice);
+	                		
+	                		var r1=confirm("是否回到主页");
+	                		
+	                		if(r1==true){
+	                			window.location = "http://localhost:8080/KCSJ/Emp/ClientMenus.do"
+	                		}
+	                	}else if(objs.result==1){
+	                		
+	                		alert("一共消费"+vipprice);
+	                		
+                            var r1=confirm("是否回到主页");
+	                		
+	                		if(r1==true){
+	                			window.location = "http://localhost:8080/KCSJ/Emp/ClientMenus.do"
+	                		}
+	                		
+	                	}else{
+	                		alert("点餐出错");
+	                	}
+	                }
+	  			})
+     	 }
+			
+		}
 		
 	}
 	

@@ -36,18 +36,13 @@ public class RoomListServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String url = request.getRequestURI();
 		String path = url.substring(url.lastIndexOf("/"), url.lastIndexOf("."));
-		
-		System.out.println(path);
-		
+			
 		EmpBiz biz = new EmpBizImpl();
-
 		// 查询所有空房间
 		if ("/GetroomlistBytype".equals(path)) {
-			System.out.println("111");
 			String type = request.getParameter("type");
 			List<Room> list = biz.QueryAllRoomNullBytype(type);
 
-			System.out.println(list.size());
 			Gson roomjson = new Gson();
 			out.print(roomjson.toJson(list));
 

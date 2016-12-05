@@ -21,8 +21,7 @@ function changesearch() {
 
 	if (numberreg.test(sousuo) == true) {
 
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					dataType : 'json',
 					url : 'http://localhost:8080/KCSJ/Emp/ClientLeave.do?sousuo='

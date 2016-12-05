@@ -1,5 +1,6 @@
 package action;
 
+import java.awt.image.PixelInterleavedSampleModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import Tool.picture;
 import biz.EBiz.EmpBiz;
 import biz.EBiz.EmpBizImpl;
 import entity.Client;
@@ -271,6 +275,8 @@ public class EmpServlet extends HttpServlet {
 
 			Gson json = new Gson();
 
+			System.out.println(list.size());
+			System.out.println(listVip.size());
 			if (list.size() == 1) {
 				out.print(json.toJson(list));
 			} else if (listVip.size() == 1) {
@@ -353,14 +359,49 @@ public class EmpServlet extends HttpServlet {
 				request.getRequestDispatcher("../EmpJsp/ClientMenus.jsp").forward(request, response);
 			}
 			
-		}
-		else if("/RuZhuMession".equals(path)){
+		}else if("/RuZhuMession".equals(path)){
 			List<Room> room = biz.QueryAllRoomByRmbuff();
 			if (room != null) {
 				request.setAttribute("Roomlist", room);
 				request.getRequestDispatcher("../EmpJsp/ruzhuMession.jsp").forward(request, response);
 			}
+		}else if("/DianCai".equals(path)){
+			
+			double clientprice = Double.valueOf(request.getParameter("clientprice"));
+			
+			double vipprice = Double.valueOf(request.getParameter("vipprice"));
+			
+			int rmno  = Integer.valueOf(request.getParameter("rmno"));
+			
+			String panduan = biz.dianCan(clientprice,vipprice,rmno);
+			
+			if(panduan.equals("client")){
+				out.print("{\"result\":\"0\"}");
+			}else if(panduan.equals("vip")){
+				out.print("{\"result\":\"1\"}");
+			}else{
+				out.print("{\"result\":\"2\"}");
+				
+			}
+		}else if("/upload".equals(path)){
+			JsonObject json = picture.upload(request, response);
+			String pictureAddress = json.get("src").getAsString();
+			
+			System.out.println(pictureAddress);
+			
+			
+			
+			
+			
+//			Client client = new Book(Tools.UUID(), request.getParameter("BNAME")
+//					, null, request.getParameter("BPRESS"), request.getParameter("BAUTHOR")
+//					, request.getParameter("BVALUE"),
+//					request.getParameter("BKINDNO"), BADDRESS, 0, BADDRESS);
+			
+			
 		} 
 	}
+	
+	
 
 }

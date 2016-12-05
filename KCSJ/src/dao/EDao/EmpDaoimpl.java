@@ -22,9 +22,9 @@ import javabean.VipBean;
 import util.util;
 
 public class EmpDaoimpl implements EmpDao {
-		Date nowTime=new Date(); 
-		SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
-		String t = time.format(nowTime);
+	Date nowTime = new Date();
+	SimpleDateFormat time = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
+	String t = time.format(nowTime);
 	public Emp queryEmp(String name) {
 		Emp emp = null;
 		try {
@@ -107,10 +107,10 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return flag;
 	}
-	
-	//查询所有预定的
-	
-	public List<Room> QueryAllYuDing(){
+
+	// 查询所有预定的
+
+	public List<Room> QueryAllYuDing() {
 		List<Room> list = new ArrayList<Room>();
 		try {
 			Connection conn = util.getConnection();
@@ -122,13 +122,13 @@ public class EmpDaoimpl implements EmpDao {
 				String rmbuff = rs.getString("rmbuff");
 				int rmno = rs.getInt("rmno");
 				double rmprice = rs.getDouble("rmprice");
-				String rmtype= rs.getString("rmtype");
+				String rmtype = rs.getString("rmtype");
 				String rydate = rs.getString("rydate");
 				double vprice = rs.getDouble("vprice");
 				Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
 				list.add(r);
 			}
-			
+
 			util.closeConnection(ps, conn, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,35 +141,18 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
-	//退订
-	public boolean tuiding(int rmno){
+
+	// 退订
+	public boolean tuiding(int rmno) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			String sql ="update room set rmbook='无人预订' where rmno=?";
+			String sql = "update room set rmbook='无人预订' where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1,rmno);
+			ps.setInt(1, rmno);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-             return flag;
-	}
-	//退订 删除客户信息
-	public boolean deleteClient(int rmno){
-		boolean flag = false;
-		try {
-			Connection conn = util.getConnection();
-			String sql ="delete from client where rmno=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1,rmno);
-			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -177,64 +160,86 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return flag;
 	}
-	//预定入住跟新client的时间
-	public boolean yudingruzhu(int rmno){
+
+	// 退订 删除客户信息
+	public boolean deleteClient(int rmno) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-		
-			Date nowTime=new Date(); 
-			SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+			String sql = "delete from client where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			int i = ps.executeUpdate();
+			if (i >= 1) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	// 预定入住跟新client的时间
+	public boolean yudingruzhu(int rmno) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+
+			Date nowTime = new Date();
+			SimpleDateFormat time = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			String t = time.format(nowTime);
-			String sql ="update client set cdate=? where rmno=?";
+			String sql = "update client set cdate=? where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, t);
-			ps.setInt(2,rmno);
+			ps.setInt(2, rmno);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return flag;
 	}
-	//预定入住跟新房间的入住时间
-	public boolean roomyudingruzhu(int rmno){
+
+	// 预定入住跟新房间的入住时间
+	public boolean roomyudingruzhu(int rmno) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			Date nowTime=new Date(); 
-			SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
+			Date nowTime = new Date();
+			SimpleDateFormat time = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
 			String t = time.format(nowTime);
-			String sql ="update room set rydate=? where rmno=?";
+			String sql = "update room set rydate=? where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,t);
-			ps.setInt(2,rmno);
+			ps.setString(1, t);
+			ps.setInt(2, rmno);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return flag;
 	}
-	//预定入住后 更新房间的信息 预定改为无人预定 设置入住为 有人
-	public boolean updateroomyudingruzhu(int rmno){
+
+	// 预定入住后 更新房间的信息 预定改为无人预定 设置入住为 有人
+	public boolean updateroomyudingruzhu(int rmno) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			String sql ="update room set rmbook='无人预订',rmbuff='有人' where rmno=?";
+			String sql = "update room set rmbook='无人预订',rmbuff='有人' where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1,rmno);
+			ps.setInt(1, rmno);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -283,6 +288,7 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
+
 	/**
 	 * 查询所有空房间通过房间类型
 	 */
@@ -321,69 +327,68 @@ public class EmpDaoimpl implements EmpDao {
 
 		return list;
 	}
-	
 
-	//通过房间状态查询房间
-		public List<Room> QueryAllRoomByRmbuff(){
-			List<Room> list = new ArrayList<Room>();
-			try {
-				Connection conn = util.getConnection();
-				String sql = "select * from room where rmbuff='有人' or rmbook='已预订' order by rmno asc";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
-				while (rs.next()) {
-					int rmno = rs.getInt("rmno");
-					String rmbuff = rs.getString("rmbuff");
-					String rmbook  = rs.getString("rmbook");
-					String rmtype = rs.getString("rmtype");
-					double rmprice = rs.getDouble("rmprice");
-					double vprice = rs.getDouble("vprice");
-					String rydate = rs.getString("rydate");
-					Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
-					list.add(r);
-				}
-
-				util.closeConnection(ps, conn, rs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	// 通过房间状态查询房间
+	public List<Room> QueryAllRoomByRmbuff() {
+		List<Room> list = new ArrayList<Room>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from room where rmbuff='有人' or rmbook='已预订' order by rmno asc";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int rmno = rs.getInt("rmno");
+				String rmbuff = rs.getString("rmbuff");
+				String rmbook = rs.getString("rmbook");
+				String rmtype = rs.getString("rmtype");
+				double rmprice = rs.getDouble("rmprice");
+				double vprice = rs.getDouble("vprice");
+				String rydate = rs.getString("rydate");
+				Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
+				list.add(r);
 			}
 
-			return list;
-			
+			util.closeConnection(ps, conn, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
-	
-	//通过房间号查找客户信息
-	public Client queryClientByRmno(int rmno){
+
+		return list;
+
+	}
+
+	// 通过房间号查找客户信息
+	public Client queryClientByRmno(int rmno) {
 		Client client = null;
 		try {
 			Connection conn = util.getConnection();
 			String sql = "select * from client where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1,rmno);
+			ps.setInt(1, rmno);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				String cname = rs.getString("cname");
 				String ccard = rs.getString("ccard");
 				long ctel = rs.getLong("ctel");
-				double cmfee = rs.getDouble("cmfee") ;
-			  client = new Client(cname, ccard, ctel, rmno, cmfee, t);
-			  }
+				double cmfee = rs.getDouble("cmfee");
+				client = new Client(cname, ccard, ctel, rmno, cmfee, t);
+			}
 			util.closeConnection(ps, conn, rs);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return client;
-		
+
 	}
-	//通过房间号查找房间类型
-	public String queryRoomTypeByRmno(int rmno){
+
+	// 通过房间号查找房间类型
+	public String queryRoomTypeByRmno(int rmno) {
 		String type = null;
 		try {
 			Connection conn = util.getConnection();
@@ -391,7 +396,7 @@ public class EmpDaoimpl implements EmpDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, rmno);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				type = rs.getString("rmtype");
 			}
 		} catch (Exception e) {
@@ -400,8 +405,8 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return type;
 	}
-	
-	//查询所有空房间
+
+	// 查询所有空房间
 
 	// 查询所有空房间
 	public List<Room> QueryAllNullRoom() {
@@ -444,7 +449,7 @@ public class EmpDaoimpl implements EmpDao {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			String sql ="insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'))";
+			String sql = "insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'))";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setString(2, card);
@@ -464,62 +469,62 @@ public class EmpDaoimpl implements EmpDao {
 	// 顾客入住后更新房间状态
 	public boolean updateRoomRuZhu(int rmno) {
 		boolean flag = false;
-		
-		try{
-		Connection conn = util.getConnection();
-		String sql = "update room set rmbuff='有人' where rmno=?";
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1,rmno);
-		int n=ps.executeUpdate();
-		if(n>=1){
-			 flag=true;
-		}
-		util.closeConnection(ps, conn, null);
+
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update room set rmbuff='有人' where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return flag;
 	}
-	
-	//预定不加时间
-	public boolean ClientYuDing(String name, String card, long tel,int rmno) {
+
+	// 预定不加时间
+	public boolean ClientYuDing(String name, String card, long tel, int rmno) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			String sql =" insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,null)";
+			String sql = " insert into client(cid,cname,ccard,ctel,rmno,cmfee,cdate) values(client_seq.nextval,?,?,?,?,0,null)";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,name);
-			ps.setString(2,card);
-			ps.setLong(3,tel);
-			ps.setInt(4,rmno);
+			ps.setString(1, name);
+			ps.setString(2, card);
+			ps.setLong(3, tel);
+			ps.setInt(4, rmno);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-             return flag;
+		return flag;
 	}
+
 	public boolean updateRoomYuDing(int rmno) {
 		boolean flag = false;
-		try{
-		Connection conn = util.getConnection();
-		String sql = "update room set rmbook='已预订' where rmno=?";
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1,rmno);
-		int n=ps.executeUpdate();
-		if(n>=1){
-			 flag=true;
-		}
-		util.closeConnection(ps, conn, null);
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update room set rmbook='已预订' where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-         return flag;
+		return flag;
 	}
-	
 
 	/**
 	 * 查询员工通过姓名
@@ -551,24 +556,25 @@ public class EmpDaoimpl implements EmpDao {
 		return e;
 
 	}
-	//预定记录
-	public boolean yudingHistory(String vname, String vcard, long tel, 
-		int rmno, String rmtype, String newtime,String shijian){
+
+	// 预定记录
+	public boolean yudingHistory(String vname, String vcard, long tel, int rmno, String rmtype, String newtime,
+			String shijian) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
-			String sql ="insert into history  values(his_seq.nextval,?,?,?,?,?,?,'无','无','无',0,?)";
+			String sql = "insert into history  values(his_seq.nextval,?,?,?,?,?,?,'无','无','无',0,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,vname);
-			ps.setString(2,vcard);
-			ps.setLong(3,tel);
-			ps.setInt(4,rmno);
-			ps.setString(5,rmtype);
-			ps.setString(6,newtime);
-			ps.setString(7,shijian);
+			ps.setString(1, vname);
+			ps.setString(2, vcard);
+			ps.setLong(3, tel);
+			ps.setInt(4, rmno);
+			ps.setString(5, rmtype);
+			ps.setString(6, newtime);
+			ps.setString(7, shijian);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -576,77 +582,78 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return flag;
 	}
-	//客户退订后增加记录
-		public boolean addTuiDinghistory(String name, String card, 
-				long tel, int rmno, String type, String newtime,
-				String shijian) {
-			boolean flag = false;
-			try {
-				Connection conn = util.getConnection();
-				String sql =" insert into history values(his_seq.nextval,?,?,?,?,?,'空',?,'无','无',0,?)";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1,name);
-				ps.setString(2,card);
-				ps.setLong(3,tel);
-				ps.setInt(4,rmno);
-				ps.setString(5,type);
-				ps.setString(6,newtime);
-				ps.setString(7,shijian);
-				int i = ps.executeUpdate();
-				if(i>=1){
-					flag =  true;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+	// 客户退订后增加记录
+	public boolean addTuiDinghistory(String name, String card, long tel, int rmno, String type, String newtime,
+			String shijian) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = " insert into history values(his_seq.nextval,?,?,?,?,?,'空',?,'无','无',0,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, card);
+			ps.setLong(3, tel);
+			ps.setInt(4, rmno);
+			ps.setString(5, type);
+			ps.setString(6, newtime);
+			ps.setString(7, shijian);
+			int i = ps.executeUpdate();
+			if (i >= 1) {
+				flag = true;
 			}
-			return flag;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	//预定入住后添加纪录（包括入住）
-		public boolean addRuZhuhistory(String name, String card, long tel,
-				int rmno, String type,String shijian) {
-			boolean flag = false;
-			try {
-				Connection conn = util.getConnection();
-				String sql =" insert into history  values(his_seq.nextval,?,?,?,?,?,'空','空',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'无',0,?)";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1,name);
-				ps.setString(2,card);
-				ps.setLong(3,tel);
-				ps.setInt(4,rmno);
-				ps.setString(5,type);
-				ps.setString(6,shijian);
-				int i = ps.executeUpdate();
-				if(i>=1){
-					flag =  true;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		return flag;
+	}
+
+	// 预定入住后添加纪录（包括入住）
+	public boolean addRuZhuhistory(String name, String card, long tel, int rmno, String type, String shijian) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = " insert into history  values(his_seq.nextval,?,?,?,?,?,'空','空',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'无',0,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, card);
+			ps.setLong(3, tel);
+			ps.setInt(4, rmno);
+			ps.setString(5, type);
+			ps.setString(6, shijian);
+			int i = ps.executeUpdate();
+			if (i >= 1) {
+				flag = true;
 			}
-			return flag;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return flag;
+	}
 
 	// 更新员工密码
 	public boolean updateEmpPwd(String ename, String newpwd) {
 		boolean flag = false;
-		try{
-		Connection conn = util.getConnection();
-		String sql = "update emp set epassword=?  where ename=?";
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setString(1,newpwd);
-		ps.setString(2,ename);
-		int n=ps.executeUpdate();
-		if(n>=1){
-			 flag=true;
-		}
-		util.closeConnection(ps, conn, null);
-		}catch (Exception e) {
-		e.printStackTrace();
-		
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update emp set epassword=?  where ename=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, newpwd);
+			ps.setString(2, ename);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		}
 		return flag;
 	}
+
 	/**
 	 * 通过会员编号查询会员
 	 */
@@ -679,8 +686,9 @@ public class EmpDaoimpl implements EmpDao {
 		return v;
 
 	}
-	//会员预定判定
-	public Vip QueryVipByVno2(int vno){
+
+	// 会员预定判定
+	public Vip QueryVipByVno2(int vno) {
 		Vip vip = new Vip();
 		try {
 			Connection conn = util.getConnection();
@@ -692,9 +700,9 @@ public class EmpDaoimpl implements EmpDao {
 				String vname = rs.getString("vname");
 				String vcard = rs.getString("vcard");
 				long vtel = rs.getLong("vtel");
-			vip.setVname(vname);
-			vip.setVcard(vcard);
-			vip.setVtel(vtel);
+				vip.setVname(vname);
+				vip.setVcard(vcard);
+				vip.setVtel(vtel);
 			}
 			util.closeConnection(ps, conn, rs);
 		} catch (Exception e1) {
@@ -726,8 +734,7 @@ public class EmpDaoimpl implements EmpDao {
 	/**
 	 * 普通客户退房时查询信息
 	 */
-	public List<ClientBean> queryClientByRmno2
-	(int rmno) {
+	public List<ClientBean> queryClientBy_Rmno(int rmno) {
 
 		List<ClientBean> list = new ArrayList<ClientBean>();
 
@@ -971,8 +978,7 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return list;
 	}
-	
-	
+
 	/**
 	 * 通过房间编号查询历史记录
 	 */
@@ -1006,7 +1012,6 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return list;
 	}
-	
 
 	/**
 	 * 查询所有菜
@@ -1020,7 +1025,7 @@ public class EmpDaoimpl implements EmpDao {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Menus m = new Menus();
-				
+
 				m.setMimg(rs.getString("mimg"));
 				m.setMno(rs.getInt("mno"));
 				m.setMsale(rs.getDouble("msale"));
@@ -1028,7 +1033,7 @@ public class EmpDaoimpl implements EmpDao {
 				m.setMsname(rs.getString("msname"));
 				m.setMtype(rs.getString("mtype"));
 				m.setMvfee(rs.getDouble("mvfee"));
-				
+
 				list.add(m);
 			}
 			util.closeConnection(ps, conn, rs);
@@ -1038,14 +1043,74 @@ public class EmpDaoimpl implements EmpDao {
 		return list;
 	}
 
+	// 点菜时查询VIp
+	public Vip queryvipByrmno(int rmno) {
+		Vip vip = null;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from vip  where rmno=? ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,rmno);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				vip = new Vip();
+
+				vip.setRmno(rmno);
+				vip.setVcard(rs.getString("vcard"));
+				vip.setVdate(rs.getString("vdate"));
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vip;
+	}
+
+	/**
+	 * 更新普通顾客的点菜
+	 */
+	public boolean updateClientMenus(int rmno, double clientprice) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update client set cmfee=cmfee+?  where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setDouble(1, clientprice);
+			ps.setInt(2,rmno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+
+	/**
+	 *更新vip的点菜 
+	 */
+	public boolean updateVipMenus(int rmno, double vipprice) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update vip set vfee=vfee+?  where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setDouble(1, vipprice);
+			ps.setInt(2,rmno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
 	public static void main(String[] args) {
 
 		// EmpDaoimpl dao = new EmpDaoimpl();
@@ -1057,7 +1122,6 @@ public class EmpDaoimpl implements EmpDao {
 		// System.out.println(list.get(0).getRoom().getRmprice());
 
 	}
-
 
 
 }

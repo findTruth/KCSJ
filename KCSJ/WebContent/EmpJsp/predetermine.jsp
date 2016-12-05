@@ -119,7 +119,7 @@
 		<br> <span
 			style="font-size: 12px; color: red; position: absolute; left: 350px; top: 100px;"
 			id="Vipdialogs"> </span> <input type="button" id="Btup"
-			onclick="checkVip()" value="确认入住" /> <input type="button" value="关闭"
+			onclick="checkVip()" value="确认预订" /> <input type="button" value="关闭"
 			onclick="closeVipDiv()">
 
 	</div>
@@ -143,7 +143,7 @@
 				document.getElementById("Vipdialogs").innerHTML = "会员号不能为空！";
 				matchResult = false;
 			} else if (vcard == "") {
-				document.getElementById("dialogs").innerHTML = "身份证不能为空！";
+				document.getElementById("Vipdialogs").innerHTML = "身份证不能为空！";
 				matchResult = false;
 			}
 			if (matchResult == true) {

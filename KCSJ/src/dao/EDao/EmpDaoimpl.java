@@ -55,6 +55,25 @@ public class EmpDaoimpl implements EmpDao {
 
 		return emp;
 	}
+	//会员预定修改会员表
+	public boolean updateVipMession(int vno,int rmno){
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update vip set rmno=? where vno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, rmno);
+			ps.setInt(2, vno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 
 	// 通过身份证查询员工
 	public Emp queryEmpByCard(String card) {
@@ -175,6 +194,32 @@ public class EmpDaoimpl implements EmpDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return flag;
+	}
+	
+	//
+	//跟新会员时间
+	public  boolean updateVipTime(int rmno){
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+		
+			Date nowTime=new Date(); 
+			SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+			String t = time.format(nowTime);
+			String sql ="update vip set vdate=? where rmno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,t);
+			ps.setInt(2,rmno);
+			int i = ps.executeUpdate();
+			if(i>=1){
+				flag =  true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return flag;
 	}
 	//预定入住跟新client的时间
@@ -356,7 +401,25 @@ public class EmpDaoimpl implements EmpDao {
 			return list;
 			
 		}
-	
+	//通过card找vip
+		public String queryVipByCard(String card){
+			String card2 = null;
+			try {
+				Connection conn = util.getConnection();
+				String sql = "select * from vip where vcard=?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1,card);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+				 card2 = rs.getString("vcard");
+			}
+				util.closeConnection(ps, conn, rs);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return card2;
+		}
 	
 	//通过房间号查找客户信息
 	public Client queryClientByRmno(int rmno){

@@ -148,9 +148,16 @@ public class EmpServlet extends HttpServlet {
 		}else if("/yudingruzhu".equals(path)){
 			
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			//预定入住，将客户信息表的时间加上
-			boolean flag = biz.yudingruzhu(rmno);
-			if(flag){
+			//判断是否是会员，
+			//通过房间号查找对应的信息
+			Client c = biz.queryClientByRmno(rmno);
+			String card = c.getCcard();
+			//在会员表中通过card查找
+			String card2 = biz.queryVipByCard(card);
+			//如果是会员就将入住时间加入会员表,不是就加入客户表
+			if(card2==null){
+				//预定入住，将客户信息表的时间加上
+				boolean flag = biz.yudingruzhu(rmno);
 				//将房间的状态改成入住，无人预定
 				boolean flag3 = biz.updateroomyudingruzhu(rmno);
 				//跟新房间的入住时间
@@ -163,9 +170,28 @@ public class EmpServlet extends HttpServlet {
 				if(flag==true){
 					 out.print("{\"result\":\"0\"}");
 				 }
-			}else{
-				 out.print("{\"result\":\"1\"}");
-			 }
+				else{
+					out.print("{\"result\":\"1\"}");
+				}
+			}else if(card2!=null){
+				//将时间加入会员表
+				boolean flag4 = biz.updateVipTime(rmno);
+				//将房间的状态改成入住，无人预定
+				boolean flag3 = biz.updateroomyudingruzhu(rmno);
+				//查询出房间信息
+				Client client =  biz.queryClientByRmno(rmno);
+				String type= biz.queryRoomTypeByRmno(rmno);
+				//预定住房记录
+				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type, "预定入住");
+				if(flag3==true){
+					 out.print("{\"result\":\"0\"}");
+				 }
+				else{
+					out.print("{\"result\":\"1\"}");
+				}
+			
+			}
+			
 			//Vip预定
 		}else if("/VipYuDing".equals(path)){
 			int vno = Integer.valueOf(request.getParameter("vno"));
@@ -184,6 +210,8 @@ public class EmpServlet extends HttpServlet {
 				 //会员预定 加入历史纪录
 				 String type= biz.queryRoomTypeByRmno(rmno);
 				 biz.addRuZhuhistory(name, card, tel, rmno, type, "会员预定");
+				 //会员预定加入会员表	
+				 biz.updateVipMession(vno,rmno);
 				 if(flag2==true&&flag==true){
 					 out.print("{\"result\":\"0\"}");
 				 }else{
@@ -260,7 +288,23 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"3\"}");
 			}
 
-		} else if ("/ClientLeave".equals(path)) {
+		}else if("roomNewMession".equals(path)){
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+			Client list = biz.queryClientByRmno(rmno);
+			Gson roomjson = new Gson();
+			out.print(roomjson.toJson(list));
+			System.out.println("你好");
+			if (list!=null) {
+				out.print(roomjson.toJson(list));
+			}
+			else {
+				out.print(roomjson.toJson(null));
+			}
+			
+
+		} 
+		
+		else if ("/ClientLeave".equals(path)) {
 
 			int rmno = Integer.valueOf(request.getParameter("sousuo"));
 

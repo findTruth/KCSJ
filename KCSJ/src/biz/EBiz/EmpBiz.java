@@ -92,5 +92,9 @@ public interface EmpBiz {
 	List<Menus> queryAllMenus();
 
 	String dianCan(double clientprice, double vipprice, int rmno);
+
+	List<Menus> queryMenusByType(String type);
+
+	List<Menus> queryMenusByName(String mname);
 	
 }

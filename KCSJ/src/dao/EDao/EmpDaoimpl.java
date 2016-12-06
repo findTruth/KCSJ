@@ -1173,7 +1173,74 @@ public class EmpDaoimpl implements EmpDao {
 		}
 		return flag;
 	}
+	
+	//根据菜系查询菜
+	public List<Menus> queryMenusByType(String type) {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus where mtype=? order by msale asc ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,type);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Menus m = new Menus();
 
+				m.setMimg(rs.getString("mimg"));
+				m.setMno(rs.getInt("mno"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMsname(rs.getString("msname"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+
+				list.add(m);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	/**
+	 * 通过菜名查询菜单
+	 */
+	public List<Menus> queryMenusByName(String mname) {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus where msname=?  ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,mname);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Menus m = new Menus();
+
+				m.setMimg(rs.getString("mimg"));
+				m.setMno(rs.getInt("mno"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMsname(rs.getString("msname"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+
+				list.add(m);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 
 		// EmpDaoimpl dao = new EmpDaoimpl();

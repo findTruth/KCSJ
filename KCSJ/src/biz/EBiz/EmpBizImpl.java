@@ -415,4 +415,14 @@ public class EmpBizImpl implements EmpBiz {
 
 	}
 
+	//根据菜系查询菜
+	public List<Menus> queryMenusByType(String type) {
+		return dao.queryMenusByType(type);
+	}
+
+	//根据菜名查询菜
+	public List<Menus> queryMenusByName(String mname) {
+		return dao.queryMenusByName(mname);
+	}
+
 }

@@ -31,10 +31,10 @@ public class EmpServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	public String t;
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
+
 		response.setContentType("text/html;charset=utf-8");
 
 		request.setCharacterEncoding("utf-8");// 设置request解码
@@ -47,11 +47,11 @@ public class EmpServlet extends HttpServlet {
 		String path = url.substring(url.lastIndexOf("/"), url.lastIndexOf("."));
 
 		EmpBiz biz = new EmpBizImpl();
-		
-		Date nowTime=new Date(); 
-		SimpleDateFormat time=new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss"); 
+
+		Date nowTime = new Date();
+		SimpleDateFormat time = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
 		String t = time.format(nowTime);
-		
+
 		if ("/login".equals(path)) {
 
 			String name = request.getParameter("name");
@@ -102,141 +102,139 @@ public class EmpServlet extends HttpServlet {
 				request.setAttribute("msg", "出错了");
 				request.getRequestDispatcher("../Login/Emppassword.jsp").forward(request, response);
 			}
-			
+
 		}
-		//预定入住
-		else if("/yuding".equals(path)){
+		// 预定入住
+		else if ("/yuding".equals(path)) {
 			String type = request.getParameter("idtype");
 			String name = request.getParameter("name");
 			String card = request.getParameter("idcard");
-			long  tel = Long.valueOf(request.getParameter("tel"));
+			long tel = Long.valueOf(request.getParameter("tel"));
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			//插入client不加时间
-			boolean flag = biz.ClientYuDing(name,card,tel,rmno);
-			 if(flag==true){
-				 //跟新预定状态
-				 boolean flag2 = biz.updateRoomYuDing(rmno);
-				 //将预定信息插入到历史纪录表，设置事件为预定
-				boolean flag3 = biz.yudingHistory(name, card, tel, rmno, type,
-						t, "预定房间");
-				 if(flag2==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-			 }else{
-				 out.print("{\"result\":\"1\"}");
-			 }
-			
-		}
-		else if("/tuiding".equals(path)){
+			// 插入client不加时间
+			boolean flag = biz.ClientYuDing(name, card, tel, rmno);
+			if (flag == true) {
+				// 跟新预定状态
+				boolean flag2 = biz.updateRoomYuDing(rmno);
+				// 将预定信息插入到历史纪录表，设置事件为预定
+				boolean flag3 = biz.yudingHistory(name, card, tel, rmno, type, t, "预定房间");
+				if (flag2 == true) {
+					out.print("{\"result\":\"0\"}");
+				}
+			} else {
+				out.print("{\"result\":\"1\"}");
+			}
+
+		} else if ("/tuiding".equals(path)) {
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			//退订删除顾客信息表，跟新房间
-			String type= biz.queryRoomTypeByRmno(rmno);
-			//System.out.println(rmno);
-			if(type!=null){
-				//System.out.println("成功");
+			// 退订删除顾客信息表，跟新房间
+			String type = biz.queryRoomTypeByRmno(rmno);
+			// System.out.println(rmno);
+			if (type != null) {
+				// System.out.println("成功");
 				boolean flag = biz.tuiding(rmno);
-				//客户表中查找信息  逻辑错误 预定没有插入客户信息表
-				//在记录中找信息
-				//通过房间号查找房间类型
+				// 客户表中查找信息 逻辑错误 预定没有插入客户信息表
+				// 在记录中找信息
+				// 通过房间号查找房间类型
 				Client client = biz.queryClientByRmno(rmno);
-				//System.out.println(client);
-				biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(),client.getRmno(),type, t, "退订");
+				// System.out.println(client);
+				biz.addTuiDinghistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type, t,
+						"退订");
 				biz.deleteClient(rmno);
-				if(flag==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-			}else{
-				 out.print("{\"result\":\"1\"}");
-			 }
-			
-		}else if("/yudingruzhu".equals(path)){
+				if (flag == true) {
+					out.print("{\"result\":\"0\"}");
+				}
+			} else {
+				out.print("{\"result\":\"1\"}");
+			}
+
+		} else if ("/yudingruzhu".equals(path)) {
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			//判断是否是会员，
-			//通过房间号查找对应的信息
+			// 判断是否是会员，
+			// 通过房间号查找对应的信息
 			Client c = biz.queryClientByRmno(rmno);
 			String card = c.getCcard();
-			//在会员表中通过card查找
+			// 在会员表中通过card查找
 			String card2 = biz.queryVipByCard(card);
-			//如果是会员就将入住时间加入会员表,不是就加入客户表
-			if(card2==null){
-				//普通客户预定入住，将客户信息表的时间加上
+			// 如果是会员就将入住时间加入会员表,不是就加入客户表
+			if (card2 == null) {
+				// 普通客户预定入住，将客户信息表的时间加上
 				boolean flag = biz.yudingruzhu(rmno);
-				//将房间的状态改成入住，无人预定
+				// 将房间的状态改成入住，无人预定
 				boolean flag3 = biz.updateroomyudingruzhu(rmno);
-				//跟新房间的入住时间
+				// 跟新房间的入住时间
 				boolean flag2 = biz.roomyudingruzhu(rmno);
-				//查询出房间信息
-				Client client =  biz.queryClientByRmno(rmno);
-				String type= biz.queryRoomTypeByRmno(rmno);
-				//预定住房记录
-				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type, "预定入住");
-				if(flag==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-				else{
+				// 查询出房间信息
+				Client client = biz.queryClientByRmno(rmno);
+				String type = biz.queryRoomTypeByRmno(rmno);
+				// 预定住房记录
+				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type,
+						"预定入住");
+				if (flag == true) {
+					out.print("{\"result\":\"0\"}");
+				} else {
 					out.print("{\"result\":\"1\"}");
 				}
-			}else if(card2!=null){
-				//将时间加入会员
+			} else if (card2 != null) {
+				// 将时间加入会员
 				boolean flag4 = biz.updateVipTime(rmno);
-				//将房间的状态改成入住，无人预定
+				// 将房间的状态改成入住，无人预定
 				boolean flag3 = biz.updateroomyudingruzhu(rmno);
-				//查询出房间信息
-				Client client =  biz.queryClientByRmno(rmno);
-				String type= biz.queryRoomTypeByRmno(rmno);
-				//预定住房记录
-				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type, "预定入住");
+				// 查询出房间信息
+				Client client = biz.queryClientByRmno(rmno);
+				String type = biz.queryRoomTypeByRmno(rmno);
+				// 预定住房记录
+				biz.addRuZhuhistory(client.getCname(), client.getCcard(), client.getCtel(), client.getRmno(), type,
+						"预定入住");
 				boolean falg5 = biz.deleteClient(rmno);
-				if(flag3==true){
-					 out.print("{\"result\":\"0\"}");
-				 }
-				else{
+				if (flag3 == true) {
+					out.print("{\"result\":\"0\"}");
+				} else {
 					out.print("{\"result\":\"1\"}");
 				}
-			
+
 			}
-			
-			//Vip预定
-		}else if("/VipYuDing".equals(path)){
+
+			// Vip预定
+		} else if ("/VipYuDing".equals(path)) {
 			int vno = Integer.valueOf(request.getParameter("vno"));
 			String vcard = request.getParameter("vcard");
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			Vip v =  biz.QueryVipByVno(vno);
-			//判断会员号
+			Vip v = biz.QueryVipByVno(vno);
+			// 判断会员号
 			String card = v.getVcard();
 			String name = v.getVname();
 			long tel = v.getVtel();
-			if(vcard.equals(card)){
-				//调用预定方法更新房间状态
-				 boolean flag2 = biz.updateRoomYuDing(rmno);
-				 boolean flag = biz.ClientYuDing(name,card,tel,rmno);
-				 String type= biz.queryRoomTypeByRmno(rmno);
-				 //会员预定 加入历史纪录				 
-				 biz.addRuZhuhistory(name, card, tel, rmno, type, "会员预定");
-				 //会员预定加入会员表	
-				 biz.updateVipMession(vno,rmno);
-				 if(flag2==true){
-					 out.print("{\"result\":\"0\"}");
-				 }else{
-					 out.print("{\"result\":\"1\"}");
-					}
-			}else{
-				 out.print("{\"result\":\"1\"}");
+			if (vcard.equals(card)) {
+				// 调用预定方法更新房间状态
+				boolean flag2 = biz.updateRoomYuDing(rmno);
+				boolean flag = biz.ClientYuDing(name, card, tel, rmno);
+				String type = biz.queryRoomTypeByRmno(rmno);
+				// 会员预定 加入历史纪录
+				biz.addRuZhuhistory(name, card, tel, rmno, type, "会员预定");
+				// 会员预定加入会员表
+				biz.updateVipMession(vno, rmno);
+				if (flag2 == true) {
+					out.print("{\"result\":\"0\"}");
+				} else {
+					out.print("{\"result\":\"1\"}");
+				}
+			} else {
+				out.print("{\"result\":\"1\"}");
 			}
 		} else if ("/RuZhu".equals(path)) {
 
 			String name = request.getParameter("name");
 
 			String card = request.getParameter("card");
-			
+
 			String type = request.getParameter("type");
 
 			long tel = Long.valueOf(request.getParameter("tel"));
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 
-
-			boolean flag = biz.ClientRuZhu(name, card, tel, rmno,type);
+			boolean flag = biz.ClientRuZhu(name, card, tel, rmno, type);
 
 			if (flag) {
 				// 房间的入住状态
@@ -248,8 +246,7 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"1\"}");
 			}
 
-		}
-		else if ("/updatePwd".equals(path)) {
+		} else if ("/updatePwd".equals(path)) {
 
 			String oldpwd = request.getParameter("oldpwd");
 
@@ -275,10 +272,10 @@ public class EmpServlet extends HttpServlet {
 			String vcard = request.getParameter("vcard");
 
 			String type = request.getParameter("type");
-			
+
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
-			
-			String s = biz.VipRuZhu(vno,vcard,rmno,type);
+
+			String s = biz.VipRuZhu(vno, vcard, rmno, type);
 
 			if (s.equals("信息有误")) {
 
@@ -291,22 +288,20 @@ public class EmpServlet extends HttpServlet {
 				out.print("{\"result\":\"3\"}");
 			}
 
-		}else if("roomNewMession".equals(path)){
+		} else if ("roomNewMession".equals(path)) {
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
 			Client list = biz.queryClientByRmno(rmno);
 			Gson roomjson = new Gson();
 			out.print(roomjson.toJson(list));
-			//System.out.println("你好");
-			if (list!=null) {
+			// System.out.println("你好");
+			if (list != null) {
 				out.print(roomjson.toJson(list));
-			}
-			else {
+			} else {
 				out.print(roomjson.toJson(null));
 			}
-			
 
-		} 
-		
+		}
+
 		else if ("/ClientLeave".equals(path)) {
 
 			int rmno = Integer.valueOf(request.getParameter("sousuo"));
@@ -378,71 +373,96 @@ public class EmpServlet extends HttpServlet {
 
 			if (panduan.equals("success")) {
 				out.print("{\"result\":\"0\"}");
-			}else{
+			} else {
 				out.print("{\"result\":\"1\"}");
 			}
 
-		}else if("/AllHistory".equals(path)){
-			
+		} else if ("/AllHistory".equals(path)) {
+
 			List<History> list = biz.queryAllHistory();
-			
-			if(list!=null){
+
+			if (list != null) {
 				request.setAttribute("historyList", list);
 				request.getRequestDispatcher("../EmpJsp/History.jsp").forward(request, response);
 			}
-			
-		}else if("/ClientMenus".equals(path)){
-			
+
+		} else if ("/ClientMenus".equals(path)) {
+
 			List<Menus> list = biz.queryAllMenus();
-			
-			if(list!=null){
+
+			if (list != null) {
 				request.setAttribute("list", list);
 				request.getRequestDispatcher("../EmpJsp/ClientMenus.jsp").forward(request, response);
 			}
-			
-		}else if("/RuZhuMession".equals(path)){
+
+		} else if ("/RuZhuMession".equals(path)) {
 			List<Room> room = biz.QueryAllRoomByRmbuff();
 			if (room != null) {
 				request.setAttribute("Roomlist", room);
 				request.getRequestDispatcher("../EmpJsp/ruzhuMession.jsp").forward(request, response);
 			}
-		}else if("/DianCai".equals(path)){
-			
+
+			// 顾客点菜(biz中区分vip和client)
+		} else if ("/DianCai".equals(path)) {
+
 			double clientprice = Double.valueOf(request.getParameter("clientprice"));
-			
+
 			double vipprice = Double.valueOf(request.getParameter("vipprice"));
-			
-			int rmno  = Integer.valueOf(request.getParameter("rmno"));
-			
-			String panduan = biz.dianCan(clientprice,vipprice,rmno);
-			
-			if(panduan.equals("client")){
+
+			int rmno = Integer.valueOf(request.getParameter("rmno"));
+
+			String panduan = biz.dianCan(clientprice, vipprice, rmno);
+
+			if (panduan.equals("client")) {
 				out.print("{\"result\":\"0\"}");
-			}else if(panduan.equals("vip")){
+			} else if (panduan.equals("vip")) {
 				out.print("{\"result\":\"1\"}");
-			}else{
+			} else {
 				out.print("{\"result\":\"2\"}");
-				
+
 			}
-		}else if("/upload".equals(path)){
+		} else if ("/ChangeMenusByType".equals(path)) {
+
+			String type = request.getParameter("type");
+
+			List<Menus> list = biz.queryMenusByType(type);
+
+			Gson roomjson = new Gson();
+
+			out.print(roomjson.toJson(list));
+
+		} else if ("/ChangeMenusByName".equals(path)) {
+
+			String mname = request.getParameter("mname");
+
+			List<Menus> list = biz.queryMenusByName(mname);
+
+			Gson roomjson = new Gson();
+
+			out.print(roomjson.toJson(list));
+
+		}
+
+		
+		
+		
+		
+		
+		
+		else if ("/upload".equals(path)) {
 			JsonObject json = picture.upload(request, response);
 			String pictureAddress = json.get("src").getAsString();
-			
+
 			System.out.println(pictureAddress);
-			
-			
-			
-			
-			
-//			Client client = new Book(Tools.UUID(), request.getParameter("BNAME")
-//					, null, request.getParameter("BPRESS"), request.getParameter("BAUTHOR")
-//					, request.getParameter("BVALUE"),
-//					request.getParameter("BKINDNO"), BADDRESS, 0, BADDRESS);
-			
-			
-		} 
+
+			// Client client = new Book(Tools.UUID(),
+			// request.getParameter("BNAME")
+			// , null, request.getParameter("BPRESS"),
+			// request.getParameter("BAUTHOR")
+			// , request.getParameter("BVALUE"),
+			// request.getParameter("BKINDNO"), BADDRESS, 0, BADDRESS);
+
+		}
 	}
-	
-	
 
 }

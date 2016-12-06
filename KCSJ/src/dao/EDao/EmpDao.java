@@ -102,6 +102,10 @@ public interface EmpDao {
 	boolean updateClientMenus(int rmno, double clientprice);
 
 	boolean updateVipMenus(int rmno, double vipprice);
+
+	List<Menus> queryMenusByType(String type);
+
+	List<Menus> queryMenusByName(String mname);
 	
 	/*
 	

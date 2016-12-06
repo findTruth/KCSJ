@@ -38,15 +38,15 @@
 
 				<if condition="$iscid eq 1">
 				<li><select name="cid" class="input"
-					style="width: 200px; line-height: 17px;" onchange="changesearch()">
-						<option value="">请选择菜系类别</option>
-						<option value="">粤菜</option>
-						<option value="">川菜</option>
-						<option value="">饮料</option>
-						<option value="">湘菜</option>
+					style="width: 200px; line-height: 17px;" onchange="change(this)">
+						<option>请选择菜系类别</option>
+						<option>粤菜</option>
+						<option>川菜</option>
+						<option>饮料</option>
+						<option>湘菜</option>
 				</select></li>
 				</if>
-				<li><input type="text" placeholder="请输入搜索关键字" name="keywords"
+				<li><input type="text" id="Key" placeholder="请输入搜索关键字" name="keywords"
 					class="input"
 					style="width: 250px; line-height: 17px; display: inline-block" />
 					<a href="javascript:void(0)" class="button border-main icon-search"
@@ -67,14 +67,14 @@
 					<th width="210">操作</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="Menus">
 				<c:forEach varStatus="i" var="list" items="${list}">
 					<tr>
 						<td><c:out value="${list.mno}"></c:out></td>
 						<td><c:out value="${list.mtype}"></c:out></td>
 						<td><c:out value="${list.msname}"></c:out></td>
 						<td width="10%"><img src="<%=basePath %>EmpJsp/${list.mimg}"
-							alt="" width="70" height="50" /></td>
+							alt="" width="60" height="40" /></td>
 						<td><c:out value="${list.msfee}"></c:out></td>
 						<td><c:out value="${list.mvfee}"></c:out></td>
 						<td><select id="qutity">
@@ -90,7 +90,7 @@
 						<td>
 							<div class="button-group">
 								<a class="button border-main"
-									onclick="addMenus('${list.msname}',${list.msfee},${list.mvfee},this);"><span
+									onclick="ChangeNumber('${list.msname}',${list.msfee},${list.mvfee},this)"><span
 									class="icon-edit">+</span></a>
 							</div>
 						</td>
@@ -102,7 +102,7 @@
 	</div>
 
 
-<!-- 顾客已点菜的弹出界面 -->
+	<!-- 顾客已点菜的弹出界面 -->
 
 
 	<div class="modal fade" id="MenusDiv" tabindex="-1" role="dialog"
@@ -117,7 +117,8 @@
 				<div class="modal-body">
 					<input type="text" placeholder="请输入顾客居住的房间号" name="keywords"
 						class="input"
-						style="width: 180px; line-height: 17px; display: inline-block" id="rmno"/>
+						style="width: 180px; line-height: 17px; display: inline-block"
+						id="rmno" />
 					<table class="table table-hover text-center">
 						<thead>
 							<tr>
@@ -147,7 +148,7 @@
 		</div>
 	</div>
 
-<!-- 顾客点菜的弹出界面 -->
+	<!-- 顾客点菜的弹出界面 -->
 
 
 
@@ -158,53 +159,71 @@
 	
 	var $tbody ;
 	
-	//顾客点菜的购物车
-	function addMenus(msname,mfee,vfee,data){
+	var trObject;
+
+	
+	function ChangeNumber(msname,mfee,vfee,data){
 		
-	  //用Dictionary进行键值对的储存
-	    var d = new Dictionary();
-		//获得tr对象
-		var trObject = $(data).parent().parent().parent();
-		
-		//获得顾客点的份数
-		var qutity = trObject.children('td').children('select').get(0).value;
-		
-		if(qutity==0){
-			alert("请输入份数");
-		}else{
+			 trObject = $(data).parent().parent().parent();
 			
-			for(var i = 0;i<arr.length;i++){
-				
-				if(msname==arr[i].get('msname')){
-					var newqutity = parseInt(qutity);
-					
-					var oldqutity = parseInt(arr[i].get('qutity'));
-					
-					var qutity1  = (newqutity+oldqutity)+"";
-					
-					arr.splice(i,1);
-					
-					d.put("mfee", mfee);
-				    d.put("vfee", vfee);
-				    d.put("qutity",qutity1);
-				    d.put("msname",msname);
-				    arr.push(d);
-					
-					alert("添加成功");
-				    trObject.children('td').children('select').get(0).value = 0;
-					return;
-				}
-				
-			}
-	    d.put("mfee", mfee);
-	    d.put("vfee", vfee);
-	    d.put("qutity",qutity);
-	    d.put("msname",msname);
-	    arr.push(d);
-	    alert("添加成功");
-	    trObject.children('td').children('select').get(0).value = 0;
-		}
+			
+			//获得顾客点的份数
+			var qutity = trObject.children('td').eq(6).children('select').val();
+			
+		
+		    addMenus(msname, mfee, vfee, qutity);
 	}
+	
+	
+	
+	
+	
+	//顾客点菜的购物车
+	function addMenus(msname,mfee,vfee,qutity){
+		
+			
+		   //用Dictionary进行键值对的储存
+		    var d = new Dictionary();
+			//获得tr对象
+			
+			if(qutity==0){
+				alert("请输入份数");
+			}else{
+				
+				for(var i = 0;i<arr.length;i++){
+					
+					if(msname==arr[i].get('msname')){
+						var newqutity = parseInt(qutity);
+						
+						var oldqutity = parseInt(arr[i].get('qutity'));
+						
+						var qutity1  = (newqutity+oldqutity)+"";
+						
+						arr.splice(i,1);
+						
+						d.put("mfee", mfee);
+					    d.put("vfee", vfee);
+					    d.put("qutity",qutity1);
+					    d.put("msname",msname);
+					    arr.push(d);
+						
+						alert("添加成功");
+						  trObject.children('td').children('select').get(0).value = 0;
+						return;
+					}
+					
+				}
+		    d.put("mfee", mfee);
+		    d.put("vfee", vfee);
+		    d.put("qutity",qutity);
+		    d.put("msname",msname);
+		    arr.push(d);
+		    alert("添加成功");
+		    trObject.children('td').children('select').get(0).value = 0;
+			}
+		}
+	
+	
 	
 	
 	//查看顾客已点的菜(MenusDiv的弹出)
@@ -250,7 +269,6 @@
 			vipprice+= arr[i].get("vfee")*arr[i].get("qutity");
 			
 		}
-		
 		
 		var rmno = $('#rmno').get(0).value;
 		var reg = /^\d{3}$/;
@@ -299,10 +317,89 @@
 		
 	}
 	
-	//搜索
-	function changesearch() {
-		alert("aaa");
+	//封装ajax的刷新表格方法
+	function flush(data){
+		 var $tbody = $("#Menus");
+		 $tbody.empty();
+        	            for (var j = 0; j < data.length; j++) { 
+        	            	
+        	              var table = "<tr><td>"
+								+ data[j].mno
+								+ "</td><td>"
+								+ data[j].mtype
+								+ "</td><td>"
+								+ data[j].msname
+								+ "</td><td>"+"<img width ='60' height='40' src=http://localhost:8080/KCSJ/EmpJsp/"+ data[j].mimg
+								+ ">"
+								+ "</td><td>"
+								+ data[j].msfee
+								+ "</td><td>"
+								+ data[j].mvfee
+								+ "</td><td><select id='qutity"+j+"'>"
+								+ "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>"
+								+"</select>"
+								+"</td><td>"
+								+data[j].msale
+								+ "</td><td>"
+								+"<div class='button-group'><a name='test' class='button border-main' ><span class='icon-edit'>+</span></a></div></td></tr>";
+        	            	
+        	            	$tbody.append(table);
+        	            	
+        	            }
+        	            $("a[name='test']").click(function(){
+    	            		trObject = $(this).parent().parent().parent();
+    	            		var msname = trObject.children('td').eq(2).html();
+    	            		var mfee = trObject.children('td').eq(4).html();
+    	            		var vfee = trObject.children('td').eq(5).html();
+    	            		var number = trObject.children('td').eq(6).children('select').val();
+    	            		addMenus(msname,mfee,vfee,number);
+    	            	});
+		
+		
+		
 	}
+	
+	//根据用户的下拉框刷新表格
+	function change(data){
+		if(data.value=="请选择菜系类别"){
+			
+			alert("请选择");
+		}else{
+			 $.ajax({
+ 				  type:'post',
+                 dataType: 'json',
+                 url:'http://localhost:8080/KCSJ/Emp/ChangeMenusByType.do?type='+data.value,
+                 success:function(data){
+                	 flush(data);
+               }
+ 			})
+		}
+	}
+	
+	
+    //根据用户的搜索菜名来刷新表格	
+	function changesearch(data) {
+		var name = $('#Key').val();
+		
+			 $.ajax({
+				  type:'post',
+                dataType: 'json',
+                url:'http://localhost:8080/KCSJ/Emp/ChangeMenusByName.do?mname='+name,
+                success:function(data){
+               	 flush(data);
+              }
+			})
+			
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	//自定义字典对象
 	function Dictionary(){

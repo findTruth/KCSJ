@@ -149,9 +149,36 @@
 	var spanNext = document.getElementById("spanNext");//下一页
 	var spanFirst = document.getElementById("spanFirst");//首页
 	var spanLast = document.getElementById("spanLast");//尾页
-	var pageSize = 5;//每页信息条数
+	var pageSize = 8;//每页信息条数
 
 	var numberRowsInTable = theTable.rows.length - 1;//表格最大行数
+	
+	
+	//封装分页刷新
+  	function refreshFenYe(){
+  		
+  		//重新获取对应控件
+            totalPage = document.getElementById("spanTotalPage");//总页数
+            pageNum = document.getElementById("spanPageNum");//当前页
+            totalInfor = document.getElementById("spanTotalInfor");//记录总数
+            pageNum2 = document.getElementById("Text1");//当前页文本框
+
+            spanPre = document.getElementById("spanPre");//上一页
+            spanNext = document.getElementById("spanNext");//下一页
+            spanFirst = document.getElementById("spanFirst");//首页
+            spanLast = document.getElementById("spanLast");//尾页
+            pageSize = 8;//每页信息条数
+
+            numberRowsInTable = theTable.rows.length-1;//表格最大行数
+            hide();
+  		
+  		
+  	}
+	
+	
+	
+	
+	
 
 	function change(data) {
 		$.ajax({
@@ -180,23 +207,7 @@
 							$tbody.append(table);
 						}
 
-						theTable = document.getElementById("t_table");
-						txtValue = document.getElementById("Text1").value;
-
-						//重新获取对应控件
-						totalPage = document.getElementById("spanTotalPage");//总页数
-						pageNum = document.getElementById("spanPageNum");//当前页
-						totalInfor = document.getElementById("spanTotalInfor");//记录总数
-						pageNum2 = document.getElementById("Text1");//当前页文本框
-
-						spanPre = document.getElementById("spanPre");//上一页
-						spanNext = document.getElementById("spanNext");//下一页
-						spanFirst = document.getElementById("spanFirst");//首页
-						spanLast = document.getElementById("spanLast");//尾页
-						pageSize = 5;//每页信息条数
-
-						numberRowsInTable = theTable.rows.length - 1;//表格最大行数
-						hide();
+						refreshFenYe();
 					}
 				})
 
@@ -234,24 +245,7 @@
 								+ "</tr>";
 						$tbody.append(table);
 					}
-
-					theTable = document.getElementById("t_table");
-					txtValue = document.getElementById("Text1").value;
-
-					//重新获取对应控件
-					totalPage = document.getElementById("spanTotalPage");//总页数
-					pageNum = document.getElementById("spanPageNum");//当前页
-					totalInfor = document.getElementById("spanTotalInfor");//记录总数
-					pageNum2 = document.getElementById("Text1");//当前页文本框
-
-					spanPre = document.getElementById("spanPre");//上一页
-					spanNext = document.getElementById("spanNext");//下一页
-					spanFirst = document.getElementById("spanFirst");//首页
-					spanLast = document.getElementById("spanLast");//尾页
-					pageSize = 5;//每页信息条数
-
-					numberRowsInTable = theTable.rows.length - 1;//表格最大行数
-					hide();
+					refreshFenYe();
 				}
 			})
 			

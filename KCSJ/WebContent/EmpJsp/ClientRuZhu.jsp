@@ -209,6 +209,34 @@
           var pageSize = 5;//每页信息条数
 
           var numberRowsInTable = theTable.rows.length-1;//表格最大行数
+          
+          
+          
+          
+        //封装分页刷新
+      	function refreshFenYe(){
+      		
+      		//重新获取对应控件
+                totalPage = document.getElementById("spanTotalPage");//总页数
+                pageNum = document.getElementById("spanPageNum");//当前页
+                totalInfor = document.getElementById("spanTotalInfor");//记录总数
+                pageNum2 = document.getElementById("Text1");//当前页文本框
+
+                spanPre = document.getElementById("spanPre");//上一页
+                spanNext = document.getElementById("spanNext");//下一页
+                spanFirst = document.getElementById("spanFirst");//首页
+                spanLast = document.getElementById("spanLast");//尾页
+                pageSize = 5;//每页信息条数
+
+                numberRowsInTable = theTable.rows.length-1;//表格最大行数
+                hide();
+      		
+      		
+      	}
+          
+          
+          
+          
 
           /*改变分页的值*/
           function changepage() {
@@ -362,23 +390,7 @@
   	                	            	var table="<tr class='warning'><td>"+data[j].rmno+"</td><td>"+data[j].rmtype+"</td><td>"+data[j].rmprice +"</td><td>"+data[j].vprice +"</td>"+"<td><a onclick='ruzhu("+data[j].rmno+','+'"'+data[j].rmtype+'"'+")'>入住</a></td></tr>";
   	                	            	$tbody.append(table);
   	                	            }
-  	                	           theTable = document.getElementById("t_table");
-  	                	           txtValue = document.getElementById("Text1").value;
-  	                	          
-  	                	        //重新获取对应控件
-  	                	           totalPage = document.getElementById("spanTotalPage");//总页数
-  	                	           pageNum = document.getElementById("spanPageNum");//当前页
-  	                	           totalInfor = document.getElementById("spanTotalInfor");//记录总数
-  	                	           pageNum2 = document.getElementById("Text1");//当前页文本框
-
-  	                	           spanPre = document.getElementById("spanPre");//上一页
-  	                	           spanNext = document.getElementById("spanNext");//下一页
-  	                	           spanFirst = document.getElementById("spanFirst");//首页
-  	                	           spanLast = document.getElementById("spanLast");//尾页
-  	                	           pageSize = 5;//每页信息条数
-
-  	                	           numberRowsInTable = theTable.rows.length-1;//表格最大行数
-  	                	           hide();
+  	                	          refreshFenYe();
   	                }
   	  			})
 

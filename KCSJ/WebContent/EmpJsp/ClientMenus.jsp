@@ -46,14 +46,14 @@
 						<option>湘菜</option>
 				</select></li>
 				</if>
-				<li><input type="text" id="Key" placeholder="请输入搜索关键字" name="keywords"
-					class="input"
+				<li><input type="text" id="Key" placeholder="请输入搜索关键字"
+					name="keywords" class="input"
 					style="width: 250px; line-height: 17px; display: inline-block" />
 					<a href="javascript:void(0)" class="button border-main icon-search"
 					onclick="changesearch()"> 搜索</a></li>
 			</ul>
 		</div>
-		<table class="table table-hover text-center">
+		<table class="table table-hover text-center" id="t_table">
 			<thead>
 				<tr>
 					<th width="100" style="text-align: left; padding-left: 20px;">ID</th>
@@ -100,7 +100,27 @@
 			</tbody>
 		</table>
 	</div>
-
+	
+	
+	<!-- 分页 -->
+	 <div class="gridItem"
+				style="padding: 5px; width: 250px; float: left; text-align: left; height: 20px; font-size: 15px;">
+				共有 <span id="spanTotalInfor"></span> 条记录 当前第<span id="spanPageNum"></span>页
+				共<span id="spanTotalPage"></span>页
+			</div>
+			<div class="gridItem"
+				style="margin-left: 50px; padding: 5px; width: 400px; float: left; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">
+				<span id="spanFirst">首页</span> &nbsp;&nbsp;<span id="spanPre">上一页</span>
+				<span id="spanInput"
+					style="margin: 0px; padding: 0px 0px 4px 0px; height: 100%;">
+					第<input id="Text1" type="text" class="TextBox"
+					onkeyup="changepage()"
+					style="height: 20px; text-align: center; width: 50px" />页
+				</span> &nbsp;&nbsp;<span id="spanNext">下一页</span> &nbsp;&nbsp;<span
+					id="spanLast">尾页</span>
+			</div>
+	
+	
 
 	<!-- 顾客已点菜的弹出界面 -->
 
@@ -160,6 +180,26 @@
 	var $tbody ;
 	
 	var trObject;
+	
+	
+	var theTable = document.getElementById("t_table");
+    var txtValue = document.getElementById("Text1").value;
+    
+  //获取分页对应的控件
+    var totalPage = document.getElementById("spanTotalPage");//总页数
+
+    var pageNum = document.getElementById("spanPageNum");//当前页
+    var totalInfor = document.getElementById("spanTotalInfor");//记录总数
+    var pageNum2 = document.getElementById("Text1");//当前页文本框
+
+    var spanPre = document.getElementById("spanPre");//上一页
+    var spanNext = document.getElementById("spanNext");//下一页
+    var spanFirst = document.getElementById("spanFirst");//首页
+    var spanLast = document.getElementById("spanLast");//尾页
+    var pageSize = 5;//每页信息条数
+
+    var numberRowsInTable = theTable.rows.length-1;//表格最大行数
+	
 
 	
 	function ChangeNumber(msname,mfee,vfee,data){
@@ -177,15 +217,11 @@
 	
 	
 	
-	
 	//顾客点菜的购物车
 	function addMenus(msname,mfee,vfee,qutity){
-		
-			
 		   //用Dictionary进行键值对的储存
 		    var d = new Dictionary();
 			//获得tr对象
-			
 			if(qutity==0){
 				alert("请输入份数");
 			}else{
@@ -223,9 +259,6 @@
 			}
 		}
 	
-	
-	
-	
 	//查看顾客已点的菜(MenusDiv的弹出)
 	function look(){
 
@@ -242,9 +275,7 @@
 	
 	//取消已经点的餐
 	function deleteMenus(msname){
-		
 		$tbody= $("#lookMenus");
-		
 		for(var i = 0;i<arr.length;i++){
 			if(msname==arr[i].get('msname')){
 				arr.splice(i,1);
@@ -263,11 +294,8 @@
 		var vipprice = 0;
 		var clientprice = 0;
 		for(var i = 0;i<arr.length;i++){
-			
 			clientprice+= arr[i].get("mfee")*arr[i].get("qutity");
-			
 			vipprice+= arr[i].get("vfee")*arr[i].get("qutity");
-			
 		}
 		
 		var rmno = $('#rmno').get(0).value;
@@ -288,33 +316,24 @@
 
 	                    var objs = eval(data); 
 	                	if(objs.result==0){
-	                		
 	                		alert("一共消费"+clientprice);
-	                		
 	                		var r1=confirm("是否回到主页");
-	                		
 	                		if(r1==true){
 	                			window.location = "http://localhost:8080/KCSJ/Emp/ClientMenus.do"
 	                		}
 	                	}else if(objs.result==1){
-	                		
 	                		alert("一共消费"+vipprice);
-	                		
                             var r1=confirm("是否回到主页");
-	                		
 	                		if(r1==true){
 	                			window.location = "http://localhost:8080/KCSJ/Emp/ClientMenus.do"
 	                		}
-	                		
 	                	}else{
 	                		alert("点餐出错");
 	                	}
 	                }
 	  			})
      	 }
-			
 		}
-		
 	}
 	
 	//封装ajax的刷新表格方法
@@ -346,6 +365,9 @@
         	            	$tbody.append(table);
         	            	
         	            }
+        	            
+        	            refreshFenYe();
+        	            
         	            $("a[name='test']").click(function(){
     	            		trObject = $(this).parent().parent().parent();
     	            		var msname = trObject.children('td').eq(2).html();
@@ -355,6 +377,29 @@
     	            		addMenus(msname,mfee,vfee,number);
     	            	});
 		
+		
+		
+	}
+	
+	
+	
+	//封装分页刷新
+	function refreshFenYe(){
+		
+		//重新获取对应控件
+          totalPage = document.getElementById("spanTotalPage");//总页数
+          pageNum = document.getElementById("spanPageNum");//当前页
+          totalInfor = document.getElementById("spanTotalInfor");//记录总数
+          pageNum2 = document.getElementById("Text1");//当前页文本框
+
+          spanPre = document.getElementById("spanPre");//上一页
+          spanNext = document.getElementById("spanNext");//下一页
+          spanFirst = document.getElementById("spanFirst");//首页
+          spanLast = document.getElementById("spanLast");//尾页
+          pageSize = 5;//每页信息条数
+
+          numberRowsInTable = theTable.rows.length-1;//表格最大行数
+          hide();
 		
 		
 	}
@@ -380,7 +425,6 @@
     //根据用户的搜索菜名来刷新表格	
 	function changesearch(data) {
 		var name = $('#Key').val();
-		
 			 $.ajax({
 				  type:'post',
                 dataType: 'json',
@@ -389,15 +433,7 @@
                	 flush(data);
               }
 			})
-			
-		
-		
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -434,6 +470,7 @@
 
 <script type="text/javascript" src="<%=basePath%>js/jquery.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/pintuer.js"></script>
+<script type="text/javascript" src="<%=basePath%>EmpJsp/js/TableFenYe.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
 
 

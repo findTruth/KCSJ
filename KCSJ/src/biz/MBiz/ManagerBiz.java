@@ -13,9 +13,9 @@ public interface ManagerBiz {
 	
 	List<Emp> queryall();
 	
-	boolean AddEmp(String name, String sex, int age,double sal,String card);
+	String AddEmp(String name, String sex, int age,double sal,String card);
 	
-	boolean updateEmp(int empno, String ename, String sex, int age, double sal,String card);
+	String updateEmp(int empno, String ename, String sex, int age, double sal,String card);
 	
 	boolean deleteEmp(int empno);
 	

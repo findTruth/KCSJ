@@ -295,6 +295,42 @@ public class ManagerDaoimpl implements ManagerDao {
 		return emp;
 	}
 
+	/**
+	 * 通过身份证号查询员工
+	 */
+	public Emp queryempByename(String card) {
+		Emp emp = null;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from emp where ecard=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, card);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				int empno = rs.getInt("empno");
+				String password = rs.getString("epassword");
+				String esex = rs.getString("esex");
+				String ename = rs.getString("ename");
+				int eage = rs.getInt("eage");
+				double sal = rs.getDouble("esal");
+
+				// emp表-->Employee对象
+				emp = new Emp(empno, card, password, ename, esex, eage, sal);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return emp;
+	}
+	
+	
 
 	/**
 	 * 查询所有房间
@@ -517,6 +553,8 @@ public class ManagerDaoimpl implements ManagerDao {
 		}
 		return flag;
 	}
+
+	
 	
 	
 	

@@ -125,7 +125,7 @@
 						</div>
 						<span
 							style="font-size: 15px; color: red; position: absolute; left: 30px; top: 320px;"
-							id="dialogs"> 出现错误 </span>
+							id="dialogs"> </span>
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"

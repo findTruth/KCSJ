@@ -168,10 +168,6 @@ public class ManagerServlet extends HttpServlet {
 			int age = Integer.valueOf(request.getParameter("eage"));
 			double sal = Double.valueOf(request.getParameter("esal"));
 			String card = request.getParameter("card");
-			
-			System.out.println(name+sex+age+card +"");
-			
-			
 			String flag = biz.AddEmp(name, sex, age, sal, card);
 			if (flag.equals("success")) {
 				out.print("{\"result\":\"0\"}");
@@ -204,21 +200,23 @@ public class ManagerServlet extends HttpServlet {
 			List<Room> list = biz.QueryAllRoom();
 			if (list != null) {
 				request.setAttribute("Roomlist", list);
-				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/queryRoom.jsp").forward(request, response);
+				request.getRequestDispatcher("../ManagerJsp/queryRoom.jsp").forward(request, response);
 
 			}
 
 		} else if ("/queryRoom".equals(path)) {
 
-			String name = request.getParameter("name");
+			String name = request.getParameter("str");
+			
+			System.out.println(name);
 
 			List<Room> list = biz.QueryRoom(name);
+			
+			Gson roomjson = new Gson();
 
-			if (list != null) {
-				request.setAttribute("Roomlist", list);
-				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/queryRoom.jsp").forward(request, response);
+			out.print(roomjson.toJson(list));
+			
 
-			}
 		}
 		/*else if("RuzhuqueryRoom".equals(path)){
 			List<Room> room = biz.QueryAllRoomByRmbuff();

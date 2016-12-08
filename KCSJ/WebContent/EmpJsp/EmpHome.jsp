@@ -54,8 +54,7 @@
   <h2><span class="icon-pencil-square-o"></span>基本操作</h2>
   <ul>
     <li><a href="EmpPwd.jsp" target="right"><span class="icon-caret-right"></span>密码修改</a></li>
-    <li><a href="add.html" target="right"><span class="icon-caret-right"></span>会员管理</a></li>
-    <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>餐饮管理</a></li>        
+    <li><a href="add.html" target="right"><span class="icon-caret-right"></span>会员管理</a></li>        
   </ul>  
 </div>
     <script type="text/javascript">

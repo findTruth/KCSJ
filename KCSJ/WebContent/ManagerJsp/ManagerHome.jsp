@@ -47,7 +47,7 @@
   <ul style="display:block">
     <li><a href="<%=basePath %>Manager/Emplist.do" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
     <li><a href="<%=basePath %>Manager/Roomlist.do" target="right"><span class="icon-caret-right"></span>客房管理</a></li>
-    <li><a href="page.html" target="right"><span class="icon-caret-right"></span>网络管理</a></li>  
+    <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>餐饮管理</a></li> 
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>个人管理</h2>
   <ul>

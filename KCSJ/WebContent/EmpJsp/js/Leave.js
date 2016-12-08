@@ -205,6 +205,7 @@ function jieZhang() {
 					var $tbody = $("#List");
 					$tbody.empty();
 					alert("退房成功");
+					window.location.href = "http://localhost:8080/KCSJ/EmpJsp/info.html";
 				}else {
 					alert("失败");
 				}
@@ -225,7 +226,7 @@ function jieZhang() {
 					alert("退房成功");
 					var $tbody = $("#List");
 					$tbody.empty();
-					window.location.href = "http://localhost:8080/KCSJ/info.html";
+					window.location.href = "http://localhost:8080/KCSJ/EmpJsp/info.html";
 				}else {
 					alert("失败");
 				}

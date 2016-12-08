@@ -70,7 +70,7 @@ public class filter implements Filter {
 				|| url.endsWith("/check") || url.endsWith("/login.do") || url.endsWith("404.jsp")||url.endsWith("/GetroomlistBytype.do")
 				|| url.endsWith("404.html") || url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".gif")
 				|| url.endsWith(".png") || url.endsWith(".jpg")) {
-			chain.doFilter(request, response);
+			  chain.doFilter(request, response);
 		} else {
 
 			PrintWriter out = resp.getWriter();

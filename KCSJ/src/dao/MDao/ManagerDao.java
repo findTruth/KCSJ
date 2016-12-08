@@ -43,6 +43,6 @@ public interface ManagerDao {
 
 	boolean addRoom(String type, double price, double vprice);
 
-	
+	Emp queryempByename(String ename);
 	
 }

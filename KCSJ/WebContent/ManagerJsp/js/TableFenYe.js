@@ -2,6 +2,7 @@
  * 分页功能
  */
   //获取对应控件 
+/*
  var totalPage = document.getElementById("spanTotalPage");
   //总页数
   var pageNum = document.getElementById("spanPageNum");//当前页 
@@ -16,7 +17,7 @@
   //每页信息条数
  
   var numberRowsInTable = theTable.rows.length-1;//表格最大行数
- 
+ */
 var page = 1;
 
 // 下一页

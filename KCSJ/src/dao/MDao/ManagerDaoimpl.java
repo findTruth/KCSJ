@@ -10,6 +10,7 @@ import java.util.List;
 
 import entity.Emp;
 import entity.Manager;
+import entity.Menus;
 import entity.Room;
 import util.util;
 
@@ -552,6 +553,123 @@ public class ManagerDaoimpl implements ManagerDao {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+
+	/**
+	 * 查询所有菜单
+	 */
+	public List<Menus> MenusList() {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Menus m = new Menus();
+				m.setMno(rs.getInt("mno"));
+				m.setMsname(rs.getString("msname"));
+				m.setMimg(rs.getString("mimg"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+				list.add(m);
+			}
+			//关闭连接
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	/**
+	 * 删除菜单
+	 */
+	public boolean deleteMenus(int mno) {
+		boolean flag = false;
+
+		try {
+			Connection conn = util.getConnection();
+			String sql = "delete  from menus where mno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			int rs = ps.executeUpdate();
+			if (rs == 1) {
+				flag = true;
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return flag;
+	}
+
+	/**
+	 * 查询菜单通过菜系
+	 */
+	public List<Menus> queryMenusByType(String type) {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus where mtype=? order by msale asc ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,type);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Menus m = new Menus();
+
+				m.setMimg(rs.getString("mimg"));
+				m.setMno(rs.getInt("mno"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMsname(rs.getString("msname"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+
+				list.add(m);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	//通过菜名查询菜单
+	public List<Menus> queryMenusByString(String str) {
+		List<Menus> list = new ArrayList<Menus>();
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus where msname=? order by msale asc ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,str);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Menus m = new Menus();
+
+				m.setMimg(rs.getString("mimg"));
+				m.setMno(rs.getInt("mno"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMsname(rs.getString("msname"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+
+				list.add(m);
+			}
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	

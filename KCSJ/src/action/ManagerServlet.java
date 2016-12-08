@@ -25,6 +25,7 @@ import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
 import entity.Emp;
 import entity.Manager;
+import entity.Menus;
 import entity.Room;
 
 /**
@@ -38,7 +39,7 @@ public class ManagerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// 先从session中获取正确验证码
-		
+
 		HttpSession session = request.getSession();
 		/**
 		 * 设置编码
@@ -68,7 +69,6 @@ public class ManagerServlet extends HttpServlet {
 			// 获取用户输入验证码
 			String code = request.getParameter("code");
 
-
 			String checkCode = (String) session.getAttribute("right_checkCode");
 
 			String panduan = biz.querymanager(name, pwd, code, checkCode);
@@ -76,10 +76,10 @@ public class ManagerServlet extends HttpServlet {
 			if (!panduan.equals("验证码错误")) {
 
 				if ("正确".equals(panduan)) {
-					
+
 					session.setAttribute("mname", name);
-					
-					session.setAttribute("pwd",pwd);
+
+					session.setAttribute("pwd", pwd);
 
 					out.print("{\"result\":\"5\"}");
 
@@ -105,7 +105,6 @@ public class ManagerServlet extends HttpServlet {
 			String code = request.getParameter("code");
 
 			// 先从session中获取正确验证码
-
 
 			String checkCode = (String) session.getAttribute("right_checkCode");
 
@@ -161,8 +160,7 @@ public class ManagerServlet extends HttpServlet {
 			}
 
 		} else if ("/addEmp".equals(path)) {
-			
-			
+
 			String name = request.getParameter("ename");
 			String sex = request.getParameter("esex");
 			int age = Integer.valueOf(request.getParameter("eage"));
@@ -171,7 +169,7 @@ public class ManagerServlet extends HttpServlet {
 			String flag = biz.AddEmp(name, sex, age, sal, card);
 			if (flag.equals("success")) {
 				out.print("{\"result\":\"0\"}");
-			}else if(flag.equals("重复")){
+			} else if (flag.equals("重复")) {
 				out.print("{\"result\":\"1\"}");
 			} else {
 				out.print("{\"result\":\"2\"}");
@@ -189,14 +187,14 @@ public class ManagerServlet extends HttpServlet {
 			String flag = biz.updateEmp(empno, ename, sex, age, sal, card);
 			if (flag.equals("success")) {
 				out.print("{\"result\":\"0\"}");
-			}else if(flag.equals("重复")){
+			} else if (flag.equals("重复")) {
 				out.print("{\"result\":\"1\"}");
-			}else{
-				
+			} else {
+
 				out.print("{\"result\":\"2\"}");
 			}
 
-		}else if ("/Roomlist".equals(path)) {
+		} else if ("/Roomlist".equals(path)) {
 			List<Room> list = biz.QueryAllRoom();
 			if (list != null) {
 				request.setAttribute("Roomlist", list);
@@ -207,25 +205,22 @@ public class ManagerServlet extends HttpServlet {
 		} else if ("/queryRoom".equals(path)) {
 
 			String name = request.getParameter("str");
-			
-			System.out.println(name);
 
 			List<Room> list = biz.QueryRoom(name);
-			
+
 			Gson roomjson = new Gson();
 
 			out.print(roomjson.toJson(list));
-			
 
 		}
-		/*else if("RuzhuqueryRoom".equals(path)){
-			List<Room> room = biz.QueryAllRoomByRmbuff();
-			if (room != null) {
-				request.setAttribute("Roomlist", room);
-				request.getRequestDispatcher("../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request, response);
-			}
-		} */
-		
+		/*
+		 * else if("RuzhuqueryRoom".equals(path)){ List<Room> room =
+		 * biz.QueryAllRoomByRmbuff(); if (room != null) {
+		 * request.setAttribute("Roomlist", room); request.getRequestDispatcher(
+		 * "../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request,
+		 * response); } }
+		 */
+
 		else if ("/deleteRoom".equals(path)) {
 
 			int rmno = Integer.valueOf(request.getParameter("rmno"));
@@ -262,47 +257,77 @@ public class ManagerServlet extends HttpServlet {
 			double price = Double.valueOf(request.getParameter("price"));
 
 			double vprice = Double.valueOf(request.getParameter("vprice"));
-			
-			boolean flag = biz.addRoom(type,price,vprice);
 
+			boolean flag = biz.addRoom(type, price, vprice);
+
+			if (flag) {
+
+				out.print("{\"result\":\"0\"}");
+
+			} else {
+
+				out.print("{\"result\":\"1\"}");
+			}
+
+		} else if ("/updatePwd".equals(path)) {
+
+			// 用session保存的管理员的密码
+			String pwd = (String) session.getAttribute("pwd");
+
+			// 获得管理员的姓名
+			String mname = (String) session.getAttribute("mname");
+			String oldpwd = request.getParameter("oldpwd");
+			String newpwd = request.getParameter("newpwd");
+			String str = biz.updatePwd(mname, pwd, oldpwd, newpwd);
+			if (str.equals("nosame")) {
+				out.print("{\"result\":\"0\"}");
+			} else if (str.equals("erro")) {
+				out.print("{\"result\":\"1\"}");
+			} else {
+				out.print("{\"result\":\"2\"}");
+			}
+		} else if ("/MenusList".equals(path)) {
+
+			List<Menus> list = biz.MenusList();
+
+			if (list != null) {
+				request.setAttribute("Menuslist", list);
+				request.getRequestDispatcher("../ManagerJsp/ManagerMenus/queryMenus.jsp").forward(request, response);
+
+			}
+
+		}else if("/deleteMenus".equals(path)){
+			
+			int mno = Integer.valueOf(request.getParameter("mno"));
+			
+			boolean flag = biz.deleteMenus(mno);
+			
 			if(flag){
 				
-				out.print("{\"result\":\"0\"}");
-				
-			}else{
-				
-				out.print("{\"result\":\"1\"}");
-			}
-			
-			
-		}else if("/updatePwd".equals(path)){
-			
-			//用session保存的管理员的密码
-			String pwd = (String)session.getAttribute("pwd");
-			
-			//获得管理员的姓名
-			String mname = (String)session.getAttribute("mname");
-			
-			String oldpwd = request.getParameter("oldpwd");
-			
-			String newpwd = request.getParameter("newpwd");
-			
-			
-			String str = biz.updatePwd(mname,pwd,oldpwd,newpwd);
-			
-			if(str.equals("nosame")){
-				
-				out.print("{\"result\":\"0\"}");
-				
-			}else if(str.equals("erro")){
-				out.print("{\"result\":\"1\"}");
-				
-			}else{
-				
-				out.print("{\"result\":\"2\"}");
+				response.sendRedirect("../Manager/MenusList.do");
 				
 			}
+		}else if("/ChangeMenusByType".equals(path)){
 			
+			String type = request.getParameter("type");
+			
+			System.out.println(type);
+
+			List<Menus> list = biz.queryMenusByType(type);
+
+			Gson roomjson = new Gson();
+
+			out.print(roomjson.toJson(list));
+			
+		}else if("/queryMenusByString".equals(path)){
+			
+			String str = request.getParameter("str");
+
+			List<Menus> list = biz.queryMenusByString(str);
+
+			Gson roomjson = new Gson();
+
+			out.print(roomjson.toJson(list));
 			
 			
 		}

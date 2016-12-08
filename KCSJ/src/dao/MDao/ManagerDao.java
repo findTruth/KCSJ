@@ -44,5 +44,13 @@ public interface ManagerDao {
 	boolean addRoom(String type, double price, double vprice);
 
 	Emp queryempByename(String ename);
+
+	List<Menus> MenusList();
+
+	boolean deleteMenus(int mno);
+
+	List<Menus> queryMenusByType(String type);
+
+	List<Menus> queryMenusByString(String str);
 	
 }

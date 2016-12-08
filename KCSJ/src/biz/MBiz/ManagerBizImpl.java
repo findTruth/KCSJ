@@ -9,6 +9,7 @@ import dao.MDao.ManagerDao;
 import dao.MDao.ManagerDaoimpl;
 import entity.Emp;
 import entity.Manager;
+import entity.Menus;
 import entity.Room;
 
 public class ManagerBizImpl implements ManagerBiz {
@@ -258,9 +259,35 @@ public class ManagerBizImpl implements ManagerBiz {
 		}
 	}
 
-	@Override
+	//增加房间
 	public boolean addRoom(String type, double price, double vprice) {
 		return dao.addRoom(type, price, vprice);
+	}
+
+	//查询所有的菜单
+	public List<Menus> MenusList() {
+		return dao.MenusList();
+	}
+
+	//删除菜单
+	public boolean deleteMenus(int mno) {
+		return dao.deleteMenus(mno);
+	}
+
+	//通过菜系查询菜单
+	public List<Menus> queryMenusByType(String type) {
+		return dao.queryMenusByType(type);
+	}
+
+	//通过菜名查询所有菜(空白即查所搜)
+	public List<Menus> queryMenusByString(String str) {
+		if(str.equals("")){
+			return MenusList();
+		}else{
+			
+			return dao.queryMenusByString(str);
+			
+		}
 	}
 
 }

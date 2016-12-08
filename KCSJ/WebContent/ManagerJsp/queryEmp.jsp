@@ -429,17 +429,19 @@
 								+"<input type='button' class='btn btn-mini btn-danger' name='xiugai' value='修改' />"
 								+"</td></tr>"
       	            	$tbody.append(table);
-      	            	
       	            }
       	            
       	            refreshFenYe();
       	            
       	             $("input[name='delete']").click(function(){
-      	            
       	            	trObject = $(this).parent().parent();
   	            		var empno = trObject.children('td').eq(0).html();
-      	            	 
-      	            	window.location.href="<%=basePath%>Manager/deleteEmp.do?empno="+empno;
+  	            		
+  	            		var msg =  confirm("确认删除？？");
+  	            		if(msg==true){
+  	            			alert("删除成功");
+      	            	    window.location.href="<%=basePath%>Manager/deleteEmp.do?empno="+empno;
+  	            		}
       	           });
       	            $("input[name='xiugai']").click(function(){
   	            		trObject = $(this).parent().parent();

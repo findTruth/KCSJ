@@ -3,6 +3,7 @@ package biz.MBiz;
 import java.util.List;
 
 import entity.Emp;
+import entity.Menus;
 import entity.Room;
 
 public interface ManagerBiz {
@@ -36,5 +37,13 @@ public interface ManagerBiz {
 	String updatePwd(String mname,String pwd, String oldpwd, String newpwd);
 
 	boolean addRoom(String type, double price, double vprice);
+
+	List<Menus> MenusList();
+
+	boolean deleteMenus(int mno);
+
+	List<Menus> queryMenusByType(String type);
+
+	List<Menus> queryMenusByString(String str);
 
 }

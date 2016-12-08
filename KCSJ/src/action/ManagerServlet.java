@@ -137,22 +137,20 @@ public class ManagerServlet extends HttpServlet {
 				// 返回登录页面并给予提示
 				request.setAttribute("code_msg", "验证码错误！");
 				request.getRequestDispatcher("../Login/Register.jsp").forward(request, response);
-
 			}
 
 		} else if ("/queryEmp".equals(path)) {
-			String str = request.getParameter("name");
+			String str = request.getParameter("str");
 			List<Emp> list = biz.QueryEmp(str);
-			if (list != null) {
-				request.setAttribute("Emplist", list);
-				request.getRequestDispatcher("../ManagerJsp/ManagerEmp/queryEmp.jsp").forward(request, response);
 
-			}
+			Gson roomjson = new Gson();
+
+			out.print(roomjson.toJson(list));
 
 		} else if ("/Emplist".equals(path)) {
 			List<Emp> list = biz.queryall();
 			request.setAttribute("Emplist", list);
-			request.getRequestDispatcher("../ManagerJsp/ManagerEmp/queryEmp.jsp").forward(request, response);
+			request.getRequestDispatcher("../ManagerJsp/queryEmp.jsp").forward(request, response);
 
 		} else if ("/deleteEmp".equals(path)) {
 			int empno = Integer.valueOf(request.getParameter("empno"));
@@ -163,34 +161,43 @@ public class ManagerServlet extends HttpServlet {
 			}
 
 		} else if ("/addEmp".equals(path)) {
-			String name = request.getParameter("name");
-			String sex = request.getParameter("sex");
-			int age = Integer.valueOf(request.getParameter("age"));
-			double sal = Double.valueOf(request.getParameter("sal"));
+			
+			
+			String name = request.getParameter("ename");
+			String sex = request.getParameter("esex");
+			int age = Integer.valueOf(request.getParameter("eage"));
+			double sal = Double.valueOf(request.getParameter("esal"));
 			String card = request.getParameter("card");
-			boolean flag = biz.AddEmp(name, sex, age, sal, card);
-			if (flag) {
-				response.sendRedirect("../Manager/Emplist.do");
-
+			
+			System.out.println(name+sex+age+card +"");
+			
+			
+			String flag = biz.AddEmp(name, sex, age, sal, card);
+			if (flag.equals("success")) {
+				out.print("{\"result\":\"0\"}");
+			}else if(flag.equals("重复")){
+				out.print("{\"result\":\"1\"}");
 			} else {
-
-				out.println("出错了");
+				out.print("{\"result\":\"2\"}");
 			}
 		}
 
 		else if ("/updateEmp".equals(path)) {
 
 			int empno = Integer.valueOf(request.getParameter("empno"));
-			String ename = request.getParameter("name");
-			String sex = request.getParameter("sex");
-			int age = Integer.valueOf(request.getParameter("age"));
-			double sal = Double.valueOf(request.getParameter("sal"));
+			String ename = request.getParameter("ename");
+			String sex = request.getParameter("esex");
+			int age = Integer.valueOf(request.getParameter("eage"));
+			double sal = Double.valueOf(request.getParameter("esal"));
 			String card = request.getParameter("card");
-			boolean flag = biz.updateEmp(empno, ename, sex, age, sal, card);
-			if (flag) {
-
-				response.sendRedirect("../Manager/Emplist.do");
-
+			String flag = biz.updateEmp(empno, ename, sex, age, sal, card);
+			if (flag.equals("success")) {
+				out.print("{\"result\":\"0\"}");
+			}else if(flag.equals("重复")){
+				out.print("{\"result\":\"1\"}");
+			}else{
+				
+				out.print("{\"result\":\"2\"}");
 			}
 
 		}else if ("/Roomlist".equals(path)) {

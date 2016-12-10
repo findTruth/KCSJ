@@ -290,4 +290,10 @@ public class ManagerBizImpl implements ManagerBiz {
 		}
 	}
 
+	//增加菜单
+	public boolean addMenus(String address, String mname, String type, double price, double vprice) {
+		return dao.addMenus(address,mname,type,price,vprice);
+		
+	}
+
 }

@@ -444,25 +444,6 @@ public class EmpServlet extends HttpServlet {
 		}
 
 		
-		
-		
-		
-		
-		
-		else if ("/upload".equals(path)) {
-			JsonObject json = picture.upload(request, response);
-			String pictureAddress = json.get("src").getAsString();
-
-			System.out.println(pictureAddress);
-
-			// Client client = new Book(Tools.UUID(),
-			// request.getParameter("BNAME")
-			// , null, request.getParameter("BPRESS"),
-			// request.getParameter("BAUTHOR")
-			// , request.getParameter("BVALUE"),
-			// request.getParameter("BKINDNO"), BADDRESS, 0, BADDRESS);
-
-		}
 	}
 
 }

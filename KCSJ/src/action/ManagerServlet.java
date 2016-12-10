@@ -1,30 +1,25 @@
 package action;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
 
-import biz.EBiz.EmpBizImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import Tool.picture;
 import biz.MBiz.ManagerBiz;
 import biz.MBiz.ManagerBizImpl;
 import entity.Emp;
-import entity.Manager;
 import entity.Menus;
 import entity.Room;
 
@@ -328,10 +323,40 @@ public class ManagerServlet extends HttpServlet {
 			Gson roomjson = new Gson();
 
 			out.print(roomjson.toJson(list));
+		}else if ("/upload".equals(path)) {
 			
 			
-		}
-
+			
+			
+			JsonObject json = picture.upload(request, response);
+			
+			String address = json.get("fileName").getAsString();
+			
+			String mname = request.getParameter("mname");
+			String type =  request.getParameter("type");
+			double price = Double.valueOf(request.getParameter("price"));
+			double vprice  = Double.valueOf(request.getParameter("vprice"));
+			
+			
+			System.out.println("address="+address);
+			System.out.println("manme="+mname);
+			System.out.println("type="+type);
+			System.out.println("price="+price);
+			System.out.println("vprice="+vprice);
+			
+			
+			
+			boolean flag = biz.addMenus(address,mname,type,price,vprice);
+			
+			if(flag){
+				
+				out.print("true");
+				
+			}else{
+				out.print("false");
+			}
+			
 	}
+}
 
 }

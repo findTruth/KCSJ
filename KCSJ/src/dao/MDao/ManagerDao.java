@@ -52,5 +52,7 @@ public interface ManagerDao {
 	List<Menus> queryMenusByType(String type);
 
 	List<Menus> queryMenusByString(String str);
+
+	boolean addMenus(String address, String mname, String type, double price, double vprice);
 	
 }

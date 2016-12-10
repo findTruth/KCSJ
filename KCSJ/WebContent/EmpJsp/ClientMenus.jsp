@@ -73,7 +73,7 @@
 						<td><c:out value="${list.mno}"></c:out></td>
 						<td><c:out value="${list.mtype}"></c:out></td>
 						<td><c:out value="${list.msname}"></c:out></td>
-						<td width="10%"><img src="<%=basePath %>EmpJsp/${list.mimg}"
+						<td width="10%"><img src="<%=basePath %>EmpJsp/Image/${list.mimg}"
 							alt="" width="60" height="40" /></td>
 						<td><c:out value="${list.msfee}"></c:out></td>
 						<td><c:out value="${list.mvfee}"></c:out></td>
@@ -348,7 +348,7 @@
 								+ data[j].mtype
 								+ "</td><td>"
 								+ data[j].msname
-								+ "</td><td>"+"<img width ='60' height='40' src=http://localhost:8080/KCSJ/EmpJsp/"+ data[j].mimg
+								+ "</td><td>"+"<img width ='60' height='40' src=http://localhost:8080/KCSJ/EmpJsp/Image/"+ data[j].mimg
 								+ ">"
 								+ "</td><td>"
 								+ data[j].msfee

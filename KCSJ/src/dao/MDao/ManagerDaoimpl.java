@@ -672,6 +672,30 @@ public class ManagerDaoimpl implements ManagerDao {
 		return list;
 	}
 
+	//增加菜单
+	public boolean addMenus(String address, String mname, String type, double price, double vprice) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "insert into menus values(menus_seq.nextval,?,?,?,?,?,0)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,mname);
+			ps.setString(2, address);
+			ps.setString(3,type);
+			ps.setDouble(4,price);
+			ps.setDouble(5,vprice);
+			int i = ps.executeUpdate();
+			if(i>=1){
+				flag =  true;
+			}
+			util.closeConnection(ps,conn, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	}
+           return flag;
+	}
+
 	
 	
 	

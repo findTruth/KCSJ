@@ -296,4 +296,14 @@ public class ManagerBizImpl implements ManagerBiz {
 		
 	}
 
+	//更新时查询单个菜
+	public Menus queryMenus_update(int mno) {
+		return dao.queryMenus_update(mno);
+	}
+
+	//更新菜单
+	public boolean updateMenus(int mno, String msname, String type, double price, double vprice, String address) {
+		return dao.updateMenus(mno,msname,type,price,vprice,address);
+	}
+
 }

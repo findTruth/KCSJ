@@ -87,7 +87,7 @@
 
 								<td><c:out value="${list.mno}"></c:out></td>
 								<td><c:out value="${list.msname}"></c:out></td>
-								<td><img src="<%=basePath %>EmpJsp/<c:out value="${list.mimg}"></c:out>"
+								<td><img src="<%=basePath %>EmpJsp/Image/<c:out value="${list.mimg}"></c:out>"
 							alt="" width="60" height="40" /></td>
 								<td><c:out value="${list.mtype}"></c:out></td>
 								<td><c:out value="${list.msfee}"></c:out></td>
@@ -95,7 +95,7 @@
 
 								<td><a class="btn btn-mini btn-danger" onclick="deletemenus(${list.mno})">移除</a>
 									&nbsp;&nbsp; <a class="btn btn-mini btn-danger"
-									onclick="xiugai()">修改</a></td>
+									onclick="xiugai(${list.mno})">修改</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -182,19 +182,19 @@
   
       //增加界面
       function add(){
-    	  document.getElementById("Empdialogs").innerHTML="";
-    	  $("#addEmp").modal();
+    	  window.location.href="<%=basePath%>ManagerJsp/ManagerMenus/addMenus.jsp";
 		}
-  
+     
+      //修改界面
+      function xiugai(mno){
+    	  window.location.href="<%=basePath%>Manager/queryMenus_update.do?mno="+mno;
+		}
       
       
   
   //输入菜名或空白查询所有并刷新表格
   function query(){
-	  
 	 var sousuo = $('#sousuo').val();
-	
-	 
 		 $.ajax({
 			  type:'post',
             dataType: 'json',
@@ -205,15 +205,11 @@
 		})
   }
   
-  
-	
-  
-		
-		
 		
 	//封装ajax的刷新表格方法
 	function flush(data){
-		 var $tbody = $("#Menus");
+		 var $tbody
+		 = $("#Menus");
 		 $tbody.empty();
         	            for (var j = 0; j < data.length; j++) { 
         	            	
@@ -221,7 +217,7 @@
 								+ data[j].mno
 								+ "</td><td>"
 								+ data[j].msname
-								+ "</td><td>"+"<img width ='60' height='40' src=http://localhost:8080/KCSJ/EmpJsp/"+ data[j].mimg
+								+ "</td><td>"+"<img width ='60' height='40' src=http://localhost:8080/KCSJ/EmpJsp/Image/"+ data[j].mimg
 								+ ">"
 								+ "</td><td>"
 								+ data[j].mtype
@@ -231,7 +227,7 @@
 								+ data[j].mvfee
 								+ "</td><td>"
 								+"<a class='btn btn-mini btn-danger' name='test'>移除</a>"+
-								"&nbsp;&nbsp;<a class='btn btn-mini btn-danger' onclick='xiugai()'>修改</a></td></tr>";
+								"&nbsp;&nbsp;<a class='btn btn-mini btn-danger' onclick='xiugai(data[j].mno)'>修改</a></td></tr>";
         	            	
         	            	$tbody.append(table);
         	            	

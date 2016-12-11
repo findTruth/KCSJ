@@ -196,8 +196,8 @@ public class ManagerDaoimpl implements ManagerDao {
 			if (i >= 1) {
 				flag = true;
 			}
-			
-			util.closeConnection(ps, conn,null);
+
+			util.closeConnection(ps, conn, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -205,11 +205,10 @@ public class ManagerDaoimpl implements ManagerDao {
 		return flag;
 	}
 
-
 	/**
 	 * 更新员工信息
 	 */
-	public boolean updateEmp(int empno, String ename, String sex, int age, double sal,String card) {
+	public boolean updateEmp(int empno, String ename, String sex, int age, double sal, String card) {
 
 		boolean flag = false;
 		try {
@@ -261,7 +260,7 @@ public class ManagerDaoimpl implements ManagerDao {
 		return flag;
 	}
 
-	//通过员工号查询员工
+	// 通过员工号查询员工
 	public Emp queryemp(int empno) {
 		Emp emp = null;
 		try {
@@ -330,35 +329,33 @@ public class ManagerDaoimpl implements ManagerDao {
 
 		return emp;
 	}
-	
-	
 
 	/**
 	 * 查询所有房间
 	 */
 	public List<Room> QueryAllRoom() {
-		
+
 		List<Room> list = new ArrayList<Room>();
 		try {
 			Connection conn = util.getConnection();
 			String sql = "select * from room order by rmno asc";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				String rmbook = rs.getString("rmbook");
 				String rmbuff = rs.getString("rmbuff");
 				int rmno = rs.getInt("rmno");
 				double rmprice = rs.getDouble("rmprice");
-				String rmtype= rs.getString("rmtype");
+				String rmtype = rs.getString("rmtype");
 				String rydate = rs.getString("rydate");
 				double vprice = rs.getDouble("vprice");
-				
+
 				Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
 				list.add(r);
 			}
-			
+
 			util.closeConnection(ps, conn, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -371,7 +368,6 @@ public class ManagerDaoimpl implements ManagerDao {
 
 		return list;
 	}
-
 
 	/**
 	 * 通过房间号查询房间
@@ -382,24 +378,24 @@ public class ManagerDaoimpl implements ManagerDao {
 			Connection conn = util.getConnection();
 			String sql = "select * from room where rmno=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			
-			ps.setInt(1,no);
+
+			ps.setInt(1, no);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				String rmbook = rs.getString("rmbook");
 				String rmbuff = rs.getString("rmbuff");
 				int rmno = rs.getInt("rmno");
 				double rmprice = rs.getDouble("rmprice");
-				String rmtype= rs.getString("rmtype");
+				String rmtype = rs.getString("rmtype");
 				String rydate = rs.getString("rydate");
 				double vprice = rs.getDouble("vprice");
-				
+
 				Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
 				list.add(r);
 			}
-			
+
 			util.closeConnection(ps, conn, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -412,6 +408,7 @@ public class ManagerDaoimpl implements ManagerDao {
 
 		return list;
 	}
+
 	/**
 	 * 通过房间类型查询房间
 	 */
@@ -421,24 +418,24 @@ public class ManagerDaoimpl implements ManagerDao {
 			Connection conn = util.getConnection();
 			String sql = "select * from room where rmtype=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			
-			ps.setString(1,str);
+
+			ps.setString(1, str);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				String rmbook = rs.getString("rmbook");
 				String rmbuff = rs.getString("rmbuff");
 				int rmno = rs.getInt("rmno");
 				double rmprice = rs.getDouble("rmprice");
-				String rmtype= rs.getString("rmtype");
+				String rmtype = rs.getString("rmtype");
 				String rydate = rs.getString("rydate");
 				double vprice = rs.getDouble("vprice");
-				
+
 				Room r = new Room(rmno, rmtype, rmprice, vprice, rmbuff, rmbook, rydate);
 				list.add(r);
 			}
-			
+
 			util.closeConnection(ps, conn, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -452,7 +449,6 @@ public class ManagerDaoimpl implements ManagerDao {
 		return list;
 	}
 
-	
 	/**
 	 * 通过房间号删除房间
 	 */
@@ -477,8 +473,7 @@ public class ManagerDaoimpl implements ManagerDao {
 		return flag;
 	}
 
-
-	//更新房间信息
+	// 更新房间信息
 	public boolean updateRoom(int rmno, String type, double price, double vprice) {
 		boolean flag = false;
 		try {
@@ -494,7 +489,8 @@ public class ManagerDaoimpl implements ManagerDao {
 				flag = true;
 			}
 
-			util.closeConnection(ps, conn, null);;
+			util.closeConnection(ps, conn, null);
+			;
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -511,8 +507,8 @@ public class ManagerDaoimpl implements ManagerDao {
 			Connection conn = util.getConnection();
 			String sql = "update manager set mpassword=? where mname=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,md5);
-			ps.setString(2,mname);
+			ps.setString(1, md5);
+			ps.setString(2, mname);
 			int n = ps.executeUpdate();
 			if (n == 1) {
 
@@ -527,7 +523,6 @@ public class ManagerDaoimpl implements ManagerDao {
 		}
 		return flag;
 	}
-
 
 	/**
 	 * 增加房间信息
@@ -562,10 +557,10 @@ public class ManagerDaoimpl implements ManagerDao {
 		List<Menus> list = new ArrayList<Menus>();
 		try {
 			Connection conn = util.getConnection();
-			String sql = "select * from menus";
+			String sql = "select * from menus order by msale desc";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Menus m = new Menus();
 				m.setMno(rs.getInt("mno"));
 				m.setMsname(rs.getString("msname"));
@@ -576,7 +571,7 @@ public class ManagerDaoimpl implements ManagerDao {
 				m.setMvfee(rs.getDouble("mvfee"));
 				list.add(m);
 			}
-			//关闭连接
+			// 关闭连接
 			util.closeConnection(ps, conn, rs);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -617,10 +612,10 @@ public class ManagerDaoimpl implements ManagerDao {
 		List<Menus> list = new ArrayList<Menus>();
 		try {
 			Connection conn = util.getConnection();
-			String sql = "select * from menus where mtype=? order by msale asc ";
+			String sql = "select * from menus where mtype=? order by mno asc ";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,type);
-			
+			ps.setString(1, type);
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Menus m = new Menus();
@@ -642,15 +637,15 @@ public class ManagerDaoimpl implements ManagerDao {
 		return list;
 	}
 
-	//通过菜名查询菜单
+	// 通过菜名查询菜单
 	public List<Menus> queryMenusByString(String str) {
 		List<Menus> list = new ArrayList<Menus>();
 		try {
 			Connection conn = util.getConnection();
-			String sql = "select * from menus where msname=? order by msale asc ";
+
+			String sql = "select * from  menus  where msname like concat('%',concat(?,'%'))";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,str);
-			
+			ps.setString(1, str);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Menus m = new Menus();
@@ -672,38 +667,87 @@ public class ManagerDaoimpl implements ManagerDao {
 		return list;
 	}
 
-	//增加菜单
+	// 增加菜单
 	public boolean addMenus(String address, String mname, String type, double price, double vprice) {
 		boolean flag = false;
 		try {
 			Connection conn = util.getConnection();
 			String sql = "insert into menus values(menus_seq.nextval,?,?,?,?,?,0)";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,mname);
+			ps.setString(1, mname);
 			ps.setString(2, address);
-			ps.setString(3,type);
-			ps.setDouble(4,price);
-			ps.setDouble(5,vprice);
+			ps.setString(3, type);
+			ps.setDouble(4, price);
+			ps.setDouble(5, vprice);
 			int i = ps.executeUpdate();
-			if(i>=1){
-				flag =  true;
+			if (i >= 1) {
+				flag = true;
 			}
-			util.closeConnection(ps,conn, null);
+			util.closeConnection(ps, conn, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	}
-           return flag;
+		}
+		return flag;
 	}
 
-	
-	
-	
-	
-//	
-	//public static void main(String[] args) {
-		
-	//	System.out.println((new ManagerDaoimpl().QueryAllRoom()).size());
-	//}
+	// 更新时查询单个菜
+	public Menus queryMenus_update(int mno) {
+		Menus m = null;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "select * from menus where mno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				m = new Menus();
+				m.setMno(rs.getInt("mno"));
+				m.setMsname(rs.getString("msname"));
+				m.setMimg(rs.getString("mimg"));
+				m.setMsale(rs.getDouble("msale"));
+				m.setMsfee(rs.getDouble("msfee"));
+				m.setMtype(rs.getString("mtype"));
+				m.setMvfee(rs.getDouble("mvfee"));
+			}
+			// 关闭连接
+			util.closeConnection(ps, conn, rs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return m;
+
+	}
+
+	// 更新菜单的信息
+	public boolean updateMenus(int mno, String msname, String type, double price, double vprice, String address) {
+		boolean flag = false;
+		try {
+			Connection conn = util.getConnection();
+			String sql = "update menus set msname=?,mimg=?,mtype=?,msfee=?,mvfee=?  where mno=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, msname);
+			ps.setString(2, address);
+			ps.setString(3, type);
+			ps.setDouble(4,price);
+			ps.setDouble(5,vprice);
+			ps.setInt(6,mno);
+			int n = ps.executeUpdate();
+			if (n >= 1) {
+				flag = true;
+			}
+			util.closeConnection(ps, conn, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	//
+	// public static void main(String[] args) {
+
+	// System.out.println((new ManagerDaoimpl().QueryAllRoom()).size());
+	// }
 
 }

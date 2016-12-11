@@ -208,13 +208,6 @@ public class ManagerServlet extends HttpServlet {
 			out.print(roomjson.toJson(list));
 
 		}
-		/*
-		 * else if("RuzhuqueryRoom".equals(path)){ List<Room> room =
-		 * biz.QueryAllRoomByRmbuff(); if (room != null) {
-		 * request.setAttribute("Roomlist", room); request.getRequestDispatcher(
-		 * "../ManagerJsp/ManagerRoom/ruzhuMession.jsp").forward(request,
-		 * response); } }
-		 */
 
 		else if ("/deleteRoom".equals(path)) {
 
@@ -324,10 +317,6 @@ public class ManagerServlet extends HttpServlet {
 
 			out.print(roomjson.toJson(list));
 		}else if ("/upload".equals(path)) {
-			
-			
-			
-			
 			JsonObject json = picture.upload(request, response);
 			
 			String address = json.get("fileName").getAsString();
@@ -336,15 +325,6 @@ public class ManagerServlet extends HttpServlet {
 			String type =  request.getParameter("type");
 			double price = Double.valueOf(request.getParameter("price"));
 			double vprice  = Double.valueOf(request.getParameter("vprice"));
-			
-			
-			System.out.println("address="+address);
-			System.out.println("manme="+mname);
-			System.out.println("type="+type);
-			System.out.println("price="+price);
-			System.out.println("vprice="+vprice);
-			
-			
 			
 			boolean flag = biz.addMenus(address,mname,type,price,vprice);
 			
@@ -356,6 +336,46 @@ public class ManagerServlet extends HttpServlet {
 				out.print("false");
 			}
 			
+	}else if("/queryMenus_update".equals(path)){
+		int mno = Integer.valueOf(request.getParameter("mno"));
+		Menus m = biz.queryMenus_update(mno);
+		request.setAttribute("m", m);
+		request.setAttribute("type", m.getMtype());
+		request.getRequestDispatcher("../ManagerJsp/ManagerMenus/updateMenus.jsp").forward(request, response);
+	}else if("/updateMenus".equals(path)){
+		
+		String address;
+		String msname = request.getParameter("mname");
+		int mno  = Integer.valueOf(request.getParameter("mno")) ;
+		String type =  request.getParameter("type");
+		double price = Double.valueOf(request.getParameter("price"));
+		double vprice  = Double.valueOf(request.getParameter("vprice"));
+		
+		
+		
+		int mark = Integer.valueOf(request.getParameter("mark"));
+		
+		if(mark==1){
+			address = request.getParameter("img");
+		}else{
+			JsonObject json = picture.upload(request, response);
+			 address = json.get("fileName").getAsString();
+		}
+		
+		boolean flag = biz.updateMenus(mno,msname,type,price,vprice,address);
+
+		System.out.println(flag);
+		if(flag){
+			out.print("true");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
 

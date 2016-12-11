@@ -29,9 +29,6 @@ public class Menus {
 
 
 
-
-
-
 	public String getMtype() {
 		return mtype;
 	}

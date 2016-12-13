@@ -99,10 +99,10 @@
 			</form>
 			<div class="field" style="position: absolute;left: 20px;">
 				<button class="button bg-main icon-check-square-o" type="buttom"
-					onclick="submit()">提交</button>
+					onclick="submit()" style="width: 150px;height: 40x;" >提交</button>
 			</div>
 			&nbsp;&nbsp;
-		<button type="button" class="button bg-main icon-check-square-o" onclick="back()" style="position: absolute;left: 200px;">返回上一层</button>
+		<button type="button" class="button bg-main icon-check-square-o" onclick="back()" style="position: absolute;left: 200px; width: 150px;height: 40px;">返回上一层</button>
 		</div>
 	</div>
 </body>

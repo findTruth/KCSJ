@@ -155,7 +155,7 @@ public class ManagerDaoimpl implements ManagerDao {
 		List<Emp> list = new ArrayList<Emp>();
 		try {
 			Connection conn = util.getConnection();
-			String sql = "select * from emp where ename=?";
+			String sql = "select * from emp where ename like concat('%',concat(?,'%'))";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, str);
 			ResultSet rs = ps.executeQuery();

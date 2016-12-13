@@ -11,9 +11,6 @@ public class ClientBean {
 	public ClientBean() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
 
 
 	public ClientBean(Client client, Room room, String xinXi) {
@@ -22,11 +19,6 @@ public class ClientBean {
 		this.room = room;
 		XinXi = xinXi;
 	}
-
-
-
-
-
 	public String getXinXi() {
 		return XinXi;
 	}
@@ -35,8 +27,6 @@ public class ClientBean {
 	public void setXinXi(String xinXi) {
 		XinXi = xinXi;
 	}
-
-
 	public Client getClient() {
 		return client;
 	}
@@ -49,7 +39,6 @@ public class ClientBean {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
 	//计算总价（饭钱+房费）
 	public double allPrice(double feeprice,double roomprice){
 		

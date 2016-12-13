@@ -23,7 +23,7 @@
    margin-big-left fadein-top">
     <h1><img src="../images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />管理员操作中心</h1>
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> 
+  <div class="head-l"><a class="button button-little bg-green" href="<%=basePath%>ManagerJsp/Home.jsp" target="right"><span class="icon-home"></span> 前台首页</a> 
   &nbsp;&nbsp;<a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> 
   &nbsp;&nbsp;<a class="button button-little bg-red" href="<%=basePath%>Login/ManagerLogin.jsp"><span class="icon-power-off"></span> 退出登录</a> 
   
@@ -32,7 +32,7 @@
   <%
 			Date date=new Date();
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd E");
-%>
+ %>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px;color:white"> 
 			<%=sdf.format(date) %>
 		    <br />
@@ -68,13 +68,13 @@
     });
 </script>
 <ul class="bread">
-  <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="" target="right" class="icon-home"> 首页</a></li>
   <li><a href="##" id="a_leader_txt">网站信息</a></li>
   <li><b>当前语言：</b><span style="color:red;">中文</php></span>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li>
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="info.html" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="<%=basePath%>ManagerJsp/Home.jsp" name="right" width="100%" height="100%"></iframe>
 </div>
 <div style="text-align:center;">
 <p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>

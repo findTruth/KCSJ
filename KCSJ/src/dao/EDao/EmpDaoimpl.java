@@ -180,8 +180,8 @@ public class EmpDaoimpl implements EmpDao {
 		return flag;
 	}
 	
-	//
-	//跟新会员时间
+	
+	//更新会员时间
 	public  boolean updateVipTime(int rmno){
 		boolean flag = false;
 		try {
